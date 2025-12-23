@@ -17,6 +17,8 @@
     pavucontrol
     playerctl
     autotiling-rs
+
+    junction
   ];
 
   imports = [

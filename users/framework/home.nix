@@ -38,15 +38,11 @@
       download = "$HOME/downloads";
       pictures = "$HOME/pictures";
     };
+    mimeApps.enable = true;
+    mimeApps.defaultApplications = {
+      "application/pdf" = [ "org.pwmt.zathura.desktop" ];
+    };
   };
-
-  #mimeApps = { #TODO install and enable junction
-  #	    enable = true;
-  #	    defaultApplications = {
-  #		    "text/plain" = [ "nvim.desktop" ];
-  #		    "text/html" = [ "firefox.desktop" ];
-  #	    };
-  #   };
 
   programs.btop = {
     enable = true;
