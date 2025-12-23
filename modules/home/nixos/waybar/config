@@ -1,0 +1,48 @@
+{
+    "layer": "top",
+    "modules-left": [
+        "sway/workspaces",
+        "sway/mode"
+    ],
+    "modules-center": [
+        "sway/window"
+    ],
+    "modules-right": [
+        "network",
+        "battery",
+        "clock",
+        "tray"
+    ],
+    "sway/window": {
+        "max-length": 50
+    },
+    "network": {
+        "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-ethernet": "{ipaddr}/{cidr} ",
+        "tooltip-format": "{ifname} via {gwaddr} ",
+        "format-linked": "{ifname} (No IP) ",
+        "format-disconnected": "Disconnected ⚠",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}"
+    },
+    "battery": {
+        "interval": 2,
+        "format": "{power:.1f}w - {capacity}% {icon}",
+        "format-icons": [
+            "",
+            "",
+            "",
+            "",
+            ""
+        ]
+    },
+    "clock": {
+        "format": "{:%a, %d. %b  %H:%M:%S}",
+        "interval": 1
+    },
+    "custom/tailscale": {
+        "exec": "~/.config/waybar/scripts/tailscale_status.sh",
+        "interval": 10,
+        "format": "{}",
+        "tooltip": false
+    }
+}
