@@ -11,7 +11,7 @@ let
   myTf2Config = tf2pkgs.mergeTf2Configs (
     with tf2pkgs;
     [
-      mastercomfig.presets.medium-low
+      mastercomfig.presets.low
       mastercomfig.addons.flat-mouse
       mastercomfig.addons.no-tutorial
       mastercomfig.addons.null-canceling-movement
