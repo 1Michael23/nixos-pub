@@ -40,7 +40,7 @@
     };
     mimeApps.enable = true;
     mimeApps.defaultApplications = {
-      "application/pdf" = [ "org.pwmt.zathura.desktop" ];
+      "application/pdf" = [ "chromium.desktop" ];
     };
   };
 
