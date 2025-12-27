@@ -10,6 +10,7 @@
     "modules-right": [
         "network",
         "battery",
+        "power-profiles-daemon",
         "clock",
         "tray"
     ],
@@ -34,6 +35,17 @@
             "",
             ""
         ]
+    },
+    "power-profiles-daemon": {
+        "format": "{icon}",
+        "tooltip-format": "Power profile: {profile}nDriver: {driver}",
+        "tooltip": true,
+        "format-icons": {
+            "default": "",
+            "performance": "",
+            "balanced": "",
+            "power-saver": ""
+        }
     },
     "clock": {
         "format": "{:%a, %d. %b  %H:%M:%S}",
