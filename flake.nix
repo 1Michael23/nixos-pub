@@ -51,6 +51,8 @@
           ./roles/system/nixos-base.nix
           ./roles/system/graphical-sway.nix
 
+          ./modules/system/nixos/libvirtd.nix
+
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
