@@ -13,6 +13,8 @@
     MOZ_ENABLE_WAYLAND = "1";
     QT_QPA_PLATFORM = "wayland";
     NIXOS_OZONE_WL = "1";
+    AMD_VULKAN_ICD = "RADV";
+    LIBVA_DRIVER_NAME = "radeonsi";
   };
 
   environment.systemPackages = with pkgs; [
@@ -27,6 +29,13 @@
 
     flatpak
     gnome-software
+
+    mesa
+    vulkan-loader
+    vulkan-tools
+
+    libva-utils
+
   ];
 
   services.greetd = {
@@ -52,6 +61,19 @@
     polkit-1.fprintAuth = true;
   };
 
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+    extraPackages = with pkgs; [
+      libva
+      mesa
+      libva-vdpau-driver
+      libvdpau-va-gl
+      vulkan-loader
+      vulkan-validation-layers
+    ];
+  };
+
   services.dbus.enable = true;
   xdg.portal = {
     enable = true;
@@ -67,7 +89,6 @@
   };
 
   security.polkit.enable = true;
-  hardware.graphics.enable = true;
 
   services.pipewire = {
     enable = true;

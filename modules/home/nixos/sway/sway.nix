@@ -166,7 +166,7 @@
   };
 
   home.sessionVariables = {
-    AMD_VULKAN_ICD = "RADV";
+    NIXOS_OZONE_WL = "1";
     XDG_DATA_DIRS = "$XDG_DATA_DIRS:$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share";
   };
 }
