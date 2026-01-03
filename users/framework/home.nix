@@ -15,6 +15,9 @@
     gcr
     openssh
 
+    orca-slicer
+    moonlight-qt
+
   ];
 
   imports = [
