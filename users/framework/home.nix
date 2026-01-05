@@ -18,9 +18,12 @@
     orca-slicer
     moonlight-qt
 
+    freecad
+
   ];
 
   imports = [
+    ../../modules/home/nixos/xdg.nix
     ../../modules/home/nixos/chromium.nix
     ../../modules/home/nixos/syncthing.nix
 
@@ -31,21 +34,6 @@
     ../../roles/home/sway-home.nix
 
   ];
-
-  xdg = {
-    enable = true;
-    userDirs = {
-      enable = true;
-      createDirectories = true;
-      documents = "$HOME/documents";
-      download = "$HOME/downloads";
-      pictures = "$HOME/pictures";
-    };
-    mimeApps.enable = true;
-    mimeApps.defaultApplications = {
-      "application/pdf" = [ "chromium.desktop" ];
-    };
-  };
 
   programs.btop = {
     enable = true;

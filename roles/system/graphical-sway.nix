@@ -20,7 +20,14 @@
   environment.systemPackages = with pkgs; [
     sway
     dbus
+
     nautilus
+    adwaita-icon-theme
+    file-roller
+    sushi
+    ffmpegthumbnailer
+    poppler-utils
+
     networkmanagerapplet
     source-code-pro
     font-awesome
@@ -37,6 +44,10 @@
     libva-utils
 
   ];
+
+  services.tumbler.enable = true; # thumbnails for nautilus
+
+  services.gvfs.enable = true;
 
   services.greetd = {
     enable = true;
@@ -75,6 +86,7 @@
   };
 
   services.dbus.enable = true;
+
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [
