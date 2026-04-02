@@ -17,8 +17,11 @@
 
     orca-slicer
     moonlight-qt
+    lmstudio
 
     freecad
+
+    onlyoffice-desktopeditors
 
   ];
 

@@ -18,8 +18,10 @@
       rust-lang.rust-analyzer
       llvm-vs-code-extensions.vscode-clangd
       ms-toolsai.jupyter
+      ms-toolsai.jupyter-renderers
       ms-python.python
       ms-vscode.cpptools
+      sonarsource.sonarlint-vscode
 
       ms-vscode-remote.remote-ssh # TODO move to open source remote ssh
     ];

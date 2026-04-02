@@ -34,8 +34,10 @@
     python313
     python313Packages.notebook
     python313Packages.ipykernel
+    python313Packages.conda
     python313Packages.pip
     python313Packages.jupyter
+    python313Packages.tkinter
 
     source-code-pro
 
