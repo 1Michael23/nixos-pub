@@ -47,13 +47,17 @@
     };
   };
 
-  swapDevices = [ { device = "/dev/mapper/cryptswap"; } ]; # TODO let nix know i have encrypted swap
+  swapDevices = [ { device = "/dev/mapper/cryptswap"; } ];
   boot.resumeDevice = "/dev/mapper/cryptswap";
 
-  services.logind.lidSwitch = "suspend-then-hibernate"; # TODO fix hibernation
-  # Hibernate on power button pressed
+  services.logind.lidSwitch = "suspend-then-hibernate";
   services.logind.powerKey = "hibernate";
   services.logind.powerKeyLongPress = "poweroff";
+
+  systemd.sleep.extraConfig = ''
+    SuspendState=mem
+    HibernateDelaySec=2m
+  '';
 
   services.solaar = {
     enable = true; # Enable the service
@@ -70,18 +74,6 @@
     Name=Logitech G502 X Plus
     DeviceMatch=usb:046d:c099
     Driver=hidpp20
-  '';
-
-  # Suspend first
-  boot.kernelParams = [
-    "mem_sleep_default=deep"
-    "usbcore.autosuspend=-1"
-  ];
-
-  # Define time delay for hibernation
-  systemd.sleep.extraConfig = ''
-    HibernateDelaySec=30
-    SuspendState=mem
   '';
 
   hardware.bluetooth = {

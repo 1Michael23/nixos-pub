@@ -37,7 +37,7 @@
   ];
 
   security = {
-    protectKernelImage = true;
+    protectKernelImage = false; # needed for hibernation
     lockKernelModules = false; # TODO enable if taislcale userland networking is possible
 
     forcePageTableIsolation = true;
