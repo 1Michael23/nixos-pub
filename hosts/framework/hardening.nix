@@ -30,7 +30,7 @@
   # Kernel space
   #
 
-  #boot.kernelPackages = lib.mkForce pkgs.linuxKernel.packages.linux_hardened; #revert to check gaming performance
+  #boot.kernelPackages = lib.mkForce pkgs.linuxKernel.packages.linux_hardened; #conflicts with hibernation
 
   environment.systemPackages = with pkgs; [
     kernel-hardening-checker

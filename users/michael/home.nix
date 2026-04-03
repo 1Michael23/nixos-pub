@@ -14,6 +14,7 @@
   };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   home.packages = with pkgs; [
     moonlight-qt
     #onlyoffice-desktopeditors
@@ -24,6 +25,18 @@
     with pkgs;
     [
 >>>>>>> 23eb439 (username migration)
+=======
+  home.packages =
+    with pkgs;
+    [
+=======
+  home.packages = with pkgs; [
+    moonlight-qt
+    #onlyoffice-desktopeditors
+    spotify
+    discord
+>>>>>>> 2ad4a35 (homebrew and darwin fixes)
+>>>>>>> 0bb550e (darwin config)
 
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
