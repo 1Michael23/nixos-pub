@@ -1,3 +1,4 @@
+# flake.nix
 {
   description = "Nix";
 
@@ -6,8 +7,6 @@
 
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
-
-    tf2-nix.url = "gitlab:msyds/tf2-nix";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -19,95 +18,68 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    solaar = {
-      #url = "https://flakehub.com/f/Svenum/Solaar-Flake/*.tar.gz"; # For latest stable version
-      #url = "https://flakehub.com/f/Svenum/Solaar-Flake/0.1.6.tar.gz"; # uncomment line for solaar version 1.1.18
-      url = "github:Svenum/Solaar-Flake/main"; # Uncomment line for latest unstable version
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    solaar = {
+      url = "github:Svenum/Solaar-Flake/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    tf2-nix.url = "gitlab:msyds/tf2-nix";
   };
 
   outputs =
     inputs@{
-      self,
       nixpkgs,
       darwin,
       home-manager,
       sops-nix,
-      lanzaboote,
-      tf2-nix,
-      solaar,
       ...
     }:
     let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      mkHost = import ./lib/mkHost.nix {
+        inherit
+          nixpkgs
+          home-manager
+          sops-nix
+          inputs
+          ;
+      };
+
+      mkDarwinHost = import ./lib/mkDarwinHost.nix {
+        inherit
+          darwin
+          home-manager
+          sops-nix
+          inputs
+          ;
+      };
     in
     {
-      nixosConfigurations.framework = nixpkgs.lib.nixosSystem {
-        inherit system;
+      nixosConfigurations.framework = mkHost {
+        hostname = "framework";
+        system = "x86_64-linux";
+        secureBoot = true;
+
+        users.framework = ./users/framework/home.nix;
+
+        extraSpecialArgs = {
+          tf2Nix = inputs.tf2-nix;
+        };
 
         modules = [
-          ./hosts/framework/default.nix
-          ./roles/system/nixos-base.nix
           ./roles/system/graphical-sway.nix
-
           ./modules/system/nixos/libvirtd.nix
-
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "backup";
-            home-manager.users.framework = import ./users/framework/home.nix;
-
-            home-manager.sharedModules = [
-              inputs.sops-nix.homeManagerModules.sops
-            ];
-
-            home-manager.extraSpecialArgs = {
-              tf2Nix = inputs."tf2-nix";
-            };
-
-          }
-
-          sops-nix.nixosModules.sops
-
-          solaar.nixosModules.default
-
-          lanzaboote.nixosModules.lanzaboote
-          {
-            environment.systemPackages = [ pkgs.sbctl ];
-
-            # Lanzaboote replaces systemd-boot
-            boot.loader.systemd-boot.enable = false;
-
-            boot.lanzaboote = {
-              enable = true;
-              pkiBundle = "/var/lib/sbctl";
-            };
-          }
+          inputs.solaar.nixosModules.default
         ];
       };
-      darwinConfigurations = {
-        mbp = darwin.lib.darwinSystem {
-          system = "aarch64-darwin";
-          modules = [
-            ./hosts/darwin/configuration.nix
-            home-manager.darwinModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.backupFileExtension = "backup";
-              home-manager.users.mbp = import ./users/mbp/home.nix;
-            }
-          ];
-        };
+
+      darwinConfigurations.mbp = mkDarwinHost {
+        hostname = "darwin";
+        users.mbp = ./users/mbp/home.nix;
       };
     };
 }

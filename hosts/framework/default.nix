@@ -14,7 +14,6 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    sbctl
     powertop
     libratbag
     piper
@@ -27,7 +26,7 @@
   nixpkgs.config.allowUnfree = true;
 
   #boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  #boot.loader.efi.canTouchEfiVariables = true;
 
   nix.settings = {
     experimental-features = [
