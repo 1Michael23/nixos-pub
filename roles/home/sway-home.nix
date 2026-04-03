@@ -8,16 +8,22 @@
 {
 
   home.packages = with pkgs; [
+    sway
+    swaybg
+    waybar
+    alacritty
     fuzzel
-    mako
-    swayosd
+    grim
+    slurp
     sway-contrib.grimshot
     wl-clipboard
+    swayosd
+    autotiling-rs
     brightnessctl
+    mako
+    swayosd
     pavucontrol
     playerctl
-    autotiling-rs
-
     junction
   ];
 

@@ -17,7 +17,6 @@
 
     orca-slicer
     moonlight-qt
-    lmstudio
 
     freecad
 
@@ -37,6 +36,16 @@
     ../../roles/home/sway-home.nix
 
   ];
+
+  sops = {
+    # local age key
+    age.keyFile = "/home/framework/.config/sops/age/keys.txt";
+
+    defaultSopsFile = ../../secrets/framework.yaml;
+
+    secrets."syncthing/device_id_mbp" = { };
+    secrets."syncthing/device_id_fedora" = { };
+  };
 
   programs.btop = {
     enable = true;

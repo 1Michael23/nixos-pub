@@ -6,21 +6,6 @@
 }:
 
 {
-  home.packages = with pkgs; [
-    # TODO check redundancy
-    sway
-    swaybg
-    waybar
-    alacritty
-    fuzzel
-    grim
-    slurp
-    sway-contrib.grimshot
-    wl-clipboard
-    swayosd
-    autotiling-rs
-    brightnessctl
-  ];
 
   wayland.windowManager.sway = {
     enable = true;

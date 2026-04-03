@@ -58,7 +58,7 @@
     "init_on_free=1"
     # randomizes page allocator freelist, improving security by
     # making page allocations less predictable
-    "page_alloc.shuffel=1"
+    "page_alloc.shuffle=1"
     # enables Kernel Page Table Isolation, which mitigates Meltdown and
     # prevents some KASLR bypasses
     "pti=on"
@@ -93,7 +93,7 @@
     # should be enabled along with bpf above
     "net.core.bpf_jit_harden" = 2;
     # restrict loading TTY line disciplines to the CAP_SYS_MODULE
-    "dev.tty.ldisk_autoload" = 0;
+    "dev.tty.ldisc_autoload" = 0;
     # prevent exploit of use-after-free flaws
     "vm.unprivileged_userfaultfd" = 0;
     # kexec is used to boot another kernel during runtime and can be abused
@@ -167,7 +167,7 @@
     # Randomize memory
     "kernel.randomize_va_space" = 2;
     # Exec Shield (Stack protection)
-    "kernel.exec-shield" = 1;
+    #"kernel.exec-shield" = 1; # depricated
 
     ## TCP optimization
     # TCP Fast Open is a TCP extension that reduces network latency by packing

@@ -7,12 +7,10 @@
 
 {
   environment.systemPackages = with pkgs; [
-
     btop
-    neofetch
+    fastfetch
     tlrc # tldr
     usbutils
-
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -20,7 +18,6 @@
   imports = [
     ../../modules/system/common/tailscale.nix
     #../../modules/system/common/ssh-server.nix
-
   ];
 
   programs.fish.enable = true;
