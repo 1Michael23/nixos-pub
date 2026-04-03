@@ -77,9 +77,9 @@
         ];
       };
 
-      darwinConfigurations.mbp = mkDarwinHost {
-        hostname = "darwin";
-        users.mbp = ./users/mbp/home.nix;
+      darwinConfigurations.michael = mkDarwinHost {
+        hostname = "mbp";
+        users.michael = ./users/michael/home.nix;
       };
     };
 }

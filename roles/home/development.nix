@@ -7,41 +7,51 @@
 
 {
 
-  home.packages = with pkgs; [
+  home.packages =
+    with pkgs;
+    [
 
-    # Development
-    gcc
-    gnumake
-    cmake
-    zoxide
-    nixfmt
-    nil
-    nixd
-    grc
-    git
-    gh
-    ripgrep
-    fd
-    curl
-    wget
-    tree
-    rustc
-    cargo
-    bat
-    unzip
-    imhex
+      gcc
+      gnumake
+      cmake
+      zoxide
+      nixfmt
+      nil
+      nixd
+      grc
+      git
+      gh
+      ripgrep
+      fd
+      curl
+      wget
+      tree
+      rustc
+      cargo
+      bat
+      unzip
 
-    python313
-    python313Packages.notebook
-    python313Packages.ipykernel
-    python313Packages.conda
-    python313Packages.pip
-    python313Packages.jupyter
-    python313Packages.tkinter
+      source-code-pro
 
-    source-code-pro
+    ]
+    ++ lib.optionals pkgs.stdenv.isLinux [
+      imhex
 
-  ];
+      python313
+      python313Packages.notebook
+      python313Packages.ipykernel
+      python313Packages.conda
+      python313Packages.pip
+      python313Packages.jupyter
+      python313Packages.tkinter
+    ]
+    ++ lib.optionals pkgs.stdenv.isDarwin [
+      python313
+      python313Packages.notebook
+      python313Packages.ipykernel
+      python313Packages.pip
+      python313Packages.jupyter
+    ];
 
   imports = [
     ../../modules/home/shell/fish.nix
