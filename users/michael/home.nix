@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  inputs,
   ...
 }:
 
@@ -14,7 +15,7 @@
 
   home.packages = with pkgs; [
     moonlight-qt
-    onlyoffice-desktopeditors
+    #onlyoffice-desktopeditors
 
     openssh
     jq
@@ -22,6 +23,7 @@
   ];
 
   imports = [
+    inputs.mac-app-util.homeManagerModules.default
     ../../roles/home/development.nix
   ];
 

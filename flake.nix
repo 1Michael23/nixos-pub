@@ -8,6 +8,10 @@
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
+    mac-app-util = {
+      url = "github:hraban/mac-app-util";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -35,6 +39,7 @@
     inputs@{
       nixpkgs,
       darwin,
+      mac-app-util,
       home-manager,
       sops-nix,
       ...
@@ -77,9 +82,15 @@
         ];
       };
 
-      darwinConfigurations.michael = mkDarwinHost {
+      darwinConfigurations.mbp = mkDarwinHost {
         hostname = "mbp";
         users.michael = ./users/michael/home.nix;
+        modules = [
+          inputs.mac-app-util.darwinModules.default
+        ];
+        extraSpecialArgs = {
+          inherit inputs;
+        };
       };
     };
 }
