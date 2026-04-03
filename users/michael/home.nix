@@ -16,6 +16,8 @@
   home.packages = with pkgs; [
     moonlight-qt
     #onlyoffice-desktopeditors
+    spotify
+    discord
 
     openssh
     jq
