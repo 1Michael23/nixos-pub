@@ -14,6 +14,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     solaar = {
       #url = "https://flakehub.com/f/Svenum/Solaar-Flake/*.tar.gz"; # For latest stable version
       #url = "https://flakehub.com/f/Svenum/Solaar-Flake/0.1.6.tar.gz"; # uncomment line for solaar version 1.1.18
@@ -33,6 +38,7 @@
       nixpkgs,
       darwin,
       home-manager,
+      sops-nix,
       lanzaboote,
       tf2-nix,
       solaar,
@@ -60,11 +66,17 @@
             home-manager.backupFileExtension = "backup";
             home-manager.users.framework = import ./users/framework/home.nix;
 
+            home-manager.sharedModules = [
+              inputs.sops-nix.homeManagerModules.sops
+            ];
+
             home-manager.extraSpecialArgs = {
               tf2Nix = inputs."tf2-nix";
             };
 
           }
+
+          sops-nix.nixosModules.sops
 
           solaar.nixosModules.default
 

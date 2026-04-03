@@ -1,0 +1,27 @@
+keys:
+  - &framework age1mndc8gt8xh0naqardrxqvt57luzaff740w7hcma4ukrlkut8rqcshnk38p
+  - &mbp age1def456...your-mbp-key # TODO generate macbook age key
+  - &admin age18ag8f0p8q4cuhl8utvwzpgk6f563hrcz5gzmdpsm67gkk2chqgeqrf2au3  # a key you keep locally for editing
+
+creation_rules:
+  # secrets that all machines need
+  - path_regex: ^secrets/common\.yaml$
+    key_groups:
+      - age:
+          - *framework
+          - *mbp
+          - *admin
+
+  # secrets only the framework needs
+  - path_regex: ^secrets/framework\.yaml$
+    key_groups:
+      - age:
+          - *framework
+          - *admin
+
+  # secrets only the mac needs
+  - path_regex: ^secrets/mbp\.yaml$
+    key_groups:
+      - age:
+          - *mbp
+          - *admin
