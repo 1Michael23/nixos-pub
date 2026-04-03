@@ -16,7 +16,7 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   imports = [
-    ../../modules/system/common/tailscale.nix
+    ../../modules/system/networking/tailscale.nix
     #../../modules/system/common/ssh-server.nix
   ];
 

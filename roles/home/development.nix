@@ -44,11 +44,11 @@
   ];
 
   imports = [
-    ../../modules/home/common/fish.nix
-    ../../modules/home/common/vscodium.nix
-    ../../modules/home/common/zed.nix
-    ../../modules/home/common/git.nix
-    ../../modules/home/common/neovim.nix
+    ../../modules/home/shell/fish.nix
+    ../../modules/home/shell/git.nix
+    ../../modules/home/editors/vscodium.nix
+    ../../modules/home/editors/zed.nix
+    ../../modules/home/editors/neovim.nix
   ];
 
 }

@@ -25,15 +25,15 @@
   ];
 
   imports = [
-    ../../modules/home/nixos/xdg.nix
-    ../../modules/home/nixos/chromium.nix
-    ../../modules/home/nixos/syncthing.nix
+    ../../modules/home/desktop/xdg.nix
+    ../../modules/home/desktop/chromium.nix
+    ../../modules/home/services/syncthing.nix
 
-    ../../modules/home/common/tf2-game.nix
+    ../../modules/home/personal/tf2-game.nix
 
     ../../roles/home/development.nix
     ../../roles/home/pentesting.nix
-    ../../roles/home/sway-home.nix
+    ../../roles/home/desktop-sway.nix
 
   ];
 

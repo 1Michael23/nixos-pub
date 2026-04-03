@@ -29,7 +29,7 @@ nixpkgs.lib.nixosSystem {
     ../hosts/${hostname}/default.nix
 
     # modules every linux host gets
-    ../roles/system/nixos-base.nix
+    ../roles/system/base.nix
     sops-nix.nixosModules.sops
 
     { system.stateVersion = stateVersion; }

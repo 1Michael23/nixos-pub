@@ -71,8 +71,8 @@
         };
 
         modules = [
-          ./roles/system/graphical-sway.nix
-          ./modules/system/nixos/libvirtd.nix
+          ./roles/system/desktop-sway.nix
+          ./modules/system/virtualization/libvirtd.nix
           inputs.solaar.nixosModules.default
         ];
       };

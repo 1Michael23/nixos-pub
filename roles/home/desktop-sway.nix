@@ -28,13 +28,11 @@
   ];
 
   imports = [
-    ../../modules/home/nixos/sway/sway.nix
-    ../../modules/home/nixos/waybar/waybar.nix
-
-    ../../modules/home/nixos/fuzzel.nix
-    ../../modules/home/nixos/alacritty.nix
-
-    ../../modules/home/nixos/tailscale-tray.nix
+    ../../modules/home/desktop/sway/sway.nix
+    ../../modules/home/desktop/waybar/waybar.nix
+    ../../modules/home/desktop/fuzzel.nix
+    ../../modules/home/desktop/alacritty.nix
+    ../../modules/home/services/tailscale-tray.nix
   ];
 
 }
