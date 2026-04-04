@@ -50,11 +50,5 @@
     "clock": {
         "format": "{:%a, %d. %b  %H:%M:%S}",
         "interval": 1
-    },
-    "custom/tailscale": {
-        "exec": "~/.config/waybar/scripts/tailscale_status.sh",
-        "interval": 10,
-        "format": "{}",
-        "tooltip": false
     }
 }

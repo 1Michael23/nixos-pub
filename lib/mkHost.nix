@@ -39,7 +39,10 @@ nixpkgs.lib.nixosSystem {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.backupFileExtension = "backup";
-      home-manager.extraSpecialArgs = extraSpecialArgs;
+      home-manager.extraSpecialArgs = extraSpecialArgs // {
+        isLinux = true;
+        isDarwin = false;
+      };
       home-manager.sharedModules = [
         inputs.sops-nix.homeManagerModules.sops
       ];

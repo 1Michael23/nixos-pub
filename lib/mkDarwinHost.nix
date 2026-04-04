@@ -30,7 +30,11 @@ darwin.lib.darwinSystem {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.backupFileExtension = "backup";
-      home-manager.extraSpecialArgs = extraSpecialArgs;
+      home-manager.extraSpecialArgs = extraSpecialArgs // {
+        isLinux = false;
+        isDarwin = true;
+      };
+
       home-manager.sharedModules = [
         inputs.sops-nix.homeManagerModules.sops
       ];

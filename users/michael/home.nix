@@ -3,6 +3,8 @@
   pkgs,
   lib,
   inputs,
+  isLinux ? false,
+  isDarwin ? false,
   ...
 }:
 
@@ -18,7 +20,7 @@
     [
 
     ]
-    ++ lib.optionals pkgs.stdenv.isLinux [
+    ++ lib.optionals isLinux [
       gcr
       onlyoffice-desktopeditors
       moonlight-qt
@@ -30,14 +32,19 @@
     ];
 
   imports = [
-    inputs.mac-app-util.homeManagerModules.default
     ../../roles/home/development.nix
+
+  ]
+  ++ lib.optionals isDarwin [
+    inputs.mac-app-util.homeManagerModules.default
+  ]
+  ++ lib.optionals isLinux [
     ../../modules/home/desktop/xdg.nix
     ../../modules/home/desktop/chromium.nix
-    ../../modules/home/services/syncthing.nix
-    ../../modules/home/personal/tf2-game.nix
     ../../roles/home/pentesting.nix
     ../../roles/home/desktop-sway.nix
+    ../../modules/home/personal/tf2-game.nix
+    ../../modules/home/services/syncthing.nix
   ];
 
   # sops - Linux only (framework laptop)
