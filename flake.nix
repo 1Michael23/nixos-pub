@@ -69,7 +69,7 @@
         system = "x86_64-linux";
         secureBoot = true;
 
-        users.framework = ./users/framework/home.nix;
+        users.michael = ./users/michael/home.nix;
 
         extraSpecialArgs = {
           tf2Nix = inputs.tf2-nix;

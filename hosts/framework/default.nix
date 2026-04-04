@@ -25,9 +25,6 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  #boot.loader.systemd-boot.enable = true;
-  #boot.loader.efi.canTouchEfiVariables = true;
-
   nix.settings = {
     experimental-features = [
       "nix-command"
@@ -59,11 +56,11 @@
   '';
 
   services.solaar = {
-    enable = true; # Enable the service
-    package = pkgs.solaar; # The package to use
-    window = "hide"; # Show the window on startup (show, *hide*, only [window only])
-    batteryIcons = "regular"; # Which battery icons to use (*regular*, symbolic, solaar)
-    extraArgs = ""; # Extra arguments to pass to solaar on startup
+    enable = true;
+    package = pkgs.solaar;
+    window = "hide";
+    batteryIcons = "regular";
+    extraArgs = "";
   };
 
   services.ratbagd.enable = true;
@@ -80,18 +77,10 @@
     powerOnBoot = true;
     settings = {
       General = {
-        # Shows battery charge of connected devices on supported
-        # Bluetooth adapters. Defaults to 'false'.
         Experimental = true;
-        # When enabled other devices can connect faster to us, however
-        # the tradeoff is increased power consumption. Defaults to
-        # 'false'.
         FastConnectable = true;
       };
       Policy = {
-        # Enable all controllers when they are found. This includes
-        # adapters present on start as well as adapters that are plugged
-        # in later on. Defaults to 'true'.
         AutoEnable = true;
       };
     };
@@ -101,9 +90,9 @@
 
   programs.steam = {
     enable = false;
-    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = false; # Open ports in the firewall for Source Dedicated Server
-    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = false;
+    localNetworkGameTransfers.openFirewall = true;
   };
 
   time.timeZone = "Australia/Sydney";
@@ -130,11 +119,8 @@
     logitech-udev-rules
   ];
 
-  # yubikey login requirements
-  # environment.systemPackages = with pkgs; [ systemd libfido2 clevis tpm2-tools ];
-
   users.mutableUsers = true;
-  users.users.framework = {
+  users.users.michael = {
     isNormalUser = true;
     extraGroups = [
       "wheel"
