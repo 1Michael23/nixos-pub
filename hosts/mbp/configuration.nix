@@ -3,6 +3,7 @@
 {
   system.stateVersion = 4;
   system.primaryUser = "michael";
+  networking.hostName = "mbp";
   nixpkgs.config.allowUnfree = true;
   environment.shells = [ pkgs.fish ];
   users.users.michael = {
@@ -22,14 +23,18 @@
       autohide = true;
       mineffect = "scale";
       autohide-delay = 0.0;
-      autohide-time-modifier = 0.2;
+      autohide-time-modifier = 0.1;
       mru-spaces = false; # don't rearrange spaces by recent use
       show-recents = true; # hide recent apps section
       tilesize = 48; # icon size
       orientation = "left";
       persistent-apps = [
-        # pin specific apps to dock
         "/Applications/Safari.app"
+        "/Users/michael/Applications/Home Manager Apps/Visual Studio Code.app"
+        "/System/Applications/Utilities/Terminal.app"
+        "/System/Applications/Utilities/Activity Monitor.app"
+        "/System/Applications/iPhone Mirroring.app"
+        "/System/Applications/System Settings.app"
       ];
     };
 
@@ -42,6 +47,7 @@
       NSAutomaticPeriodSubstitutionEnabled = false;
       NSAutomaticQuoteSubstitutionEnabled = false;
       NSAutomaticDashSubstitutionEnabled = false;
+      NSAutomaticWindowAnimationsEnabled = false;
       InitialKeyRepeat = 15; # faster key repeat
       KeyRepeat = 2;
       NSDocumentSaveNewDocumentsToCloud = false;
@@ -59,6 +65,7 @@
       NewWindowTargetPath = "file://${builtins.getEnv "HOME"}/";
     };
   };
+
   security.pam.services.sudo_local.touchIdAuth = true;
 
   programs.fish.enable = true;
@@ -69,9 +76,6 @@
 
   fonts.packages = with pkgs; [
     source-code-pro
-    font-awesome
-    nerd-fonts.fira-code
-    nerd-fonts.jetbrains-mono
   ];
 
   homebrew = {
@@ -82,10 +86,19 @@
       cleanup = "zap";
       upgrade = true;
     };
+    brews = [
+      "nmap"
+    ];
     casks = [
       "vlc"
       "stats"
-      "tailscale"
+      "tailscale-app"
+      "syncthing-app"
+      "iina"
+      "adobe-creative-cloud"
+      "lm-studio"
+      "utm"
+      "orcaslicer"
     ];
   };
 

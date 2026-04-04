@@ -31,6 +31,8 @@
       bat
       unzip
 
+      fastfetch
+
       source-code-pro
 
     ]
