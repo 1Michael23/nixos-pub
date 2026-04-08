@@ -15,6 +15,9 @@
       gnumake
       cmake
       zoxide
+      statix
+      nix-output-monitor
+      nh
       nixfmt
       nil
       nixd
