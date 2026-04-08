@@ -28,6 +28,7 @@
       jq
       freecad
       orca-slicer
+      discord
 
     ];
 
@@ -41,8 +42,10 @@
   ++ lib.optionals isLinux [
     ../../modules/home/desktop/xdg.nix
     ../../modules/home/desktop/chromium.nix
+    ../../modules/home/desktop/librewolf.nix
     ../../roles/home/pentesting.nix
     ../../roles/home/desktop-sway.nix
+    #../../roles/home/desktop-gnome.nix
     ../../modules/home/personal/tf2-game.nix
     ../../modules/home/services/syncthing.nix
   ];
@@ -76,9 +79,11 @@
   home.sessionVariables = {
     EDITOR = "nvim";
     LANG = "en_AU.UTF-8";
+    NH_FLAKE = "$HOME/dev/nixos-pub";
   }
   // lib.optionalAttrs pkgs.stdenv.isLinux {
     TERMINAL = "alacritty";
     BROWSER = "chromium";
+
   };
 }
