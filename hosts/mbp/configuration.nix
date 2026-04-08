@@ -59,11 +59,35 @@
       ShowStatusBar = true;
       ShowPathbar = true;
       _FXSortFoldersFirst = true;
+      _FXShowPosixPathInTitle = true;
       FXPreferredViewStyle = "Nlsv"; # list view
       FXEnableExtensionChangeWarning = false;
       NewWindowTarget = "Other";
       NewWindowTargetPath = "file://${builtins.getEnv "HOME"}/";
     };
+
+    CustomUserPreferences = {
+
+      NSGlobalDomain = {
+        # Add a context menu item for showing the Web Inspector in web views
+        WebKitDeveloperExtras = true;
+      };
+      "com.apple.finder" = {
+        ShowExternalHardDrivesOnDesktop = true;
+        ShowHardDrivesOnDesktop = true;
+        ShowMountedServersOnDesktop = true;
+        ShowRemovableMediaOnDesktop = true;
+        _FXSortFoldersFirst = true;
+        # When performing a search, search the current folder by default
+        FXDefaultSearchScope = "SCcf";
+      };
+      "com.apple.desktopservices" = {
+        # Avoid creating .DS_Store files on network or USB volumes
+        DSDontWriteNetworkStores = true;
+        DSDontWriteUSBStores = true;
+      };
+    };
+
   };
 
   security.pam.services.sudo_local.touchIdAuth = true;
@@ -95,10 +119,15 @@
       "tailscale-app"
       "syncthing-app"
       "iina"
+      "discord"
       "adobe-creative-cloud"
       "lm-studio"
       "utm"
       "orcaslicer"
+      "imazing"
+      "imaging-edge"
+      "tor-browser"
+      "mac-monitor"
     ];
   };
 
