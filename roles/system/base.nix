@@ -11,6 +11,7 @@
     fastfetch
     tlrc # tldr
     usbutils
+    gdu
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;

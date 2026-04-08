@@ -18,7 +18,7 @@
 
       devices = {
         "mbp" = {
-          id = "3SQ2CR6-SXCFSBN-T7MFZWS-DKCULI2-GPS6BZT-JDFXWH4-MA6F33A-N7FTGQI";
+          id = "W3MJCQD-7AGFDDW-WZK7E5A-SF3O4VS-EVHOJTO-OW6E65D-H2SKRKB-VN6QEQ3";
         };
         "fedora-max" = {
           id = "GSNSVZM-PLL5CR6-EKK42WA-VAKXPUW-JBPNZ6S-XPNLHRC-CL2OPPZ-SOOGYAG";
@@ -36,7 +36,7 @@
         };
         "uni" = {
           id = "uni";
-          path = "${config.home.homeDirectory}/documents/uni";
+          path = "${config.home.homeDirectory}/Documents/uni";
           devices = [
             "mbp"
             "fedora-max"
@@ -44,7 +44,7 @@
         };
         "photos-picks" = {
           id = "piiqn-2kljc";
-          path = "${config.home.homeDirectory}/pictures/picks";
+          path = "${config.home.homeDirectory}/Pictures/picks";
           devices = [
             "mbp"
             "fedora-max"
@@ -52,15 +52,7 @@
         };
         "wallpapers" = {
           id = "wallpapers";
-          path = "${config.home.homeDirectory}/pictures/wallpapers";
-          devices = [
-            "mbp"
-            "fedora-max"
-          ];
-        };
-        "Work" = {
-          id = "work";
-          path = "${config.home.homeDirectory}/documents/work";
+          path = "${config.home.homeDirectory}/Pictures/wallpapers";
           devices = [
             "mbp"
             "fedora-max"
@@ -68,7 +60,7 @@
         };
         "breaches" = {
           id = "breaches";
-          path = "${config.home.homeDirectory}/documents/breaches";
+          path = "${config.home.homeDirectory}/Documents/breaches";
           devices = [ "fedora-max" ];
         };
 

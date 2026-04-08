@@ -28,6 +28,10 @@
           command = "autotiling-rs";
           always = true;
         }
+        {
+          command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_DATA_DIRS && systemctl --user restart xdg-desktop-portal xdg-desktop-portal-gtk";
+          always = false;
+        }
       ];
 
       bars = [ { command = "waybar"; } ];

@@ -11,6 +11,7 @@
     ./hardware-configuration.nix
     ./networking.nix
     ./hardening.nix
+    ./secrets.nix
   ];
 
   environment.systemPackages = with pkgs; [
