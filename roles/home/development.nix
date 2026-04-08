@@ -30,10 +30,10 @@
       cargo
       bat
       unzip
-
       fastfetch
-
       source-code-pro
+
+      claude-code
 
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
