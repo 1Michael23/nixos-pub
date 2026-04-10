@@ -17,6 +17,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-vscode-extensions = {
+      url = "github:nix-community/nix-vscode-extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -79,6 +84,7 @@
         extraSpecialArgs = {
           tf2Nix = inputs.tf2-nix;
           firefox-addons = inputs.firefox-addons.packages.x86_64-linux;
+          vscodeExtensions = inputs.nix-vscode-extensions.extensions.x86_64-linux;
         };
 
         modules = [
@@ -97,6 +103,7 @@
         ];
         extraSpecialArgs = {
           inherit inputs;
+          vscodeExtensions = inputs.nix-vscode-extensions.extensions.aarch64-darwin;
         };
       };
     };
