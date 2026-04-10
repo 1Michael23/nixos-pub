@@ -2,29 +2,32 @@
   config,
   lib,
   pkgs,
+  vscodeExtensions,
   ...
 }:
 
 {
   programs.vscode = {
     enable = true;
-    package = pkgs.vscode; # TODO move back to vscodium package
+    package = pkgs.vscodium;
     mutableExtensionsDir = false;
 
-    extensions = with pkgs.vscode-extensions; [
-      catppuccin.catppuccin-vsc
-      jnoortheen.nix-ide
-      gruntfuggly.todo-tree
-      rust-lang.rust-analyzer
-      llvm-vs-code-extensions.vscode-clangd
-      ms-toolsai.jupyter
-      ms-toolsai.jupyter-renderers
-      ms-python.python
-      ms-vscode.cpptools
-      sonarsource.sonarlint-vscode
-
-      ms-vscode-remote.remote-ssh # TODO move to open source remote ssh
-    ];
+    extensions =
+      (with pkgs.vscode-extensions; [
+        catppuccin.catppuccin-vsc
+        jnoortheen.nix-ide
+        gruntfuggly.todo-tree
+        rust-lang.rust-analyzer
+        llvm-vs-code-extensions.vscode-clangd
+        ms-toolsai.jupyter
+        ms-toolsai.jupyter-renderers
+        ms-python.python
+        ms-vscode.cpptools
+      ])
+      ++ (with vscodeExtensions.open-vsx; [
+        semgrep.semgrep
+        jeanp413.open-remote-ssh
+      ]);
 
     profiles.default.userSettings = {
       "workbench.colorTheme" = "Catppuccin Mocha";
@@ -58,6 +61,13 @@
       "[nix]" = {
         "editor.tabSize" = 4;
       };
+
+      "semgrep.scan.onSave" = true;
+      "semgrep.scan.configuration" = [ "~/dev/semgrep-rules" ];
+      "semgrep.path" = "${pkgs.semgrep}/bin/semgrep";
+      "semgrep.doLogin" = false;
+      "semgrep.scan.onlyGitDirty" = false;
+      "semgrep.metrics" = false;
     };
   };
 }
