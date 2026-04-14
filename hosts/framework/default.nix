@@ -88,11 +88,12 @@
   hardware.framework.laptop13.audioEnhancement.enable = true;
 
   programs.steam = {
-    enable = false;
+    enable = true;
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = false;
     localNetworkGameTransfers.openFirewall = true;
   };
+  programs.gamescope.enable = true;
 
   time.timeZone = "Australia/Sydney";
   i18n.defaultLocale = "en_AU.UTF-8";
@@ -116,6 +117,7 @@
   services.udev.packages = with pkgs; [
     libratbag
     logitech-udev-rules
+    keychron-udev-rules
   ];
 
   users.mutableUsers = true;

@@ -21,8 +21,9 @@ let
     ]
   );
 
-  # flatpak dir for tf2 relative to home
-  tfDirRel = ".var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/common/Team Fortress 2/tf";
+  #tfDirRel = ".var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/common/Team Fortress 2/tf";
+  tfDirRel = ".local/share/Steam/steamapps/common/Team Fortress 2/tf";
+
 in
 {
   home.file.${tfDirRel} = {
