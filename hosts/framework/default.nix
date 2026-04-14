@@ -12,6 +12,7 @@
     ./networking.nix
     ./hardening.nix
     ./secrets.nix
+
   ];
 
   environment.systemPackages = with pkgs; [
@@ -51,11 +52,6 @@
   services.logind.powerKey = "hibernate";
   services.logind.powerKeyLongPress = "poweroff";
 
-  systemd.sleep.extraConfig = ''
-    SuspendState=mem
-    HibernateDelaySec=2m
-  '';
-
   services.solaar = {
     enable = true;
     package = pkgs.solaar;
@@ -88,6 +84,8 @@
   };
 
   services.blueman.enable = true;
+
+  hardware.framework.laptop13.audioEnhancement.enable = true;
 
   programs.steam = {
     enable = false;

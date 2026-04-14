@@ -5,12 +5,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    darwin.url = "github:lnl7/nix-darwin";
-    darwin.inputs.nixpkgs.follows = "nixpkgs";
-
-    mac-app-util = {
-      url = "github:hraban/mac-app-util";
-    };
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -43,6 +38,13 @@
     };
 
     tf2-nix.url = "gitlab:msyds/tf2-nix";
+
+    darwin.url = "github:lnl7/nix-darwin";
+    darwin.inputs.nixpkgs.follows = "nixpkgs";
+
+    mac-app-util = {
+      url = "github:hraban/mac-app-util";
+    };
   };
 
   outputs =
@@ -92,6 +94,7 @@
           #./roles/system/desktop-gnome.nix
           ./modules/system/virtualization/libvirtd.nix
           inputs.solaar.nixosModules.default
+          inputs.nixos-hardware.nixosModules.framework-13-7040-amd
         ];
       };
 
