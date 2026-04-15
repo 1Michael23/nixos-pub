@@ -13,6 +13,7 @@
     interactiveShellInit = ''
       set fish_greeting
       set -gx PATH /opt/homebrew/bin $PATH
+      set -gx SOPS_AGE_KEY_FILE ~/.config/sops/age/keys.txt
     '';
     shellAliases = {
       ll = "ls -la";

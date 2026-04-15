@@ -18,7 +18,7 @@
 
   imports = [
     ../../modules/system/networking/tailscale.nix
-    #../../modules/system/common/ssh-server.nix
+    ../../modules/system/networking/ssh-server.nix
   ];
 
   programs.fish.enable = true;

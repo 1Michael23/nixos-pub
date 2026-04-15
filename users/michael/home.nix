@@ -15,6 +15,11 @@
     stateVersion = "25.05";
   };
 
+  sops = {
+    age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
+    defaultSopsFile = if isDarwin then ../../secrets/mbp.yaml else ../../secrets/framework.yaml;
+  };
+
   home.packages =
     with pkgs;
     [
@@ -34,6 +39,7 @@
 
   imports = [
     ../../roles/home/development.nix
+    ../../modules/home/shell/ssh.nix
 
   ]
   ++ lib.optionals isDarwin [

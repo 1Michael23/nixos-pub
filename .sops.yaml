@@ -1,7 +1,7 @@
 keys:
-  - &framework age1mndc8gt8xh0naqardrxqvt57luzaff740w7hcma4ukrlkut8rqcshnk38p
-  - &mbp age1def456...your-mbp-key # TODO generate macbook age key
-  - &admin age18ag8f0p8q4cuhl8utvwzpgk6f563hrcz5gzmdpsm67gkk2chqgeqrf2au3  # a key you keep locally for editing
+  - &framework age18ag8f0p8q4cuhl8utvwzpgk6f563hrcz5gzmdpsm67gkk2chqgeqrf2au3
+  - &mbp age10aya2d46mknkl7d2dm6cy9zpq43sjes4nsjz744gnvhdm8hpme8sf66mc5
+  - &admin age18ag8f0p8q4cuhl8utvwzpgk6f563hrcz5gzmdpsm67gkk2chqgeqrf2au3 
 
 creation_rules:
   # secrets that all machines need

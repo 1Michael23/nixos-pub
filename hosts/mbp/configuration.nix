@@ -1,6 +1,9 @@
 { config, pkgs, ... }:
 
 {
+
+  imports = [ ./secrets.nix ];
+
   system.stateVersion = 4;
   system.primaryUser = "michael";
   networking.hostName = "mbp";
@@ -104,7 +107,7 @@
 
   homebrew = {
     enable = true;
-    brewPrefix = "/opt/homebrew/bin";
+    prefix = "/opt/homebrew";
     onActivation = {
       autoUpdate = true;
       cleanup = "zap";

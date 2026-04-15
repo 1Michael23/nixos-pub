@@ -38,6 +38,8 @@
       unzip
       fastfetch
       source-code-pro
+      sops
+      age
 
       claude-code
 

@@ -1,6 +1,11 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-{ 
+{
   programs.alacritty = {
     enable = true;
     settings = {
