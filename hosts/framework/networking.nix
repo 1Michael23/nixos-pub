@@ -9,6 +9,7 @@
   networking = {
     hostName = "framework";
     networkmanager.enable = true;
+    networkmanager.dns = "systemd-resolved";
     networkmanager.wifi.powersave = true;
     networkmanager.wifi.macAddress = "stable-ssid";
     firewall = {
@@ -24,6 +25,15 @@
         21027
       ]; # 21027 syncthing
     };
+  };
+
+  services.resolved = {
+    enable = true;
+    dnssec = "false";
+    fallbackDns = [
+      "10.30.0.7"
+      "1.1.1.1"
+    ];
   };
 
   environment.etc."ssl/openssl.cnf".text = ''
