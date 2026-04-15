@@ -25,7 +25,6 @@
       nil
       nixd
       grc
-      git
       gh
       ripgrep
       fd

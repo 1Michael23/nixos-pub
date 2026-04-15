@@ -21,7 +21,6 @@
     autotiling-rs
     brightnessctl
     mako
-    swayosd
     pavucontrol
     playerctl
     junction
