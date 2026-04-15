@@ -100,6 +100,16 @@
     ];
   };
 
+  fonts.packages = with pkgs; [
+    dejavu_fonts
+  ];
+
+  fonts.fontconfig.defaultFonts = {
+    monospace = [ "DejaVu Sans Mono" ];
+    sansSerif = [ "DejaVu Sans" ];
+    serif = [ "DejaVu Serif" ];
+  };
+
   security.polkit.enable = true;
 
   services.pipewire = {

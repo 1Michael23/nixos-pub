@@ -94,6 +94,7 @@
     localNetworkGameTransfers.openFirewall = true;
   };
   programs.gamescope.enable = true;
+  programs.gamemode.enable = true;
 
   time.timeZone = "Australia/Sydney";
   i18n.defaultLocale = "en_AU.UTF-8";
@@ -133,6 +134,7 @@
       "wireshark"
       "dialout"
     ];
+
     shell = pkgs.fish;
   };
 
