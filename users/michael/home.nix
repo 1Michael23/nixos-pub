@@ -44,6 +44,7 @@
   ]
   ++ lib.optionals isDarwin [
     inputs.mac-app-util.homeManagerModules.default
+    ../../modules/home/darwin/aerospace.nix
   ]
   ++ lib.optionals isLinux [
     ../../modules/home/desktop/xdg.nix

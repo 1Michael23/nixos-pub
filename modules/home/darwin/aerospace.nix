@@ -1,0 +1,83 @@
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+
+{
+  xdg.configFile."aerospace/aerospace.toml".text = ''
+    [gaps]
+    inner.horizontal = 5
+    inner.vertical   = 5
+    outer.left       = 5
+    outer.right      = 5
+    outer.top        = 5
+    outer.bottom     = 5
+
+    [mode.main.binding]
+    cmd-enter       = "exec-and-forget open -a Terminal"
+    cmd-space       = "exec-and-forget open -a Raycast"
+    cmd-q           = "close"
+    cmd-shift-c     = "reload-config"
+    cmd-shift-space = "layout floating tiling"
+    cmd-f           = "fullscreen"
+
+    cmd-left  = "focus left"
+    cmd-down  = "focus down"
+    cmd-up    = "focus up"
+    cmd-right = "focus right"
+    cmd-h = "focus left"
+    cmd-j = "focus down"
+    cmd-k = "focus up"
+    cmd-l = "focus right"
+
+    cmd-shift-left  = "move left"
+    cmd-shift-down  = "move down"
+    cmd-shift-up    = "move up"
+    cmd-shift-right = "move right"
+    cmd-shift-h = "move left"
+    cmd-shift-j = "move down"
+    cmd-shift-k = "move up"
+    cmd-shift-l = "move right"
+
+    cmd-shift-period = "move-workspace-to-monitor next"
+    cmd-shift-comma  = "move-workspace-to-monitor prev"
+
+    cmd-1 = "workspace 1"
+    cmd-2 = "workspace 2"
+    cmd-3 = "workspace 3"
+    cmd-4 = "workspace 4"
+    cmd-5 = "workspace 5"
+    cmd-6 = "workspace 6"
+    cmd-7 = "workspace 7"
+    cmd-8 = "workspace 8"
+    cmd-9 = "workspace 9"
+    cmd-0 = "workspace 10"
+
+    cmd-shift-1 = "move-node-to-workspace 1"
+    cmd-shift-2 = "move-node-to-workspace 2"
+    cmd-shift-3 = "move-node-to-workspace 3"
+    cmd-shift-4 = "move-node-to-workspace 4"
+    cmd-shift-5 = "move-node-to-workspace 5"
+    cmd-shift-6 = "move-node-to-workspace 6"
+    cmd-shift-7 = "move-node-to-workspace 7"
+    cmd-shift-8 = "move-node-to-workspace 8"
+    cmd-shift-9 = "move-node-to-workspace 9"
+    cmd-shift-0 = "move-node-to-workspace 10"
+
+    cmd-r = "mode resize"
+
+    [mode.resize.binding]
+    left   = "resize width -50"
+    right  = "resize width +50"
+    up     = "resize height -50"
+    down   = "resize height +50"
+    h = "resize width -50"
+    l = "resize width +50"
+    k = "resize height -50"
+    j = "resize height +50"
+    enter  = "mode main"
+    esc    = "mode main"
+  '';
+}

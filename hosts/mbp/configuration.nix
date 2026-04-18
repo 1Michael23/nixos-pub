@@ -33,7 +33,7 @@
       orientation = "left";
       persistent-apps = [
         "/Applications/Safari.app"
-        "/Users/michael/Applications/Home Manager Apps/Visual Studio Code.app"
+        "/Users/michael/Applications/Home Manager Apps/VSCodium.app"
         "/System/Applications/Utilities/Terminal.app"
         "/System/Applications/Utilities/Activity Monitor.app"
         "/System/Applications/iPhone Mirroring.app"
@@ -117,6 +117,7 @@
       "nmap"
     ];
     casks = [
+      "aerospace"
       "vlc"
       "stats"
       "tailscale-app"
@@ -131,6 +132,8 @@
       "imaging-edge"
       "tor-browser"
       "mac-monitor"
+      "claude"
+      "onlyoffice"
     ];
   };
 

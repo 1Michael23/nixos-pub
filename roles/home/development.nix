@@ -13,6 +13,7 @@
 
       gcc
       gnumake
+      tlrc
       cmake
       zoxide
       statix
@@ -42,6 +43,8 @@
 
       claude-code
 
+      exiftool
+
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
       imhex
@@ -55,11 +58,11 @@
       python313Packages.tkinter
     ]
     ++ lib.optionals pkgs.stdenv.isDarwin [
-      python313
-      python313Packages.notebook
-      python313Packages.ipykernel
-      python313Packages.pip
-      python313Packages.jupyter
+      python314
+      python314Packages.notebook
+      python314Packages.ipykernel
+      python314Packages.pip
+      python314Packages.jupyter
     ];
 
   imports = [
