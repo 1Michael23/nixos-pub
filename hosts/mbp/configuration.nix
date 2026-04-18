@@ -54,7 +54,7 @@
       InitialKeyRepeat = 15; # faster key repeat
       KeyRepeat = 2;
       NSDocumentSaveNewDocumentsToCloud = false;
-      "com.apple.swipescrolldirection" = false;
+      "com.apple.swipescrolldirection" = true;
     };
 
     finder = {
@@ -89,8 +89,39 @@
         DSDontWriteNetworkStores = true;
         DSDontWriteUSBStores = true;
       };
-    };
 
+      "com.apple.symbolichotkeys" = {
+        AppleSymbolicHotKeys = {
+          "64" = {
+            # Spotlight search
+            enabled = false;
+          };
+          "65" = {
+            # Spotlight window
+            enabled = false;
+          };
+        };
+      };
+    };
+  };
+
+  launchd.user.agents = {
+    aerospace = {
+      serviceConfig = {
+        Label = "com.nikitabobko.AeroSpace";
+        ProgramArguments = [ "/Applications/AeroSpace.app/Contents/MacOS/AeroSpace" ];
+        RunAtLoad = true;
+        KeepAlive = true;
+      };
+    };
+    raycast = {
+      serviceConfig = {
+        Label = "com.raycast.macos";
+        ProgramArguments = [ "/Applications/Raycast.app/Contents/MacOS/Raycast" ];
+        RunAtLoad = true;
+        KeepAlive = false; # Raycast manages its own lifecycle
+      };
+    };
   };
 
   security.pam.services.sudo_local.touchIdAuth = true;
@@ -118,6 +149,7 @@
     ];
     casks = [
       "aerospace"
+      "raycast"
       "vlc"
       "stats"
       "tailscale-app"
