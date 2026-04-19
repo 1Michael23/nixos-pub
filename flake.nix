@@ -6,6 +6,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nix-mineral.url = "github:cynicsketch/nix-mineral/";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -89,6 +90,9 @@
         users.michael = ./users/michael/home.nix;
 
         extraSpecialArgs = {
+          nix-mineral = {
+            enable = true;
+          };
           tf2Nix = inputs.tf2-nix;
           firefox-addons = inputs.firefox-addons.packages.x86_64-linux;
           vscodeExtensions = inputs.nix-vscode-extensions.extensions.x86_64-linux;
@@ -97,11 +101,13 @@
         modules = [
           ./roles/system/desktop-sway.nix
           #./roles/system/desktop-gnome.nix
-          ./modules/system/virtualization/libvirtd.nix
+          #./modules/system/virtualization/libvirtd.nix
           inputs.run0-sudo-shim.nixosModules.default
+          inputs.nix-mineral.nixosModules.nix-mineral
           inputs.solaar.nixosModules.default
           inputs.nixos-hardware.nixosModules.framework-13-7040-amd
         ];
+
       };
 
       darwinConfigurations.mbp = mkDarwinHost {
