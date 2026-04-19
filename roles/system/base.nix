@@ -2,11 +2,13 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 
 {
   environment.systemPackages = with pkgs; [
+    inputs.run0-sudo-shim.packages.${pkgs.system}.default
     btop
     fastfetch
     tlrc # tldr
@@ -23,7 +25,7 @@
 
   programs.fish.enable = true;
 
-  security.sudo.enable = true; # TODO switch to run0
+  security.sudo.enable = false; # TODO switch to run0
   services.fwupd.enable = true;
   security.allowUserNamespaces = true;
 

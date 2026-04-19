@@ -32,6 +32,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    run0-sudo-shim = {
+      url = "github:lordgrimmauld/run0-sudo-shim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     solaar = {
       url = "github:Svenum/Solaar-Flake/main";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -93,6 +98,7 @@
           ./roles/system/desktop-sway.nix
           #./roles/system/desktop-gnome.nix
           ./modules/system/virtualization/libvirtd.nix
+          inputs.run0-sudo-shim.nixosModules.default
           inputs.solaar.nixosModules.default
           inputs.nixos-hardware.nixosModules.framework-13-7040-amd
         ];
