@@ -27,19 +27,11 @@
     cmd-down  = "focus down"
     cmd-up    = "focus up"
     cmd-right = "focus right"
-    cmd-h = "focus left"
-    cmd-j = "focus down"
-    cmd-k = "focus up"
-    cmd-l = "focus right"
 
     cmd-shift-left  = "move left"
     cmd-shift-down  = "move down"
     cmd-shift-up    = "move up"
     cmd-shift-right = "move right"
-    cmd-shift-h = "move left"
-    cmd-shift-j = "move down"
-    cmd-shift-k = "move up"
-    cmd-shift-l = "move right"
 
     cmd-shift-period = "move-workspace-to-monitor next"
     cmd-shift-comma  = "move-workspace-to-monitor prev"
@@ -66,17 +58,11 @@
     cmd-shift-9 = "move-node-to-workspace 9"
     cmd-shift-0 = "move-node-to-workspace 10"
 
-    cmd-r = "mode resize"
-
     [mode.resize.binding]
     left   = "resize width -50"
     right  = "resize width +50"
     up     = "resize height -50"
     down   = "resize height +50"
-    h = "resize width -50"
-    l = "resize width +50"
-    k = "resize height -50"
-    j = "resize height +50"
     enter  = "mode main"
     esc    = "mode main"
   '';
