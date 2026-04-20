@@ -11,6 +11,7 @@
     sway
     swaybg
     waybar
+    cliphist
     alacritty
     fuzzel
     grim
