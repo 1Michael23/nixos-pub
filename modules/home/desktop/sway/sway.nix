@@ -29,6 +29,14 @@
           always = true;
         }
         {
+          command = "wl-paste --type text  --watch cliphist store";
+          always = true;
+        }
+        {
+          command = "wl-paste --type image --watch cliphist store";
+          always = true;
+        }
+        {
           command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_DATA_DIRS && systemctl --user restart xdg-desktop-portal xdg-desktop-portal-gtk";
           always = false;
         }
@@ -86,6 +94,8 @@
         "Mod4+Shift+9" = "move container to workspace number 9";
         "Mod4+Shift+0" = "move container to workspace number 10";
 
+        "Mod4+v" = "exec cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"; # clipboard history
+
         "XF86AudioRaiseVolume" = "exec playerctl -p spotify volume 0.02+";
         "XF86AudioLowerVolume" = "exec playerctl -p spotify volume 0.02-";
         "XF86AudioMute" = "exec swayosd-client --output-volume mute-toggle";
@@ -119,18 +129,22 @@
         };
         "type:mouse" = {
           pointer_accel = "0";
+          scroll_factor = "1";
         };
       };
 
       output = {
         "DP-9" = {
           mode = "1920x1080@144Hz";
+          position = "0,0";
         };
         "DP-10" = {
           mode = "1920x1080@144Hz";
+          position = "0,0";
         };
         "eDP-1" = {
           scale = "1.3";
+          position = "1920,0";
         };
       };
 
