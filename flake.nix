@@ -8,6 +8,11 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nix-mineral.url = "github:cynicsketch/nix-mineral/";
 
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -108,6 +113,20 @@
           inputs.nixos-hardware.nixosModules.framework-13-7040-amd
         ];
 
+      };
+
+      nixosConfigurations.proxmox = mkHost {
+        hostname = "proxmox";
+        system = "x86_64-linux";
+        secureBoot = false;
+
+        users.michael = ./users/michael/home-server.nix;
+
+        extraSpecialArgs = { };
+
+        modules = [
+          inputs.disko.nixosModules.disko
+        ];
       };
 
       darwinConfigurations.mbp = mkDarwinHost {
