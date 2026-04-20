@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  isDarwin ? false,
   ...
 }:
 {
@@ -25,18 +24,5 @@
   programs.ssh = {
     enable = true;
     addKeysToAgent = "yes";
-
-    matchBlocks = {
-      "framework" = {
-        hostname = "100.x.x.x";
-        user = "michael";
-        identityFile = "~/.ssh/id_ed25519";
-      };
-      "mbp" = {
-        hostname = "100.x.x.x";
-        user = "michael";
-        identityFile = "~/.ssh/id_ed25519";
-      };
-    };
   };
 }

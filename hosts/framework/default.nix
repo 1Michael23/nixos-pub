@@ -130,14 +130,12 @@
       "audio"
       "video"
       "render"
-      "libvirtd"
+      #"libvirtd"
       "wireshark"
       "dialout"
     ];
 
     shell = pkgs.fish;
   };
-
-  security.chromiumSuidSandbox.enable = true;
 
 }

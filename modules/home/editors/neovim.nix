@@ -9,8 +9,10 @@
   programs.neovim = {
     enable = true;
     defaultEditor = true;
-    extraLuaConfig = "vim.o.number = true\n	      \n	  vim.o.relativenumber = true\n	      \n	  vim.o.termguicolors = true\n    ";
-
+    extraLuaConfig = ''
+      vim.o.number = true
+      vim.o.relativenumber = true
+      vim.o.termguicolors = true'';
     plugins = with pkgs.vimPlugins; [
 
     ];
