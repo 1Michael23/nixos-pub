@@ -40,6 +40,7 @@
   imports = [
     ../../roles/home/development.nix
     ../../modules/home/shell/ssh.nix
+    ../../modules/home/shell/gpg-agent.nix
 
   ]
   ++ lib.optionals isDarwin [
@@ -56,6 +57,11 @@
     ../../modules/home/personal/tf2-game.nix
     ../../modules/home/services/syncthing.nix
   ];
+
+  custom.pgp = {
+    enable = true;
+    defaultKey = "0xAABE0C32D79DFF9B";
+  };
 
   # sops - Linux only (framework laptop)
   #sops = lib.mkIf pkgs.stdenv.isLinux {
