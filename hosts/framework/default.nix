@@ -93,7 +93,7 @@
     dedicatedServer.openFirewall = false;
     localNetworkGameTransfers.openFirewall = true;
   };
-  programs.gamescope.enable = true;
+  programs.gamescope.enable = false;
   programs.gamemode.enable = true;
 
   time.timeZone = "Australia/Sydney";

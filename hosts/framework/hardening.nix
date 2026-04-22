@@ -24,10 +24,11 @@
 
   nix-mineral = {
     enable = true;
+    settings = {
+      system.multilib = true; # TODO disable when/if steam no longer needs it
+    };
     filesystems.enable = false;
   };
-
-  #boot.kernelPackages = lib.mkForce pkgs.linuxKernel.packages.linux_hardened; #conflicts with hibernation
 
   environment.systemPackages = with pkgs; [
     kernel-hardening-checker
