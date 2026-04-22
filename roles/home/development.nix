@@ -44,7 +44,6 @@
       claude-code
 
       exiftool
-      comma
 
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
@@ -75,7 +74,7 @@
     ../../modules/home/shell/fish.nix
     ../../modules/home/shell/git.nix
     ../../modules/home/editors/vscodium.nix
-    ../../modules/home/editors/zed.nix
+    #../../modules/home/editors/zed.nix
     ../../modules/home/editors/neovim.nix
   ];
 

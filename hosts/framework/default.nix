@@ -13,6 +13,7 @@
     ./hardening.nix
     ./secrets.nix
 
+    inputs.nix-index-database.nixosModules.nix-index
   ];
 
   environment.systemPackages = with pkgs; [
@@ -33,6 +34,9 @@
       "flakes"
     ];
   };
+
+  programs.nix-index-database.comma.enable = true;
+  programs.nix-index.enable = true;
 
   boot.initrd.luks.devices = {
     cryptswap = {

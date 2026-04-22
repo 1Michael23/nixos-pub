@@ -1,8 +1,16 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
 
-  imports = [ ./secrets.nix ];
+  imports = [
+    ./secrets.nix
+    inputs.nix-index-database.darwinModules.nix-index
+  ];
 
   system.stateVersion = 4;
   system.primaryUser = "michael";
@@ -20,6 +28,9 @@
       "flakes"
     ];
   };
+
+  programs.nix-index-database.comma.enable = true;
+  programs.nix-index.enable = true;
 
   system.defaults = {
     dock = {
