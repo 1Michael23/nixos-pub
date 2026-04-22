@@ -19,6 +19,7 @@
   services.spice-vdagentd.enable = true;
 
   boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   nixpkgs.config.allowUnfree = true;
 
@@ -39,7 +40,7 @@
   time.timeZone = "Australia/Sydney";
   i18n.defaultLocale = "en_AU.UTF-8";
 
-  users.mutableUsers = false;
+  users.mutableUsers = true;
   users.users.michael = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];

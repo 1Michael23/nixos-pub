@@ -39,7 +39,7 @@ darwin.lib.darwinSystem {
       home-manager.sharedModules = [
         inputs.sops-nix.homeManagerModules.sops
       ];
-      home-manager.users = builtins.mapAttrs (name: homePath: import homePath) users;
+      home-manager.users = builtins.mapAttrs (name: import) users;
     }
   ]
   ++ modules;

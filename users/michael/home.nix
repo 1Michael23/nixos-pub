@@ -22,10 +22,7 @@
 
   home.packages =
     with pkgs;
-    [
-
-    ]
-    ++ lib.optionals isLinux [
+    lib.optionals isLinux [
       gcr
       onlyoffice-desktopeditors
       moonlight-qt

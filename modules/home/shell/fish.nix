@@ -22,7 +22,7 @@
     plugins = [
       {
         name = "grc";
-        src = pkgs.fishPlugins.grc.src;
+        inherit (pkgs.fishPlugins.grc) src;
       }
     ];
 

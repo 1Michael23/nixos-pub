@@ -36,7 +36,6 @@
   imports = [
     ../../modules/home/shell/fish.nix
     ../../modules/home/shell/git.nix
-    ../../modules/home/shell/ssh.nix
     ../../modules/home/editors/neovim.nix
   ];
 

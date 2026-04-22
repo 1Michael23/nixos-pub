@@ -42,7 +42,7 @@
       pinentryPackage = if pkgs.stdenv.isDarwin then pkgs.pinentry_mac else pkgs.pinentry-qt;
 
       defaultCacheTtl = config.custom.pgp.cacheTtl;
-      maxCacheTtl = config.custom.pgp.maxCacheTtl;
+      inherit (config.custom.pgp) maxCacheTtl;
       defaultCacheTtlSsh = config.custom.pgp.cacheTtl;
       maxCacheTtlSsh = config.custom.pgp.maxCacheTtl;
 

@@ -1,6 +1,7 @@
 keys:
   - &framework age18ag8f0p8q4cuhl8utvwzpgk6f563hrcz5gzmdpsm67gkk2chqgeqrf2au3
   - &mbp age10aya2d46mknkl7d2dm6cy9zpq43sjes4nsjz744gnvhdm8hpme8sf66mc5
+  - &proxmox age1mudr9umlxxnt48defu8vxnju4z7suen22nn8dmwrcs7fyt3t657shnzrpd
   - &admin age18ag8f0p8q4cuhl8utvwzpgk6f563hrcz5gzmdpsm67gkk2chqgeqrf2au3 
 
 creation_rules:
@@ -10,6 +11,7 @@ creation_rules:
       - age:
           - *framework
           - *mbp
+          - *proxmox
           - *admin
 
   # secrets only the framework needs
@@ -25,3 +27,4 @@ creation_rules:
       - age:
           - *mbp
           - *admin
+

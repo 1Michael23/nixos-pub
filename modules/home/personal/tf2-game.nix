@@ -8,6 +8,8 @@
 let
   tf2pkgs = tf2Nix.legacyPackages.${pkgs.system};
 
+  #gamemoderun %command% -windowed -w 1920 -h 1080 -novid -nojoy -nosteamcontroller -nohltv -particles 1
+
   #tfDirRel = ".var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/common/Team Fortress 2/tf";
   tfDirRel = ".local/share/Steam/steamapps/common/Team Fortress 2/tf";
 
@@ -20,7 +22,7 @@ let
       mastercomfig.addons.null-canceling-movement
 
       improved-crosshairs
-      huds.deerhud
+      #huds.deerhud
     ]
   );
 
