@@ -44,6 +44,7 @@
       claude-code
 
       exiftool
+      comma
 
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
@@ -64,6 +65,11 @@
       python314Packages.pip
       python314Packages.jupyter
     ];
+
+  programs.nix-index = {
+    enable = true;
+    enableFishIntegration = true;
+  };
 
   imports = [
     ../../modules/home/shell/fish.nix
