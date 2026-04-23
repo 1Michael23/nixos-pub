@@ -166,7 +166,7 @@
       "audio"
       "video"
       "render"
-      #"libvirtd"
+      "libvirtd"
       "wireshark"
       "dialout"
     ];

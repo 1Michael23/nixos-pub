@@ -114,7 +114,7 @@
         modules = [
           ./roles/system/desktop-sway.nix
           #./roles/system/desktop-gnome.nix
-          #./modules/system/virtualization/libvirtd.nix
+          ./modules/system/virtualization/libvirtd.nix
           inputs.run0-sudo-shim.nixosModules.default
           inputs.nix-mineral.nixosModules.nix-mineral
           inputs.solaar.nixosModules.default
