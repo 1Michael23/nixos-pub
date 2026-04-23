@@ -36,18 +36,13 @@
       enableSshSupport = true;
       enableZshIntegration = true;
 
-      # Pick the right pinentry for the platform.
-      # Darwin: pinentry_mac (native Cocoa dialog).
-      # Linux:  pinentry-qt (works under KDE/Hyprland/etc).
-      pinentryPackage = if pkgs.stdenv.isDarwin then pkgs.pinentry_mac else pkgs.pinentry-qt;
+      pinentry.package = if pkgs.stdenv.isDarwin then pkgs.pinentry_mac else pkgs.pinentry-qt;
 
       defaultCacheTtl = config.custom.pgp.cacheTtl;
       inherit (config.custom.pgp) maxCacheTtl;
       defaultCacheTtlSsh = config.custom.pgp.cacheTtl;
       maxCacheTtlSsh = config.custom.pgp.maxCacheTtl;
 
-      # Populate if/when you move to a YubiKey or want a specific subkey
-      # exposed to ssh (keygrip from `gpg --list-keys --with-keygrip`).
       sshKeys = [ ];
     };
 
@@ -89,8 +84,6 @@
       ];
     };
 
-    # Tell git to sign with the same key; format=openpgp is the default
-    # but stating it explicitly avoids surprises if you later try SSH signing.
     programs.git = lib.mkIf (config.custom.pgp.defaultKey != null) {
       enable = true;
       signing = {
@@ -98,7 +91,7 @@
         signByDefault = true;
         format = "openpgp";
       };
-      extraConfig.gpg.program = "${pkgs.gnupg}/bin/gpg";
+      settings.gpg.program = "${pkgs.gnupg}/bin/gpg";
     };
   };
 }

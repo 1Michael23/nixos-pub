@@ -1,4 +1,9 @@
 # flake.nix
+
+#TODO cachix or attic for rebuild speedup
+#TODO investigate impermanance
+#TODO automatic garbage collection
+
 {
   description = "Nix";
 

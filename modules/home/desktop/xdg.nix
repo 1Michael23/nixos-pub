@@ -1,3 +1,5 @@
+# TODO fix xdg bookmarks
+
 { config, pkgs, ... }:
 
 let
@@ -31,6 +33,7 @@ in
 
   xdg.userDirs = {
     enable = true;
+    setSessionVariables = true;
     createDirectories = true;
 
     desktop = "${home}/Desktop";

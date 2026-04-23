@@ -6,7 +6,7 @@
 }:
 
 let
-  tf2pkgs = tf2Nix.legacyPackages.${pkgs.system};
+  tf2pkgs = tf2Nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 
   #gamemoderun %command% -windowed -w 1920 -h 1080 -novid -nojoy -nosteamcontroller -nohltv -particles 1
 
