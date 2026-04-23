@@ -25,7 +25,7 @@
   nix-mineral = {
     enable = true;
     settings = {
-      system.multilib = true; # TODO disable when/if steam no longer needs it
+      system.multilib = true; # NOTE disable when/if steam no longer needs it
     };
     filesystems.enable = false;
   };

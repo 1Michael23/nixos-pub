@@ -62,9 +62,7 @@
   services.flatpak.enable = true;
   services.packagekit.enable = true;
 
-  #programs.sway.enable = true;
-
-  services.nscd.enable = true; # TODO wtf this do?
+  services.nscd.enable = true;
   security.pam.services = {
     ly.fprintAuth = false;
     login.fprintAuth = false;

@@ -71,6 +71,15 @@
         "semgrep.doLogin" = false;
         "semgrep.scan.onlyGitDirty" = false;
         "semgrep.metrics" = false;
+
+        "todo-tree.general.statusBar" = "total";
+        "todo-tree.general.tags" = [
+          "BUG"
+          "TODO"
+          "CHECK"
+          "NOTE"
+        ];
+
       };
     };
 

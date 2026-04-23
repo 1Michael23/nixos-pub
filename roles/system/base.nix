@@ -25,7 +25,7 @@
 
   programs.fish.enable = true;
 
-  security.sudo.enable = false; # TODO switch to run0
+  security.sudo.enable = false;
   services.fwupd.enable = true;
   security.allowUserNamespaces = true;
 
