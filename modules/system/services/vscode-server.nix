@@ -1,10 +1,14 @@
-{ inputs, ... }:
+{ inputs, lib, ... }:
 
 {
   imports = [ inputs.vscode-server.nixosModules.default ];
 
   services.vscode-server = {
     enable = true;
-    enableFHS = true; # needed for some extensions (pylance, rust-analyzer binaries, etc.)
+    enableFHS = true;
+    installPath = lib.mkForce [
+      "$HOME/.vscodium-server"
+      "$HOME/.vscode-server"
+    ];
   };
 }

@@ -38,7 +38,7 @@
           ClientAliveInterval = 300;
           ClientAliveCountMax = 0;
           TCPKeepAlive = false;
-          AllowTcpForwarding = false;
+          AllowTcpForwarding = true; # Needed for vscode-server
           AllowAgentForwarding = false;
           LogLevel = "VERBOSE";
           PermitRootLogin = "no";
