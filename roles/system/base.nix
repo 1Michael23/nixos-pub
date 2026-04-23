@@ -12,6 +12,8 @@
     btop
     fastfetch
     tlrc # tldr
+    pfetch-rs
+    duf
     usbutils
     gdu
   ];

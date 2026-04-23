@@ -36,6 +36,11 @@
 
   };
 
+  security.sudo = {
+    enable = lib.mkForce true;
+    wheelNeedsPassword = true;
+  };
+
   nix.gc = {
     automatic = true;
     dates = "weekly";
