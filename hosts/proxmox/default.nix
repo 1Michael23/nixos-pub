@@ -45,6 +45,7 @@
     isNormalUser = true;
     extraGroups = [ "wheel" ];
     shell = pkgs.fish;
+    hashedPassword = "$6$NqzAOzKU/.yVE4Px$E85F4VjIXf66i7s47xT14iodJg0vhNuNZac/RUU8HWPpy1Zvby3u8.bdI/aGpYWFiknhzCLwoReopOPqjXYI1/";
   };
 
 }
