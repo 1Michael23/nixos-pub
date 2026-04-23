@@ -1,3 +1,4 @@
+# TODO fracture this huge file into modules
 {
   config,
   pkgs,
@@ -12,6 +13,8 @@
     ./networking.nix
     ./hardening.nix
     ./secrets.nix
+
+    ../../modules/system/usbguard.nix
 
     inputs.nix-index-database.nixosModules.nix-index
   ];
@@ -29,11 +32,38 @@
   nixpkgs.config.allowUnfree = true;
 
   nix.settings = {
+    max-jobs = "auto";
+    cores = 0;
+    keep-outputs = true;
+    keep-derivations = true;
+    auto-optimise-store = true;
+    download-buffer-size = 268435456;
+
     experimental-features = [
       "nix-command"
       "flakes"
     ];
   };
+
+  boot.tmp.useTmpfs = true;
+  boot.tmp.tmpfsSize = "50%";
+
+  documentation = {
+    enable = true;
+    man.enable = true;
+    doc.enable = false;
+    info.enable = false;
+    nixos.enable = false;
+  };
+
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 14d";
+    persistent = true;
+  };
+
+  nix.optimise.automatic = true;
 
   programs.nix-index-database.comma.enable = true;
   programs.nix-index.enable = true;
@@ -52,9 +82,11 @@
   swapDevices = [ { device = "/dev/mapper/cryptswap"; } ];
   boot.resumeDevice = "/dev/mapper/cryptswap";
 
-  services.logind.lidSwitch = "suspend-then-hibernate";
-  services.logind.powerKey = "hibernate";
-  services.logind.powerKeyLongPress = "poweroff";
+  services.logind.settings.Login = {
+    HandleLidSwitch = "suspend-then-hibernate";
+    HandlePowerKey = "hibernate";
+    HandlePowerKeyLongPress = "poweroff";
+  };
 
   services.solaar = {
     enable = true;
