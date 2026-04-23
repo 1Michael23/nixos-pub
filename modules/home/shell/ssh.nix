@@ -15,12 +15,6 @@
     mode = "0644";
   };
 
-  sops.secrets.ssh_authorized_keys = {
-    sopsFile = ../../../secrets/common.yaml;
-    path = "${config.home.homeDirectory}/.ssh/authorized_keys";
-    mode = "0600";
-  };
-
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;

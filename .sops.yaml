@@ -5,15 +5,6 @@ keys:
   - &admin age18ag8f0p8q4cuhl8utvwzpgk6f563hrcz5gzmdpsm67gkk2chqgeqrf2au3 
 
 creation_rules:
-  # secrets that all machines need
-  - path_regex: ^secrets/common\.yaml$
-    key_groups:
-      - age:
-          - *framework
-          - *mbp
-          - *proxmox
-          - *admin
-
   # secrets only the framework needs
   - path_regex: ^secrets/framework\.yaml$
     key_groups:
