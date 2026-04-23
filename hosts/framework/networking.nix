@@ -28,10 +28,13 @@
 
   services.resolved = {
     enable = true;
-    dnssec = "false";
-    fallbackDns = [
-      "1.1.1.1"
-    ];
+    settings.Resolve = {
+      DNSSEC = "false";
+      FallbackDNS = [
+        "10.30.0.7"
+        "1.1.1.1"
+      ];
+    };
   };
 
   # environment.etc."ssl/openssl.cnf".text = ''
