@@ -12,7 +12,7 @@ My public NixOS + nix-darwin work.
 ## Resources
 
 - [saylesss88's NixOS hardening guide](https://saylesss88.github.io/nix/hardening_NixOS.html) - Amazing security focused nix guide.
-- [msyds/tf2-nix](https://gitlab.com/msyds/tf2-nix) — Declarative TF2 config
+- [msyds/tf2-nix](https://gitlab.com/msyds/tf2-nix) - Declarative TF2 config
 
 ## Directory Structure
 
@@ -39,10 +39,10 @@ flake.nix
 ├── framework (mkHost)
 │   ├── hosts/framework/
 │   ├── roles/system/base.nix
-│   ├── roles/system/desktop-sway.nix
+│   ├── roles/system/desktop-sway.nix 
 │   └── home-manager → users/michael/home.nix
 │       ├── roles/home/development.nix
-│       ├── roles/home/desktop-sway.nix
+│       ├── roles/home/desktop-sway.nix 
 │       └── roles/home/pentesting.nix
 │           └── (modules/home/**)
 │
