@@ -56,6 +56,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    vscode-server = {
+      url = "github:nix-community/nixos-vscode-server";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     tf2-nix.url = "gitlab:msyds/tf2-nix";
 
     darwin.url = "github:lnl7/nix-darwin";
@@ -130,7 +135,9 @@
 
         users.michael = ./users/michael/home-server.nix;
 
-        extraSpecialArgs = { };
+        extraSpecialArgs = {
+          vscodeExtensions = inputs.nix-vscode-extensions.extensions.x86_64-linux;
+        };
 
         modules = [
           inputs.disko.nixosModules.disko

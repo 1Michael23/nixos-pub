@@ -24,6 +24,7 @@
     ../../modules/system/networking/tailscale.nix
     ../../modules/system/networking/ssh-server.nix
     ../../modules/system/users/authorized-keys.nix
+    ../../modules/system/services/vscode-server.nix
   ];
 
   programs.fish.enable = true;

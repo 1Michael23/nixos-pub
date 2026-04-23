@@ -14,7 +14,7 @@
     ./hardening.nix
     ./secrets.nix
 
-    ../../modules/system/usbguard.nix
+    ../../modules/system/services/usbguard.nix
 
     inputs.nix-index-database.nixosModules.nix-index
   ];

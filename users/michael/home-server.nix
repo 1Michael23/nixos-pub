@@ -36,7 +36,8 @@
   imports = [
     ../../modules/home/shell/fish.nix
     ../../modules/home/shell/git.nix
-    ../../modules/home/editors/neovim.nix
+    ../../roles/home/development.nix
+
   ];
 
   programs.btop = {

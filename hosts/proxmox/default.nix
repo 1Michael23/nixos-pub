@@ -15,6 +15,8 @@
     ./secrets.nix
   ];
 
+  boot.kernelModules = [ "virtio_balloon" ];
+
   services.qemuGuest.enable = true;
   services.spice-vdagentd.enable = true;
 
@@ -41,11 +43,18 @@
     wheelNeedsPassword = true;
   };
 
+  services.fstrim = {
+    enable = true;
+    interval = "weekly";
+  };
+
   nix.gc = {
     automatic = true;
     dates = "weekly";
     options = "--delete-older-than 14d";
   };
+
+  services.tailscale.extraSetFlags = [ "--advertise-exit-node" ];
 
   time.timeZone = "Australia/Sydney";
   i18n.defaultLocale = "en_AU.UTF-8";
