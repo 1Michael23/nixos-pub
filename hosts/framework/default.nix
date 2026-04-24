@@ -23,6 +23,7 @@
     powertop
     libratbag
     piper
+
   ];
 
   boot.extraModulePackages = with config.boot.kernelPackages; [
@@ -129,7 +130,7 @@
     dedicatedServer.openFirewall = false;
     localNetworkGameTransfers.openFirewall = true;
   };
-  programs.gamescope.enable = false;
+  programs.gamescope.enable = true;
   programs.gamemode.enable = true;
 
   time.timeZone = "Australia/Sydney";

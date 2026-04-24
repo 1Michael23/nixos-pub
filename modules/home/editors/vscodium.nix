@@ -26,6 +26,7 @@
           ms-toolsai.jupyter-renderers
           ms-python.python
           ms-vscode.cpptools
+          charliermarsh.ruff
         ])
         ++ (with vscodeExtensions.open-vsx; [
           semgrep.semgrep

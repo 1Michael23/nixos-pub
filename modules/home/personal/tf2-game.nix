@@ -8,7 +8,7 @@
 let
   tf2pkgs = tf2Nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 
-  #gamemoderun %command% -windowed -w 1920 -h 1080 -novid -nojoy -nosteamcontroller -nohltv -particles 1
+  #gamescope -W 1920 -H 1080 -r 144 -- gamemoderun %command% -novid -nojoy -nosteamcontroller -nohltv -particles 1
 
   #tfDirRel = ".var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/common/Team Fortress 2/tf";
   tfDirRel = ".local/share/Steam/steamapps/common/Team Fortress 2/tf";
@@ -16,7 +16,7 @@ let
   myTf2Config = tf2pkgs.mergeTf2Configs (
     with tf2pkgs;
     [
-      mastercomfig.presets.medium-low
+      mastercomfig.presets.low
       mastercomfig.addons.flat-mouse
       mastercomfig.addons.no-tutorial
       mastercomfig.addons.null-canceling-movement
