@@ -33,7 +33,8 @@
     enableFishIntegration = true;
   };
 
-  programs.direnv = {
+  programs.direnv = lib.mkIf pkgs.stdenv.isLinux {
+    # NOTE broken on nix-darwin temporarily
     enable = true;
     nix-direnv.enable = true;
   };

@@ -16,19 +16,24 @@
       enableUpdateCheck = false;
 
       extensions =
-        (with pkgs.vscode-extensions; [
-          catppuccin.catppuccin-vsc
-          jnoortheen.nix-ide
-          gruntfuggly.todo-tree
-          rust-lang.rust-analyzer
-          llvm-vs-code-extensions.vscode-clangd
-          ms-toolsai.jupyter
-          ms-toolsai.jupyter-renderers
-          ms-python.python
-          ms-vscode.cpptools
-          charliermarsh.ruff
-          mkhl.direnv
-        ])
+        (
+          with pkgs.vscode-extensions;
+          [
+            catppuccin.catppuccin-vsc
+            jnoortheen.nix-ide
+            gruntfuggly.todo-tree
+            rust-lang.rust-analyzer
+            llvm-vs-code-extensions.vscode-clangd
+            ms-toolsai.jupyter
+            ms-toolsai.jupyter-renderers
+            ms-python.python
+            ms-vscode.cpptools
+            charliermarsh.ruff
+          ]
+          ++ lib.optionals pkgs.stdenv.isLinux [
+            mkhl.direnv
+          ]
+        )
         ++ (with vscodeExtensions.open-vsx; [
           semgrep.semgrep
           jeanp413.open-remote-ssh
