@@ -36,6 +36,7 @@
 
   imports = [
     ../../roles/home/development.nix
+    ../../roles/home/photography.nix
     ../../modules/home/shell/ssh.nix
     ../../modules/home/shell/gpg-agent.nix
 

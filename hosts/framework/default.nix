@@ -21,9 +21,8 @@
 
   environment.systemPackages = with pkgs; [
     powertop
-    libratbag
     piper
-
+    inputs.nh.packages.x86_64-linux.nh
   ];
 
   boot.extraModulePackages = with config.boot.kernelPackages; [
@@ -97,13 +96,11 @@
     extraArgs = "";
   };
 
-  services.ratbagd.enable = true;
-
-  environment.etc."libratbag/logitech-g502-x-plus.device".text = ''
-    [Device]
-    Name=Logitech G502 X Plus
-    DeviceMatch=usb:046d:c099
-    Driver=hidpp20
+  environment.etc."libinput/local-overrides.quirks".text = ''
+    [Logitech G502 X Plus disable hi-res scroll]
+    MatchName=*G502 X PLUS*
+    MatchUdevType=mouse
+    AttrEventCode=-REL_WHEEL_HI_RES;-REL_HWHEEL_HI_RES;
   '';
 
   hardware.bluetooth = {
@@ -153,7 +150,6 @@
   '';
 
   services.udev.packages = with pkgs; [
-    libratbag
     logitech-udev-rules
     keychron-udev-rules
   ];

@@ -69,6 +69,11 @@
     mac-app-util = {
       url = "github:hraban/mac-app-util";
     };
+
+    nh = {
+      url = "github:nix-community/nh";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -82,21 +87,11 @@
     }:
     let
       mkHost = import ./lib/mkHost.nix {
-        inherit
-          nixpkgs
-          home-manager
-          sops-nix
-          inputs
-          ;
+        inherit nixpkgs home-manager sops-nix inputs;
       };
 
       mkDarwinHost = import ./lib/mkDarwinHost.nix {
-        inherit
-          darwin
-          home-manager
-          sops-nix
-          inputs
-          ;
+        inherit darwin home-manager sops-nix inputs;
       };
     in
     {

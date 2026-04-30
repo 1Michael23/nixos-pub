@@ -27,6 +27,7 @@
           ms-python.python
           ms-vscode.cpptools
           charliermarsh.ruff
+          mkhl.direnv
         ])
         ++ (with vscodeExtensions.open-vsx; [
           semgrep.semgrep

@@ -42,6 +42,8 @@
       age
 
       claude-code
+      opencode
+      opencode-desktop
 
       exiftool
 
