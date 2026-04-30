@@ -3,6 +3,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 
@@ -57,6 +58,7 @@
   environment.systemPackages = with pkgs; [
     usbguard
     usbguard-notifier
+    inputs.usbguard-fuzzel.packages.${pkgs.system}.default
   ];
 
 }

@@ -63,6 +63,8 @@
 
     tf2-nix.url = "gitlab:msyds/tf2-nix";
 
+    usbguard-fuzzel.url = "github:1Michael23/usbguard-fuzzel";
+
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -87,11 +89,21 @@
     }:
     let
       mkHost = import ./lib/mkHost.nix {
-        inherit nixpkgs home-manager sops-nix inputs;
+        inherit
+          nixpkgs
+          home-manager
+          sops-nix
+          inputs
+          ;
       };
 
       mkDarwinHost = import ./lib/mkDarwinHost.nix {
-        inherit darwin home-manager sops-nix inputs;
+        inherit
+          darwin
+          home-manager
+          sops-nix
+          inputs
+          ;
       };
     in
     {
@@ -119,6 +131,7 @@
           inputs.nix-mineral.nixosModules.nix-mineral
           inputs.solaar.nixosModules.default
           inputs.nixos-hardware.nixosModules.framework-13-7040-amd
+
         ];
 
       };

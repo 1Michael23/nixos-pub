@@ -54,6 +54,8 @@
         "Mod4+Shift+space" = "floating toggle";
         "Mod4+f" = "fullscreen";
 
+        "Mod4+u" = "exec usbguard-fuzzel";
+
         "Print" = "exec grimshot --notify savecopy screen";
         "Shift+Print" = "exec grimshot --notify savecopy area";
 
