@@ -16,7 +16,6 @@
 
     ../../modules/system/services/usbguard.nix
 
-    inputs.nix-index-database.nixosModules.nix-index
   ];
 
   environment.systemPackages = with pkgs; [
@@ -64,9 +63,6 @@
   };
 
   nix.optimise.automatic = true;
-
-  programs.nix-index-database.comma.enable = true;
-  programs.nix-index.enable = true;
 
   boot.initrd.luks.devices = {
     cryptswap = {
