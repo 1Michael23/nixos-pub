@@ -41,12 +41,6 @@
       sops
       age
 
-      claude-code
-      opencode
-      opencode-desktop
-
-      exiftool
-
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
       imhex
