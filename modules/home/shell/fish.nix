@@ -12,7 +12,7 @@
     enable = true;
     interactiveShellInit = ''
       set fish_greeting
-      set -gx PATH /opt/homebrew/bin $PATH
+      set -gx PATH $HOME/.local/bin /opt/homebrew/bin $PATH
       set -gx SOPS_AGE_KEY_FILE ~/.config/sops/age/keys.txt
     '';
     shellAliases = {

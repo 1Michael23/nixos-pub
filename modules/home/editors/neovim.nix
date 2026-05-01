@@ -56,8 +56,6 @@
 
     '';
     plugins = with pkgs.vimPlugins; [
-      catppuccin-nvim
-
       telescope-nvim
       plenary-nvim
 

@@ -15,6 +15,8 @@
     ./secrets.nix
 
     ../../modules/system/services/usbguard.nix
+    inputs.stylix.nixosModules.stylix
+    ../../modules/system/theme/stylix.nix
 
   ];
 

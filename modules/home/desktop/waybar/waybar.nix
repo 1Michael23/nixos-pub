@@ -17,6 +17,191 @@
     # Leave systemd disabled — sway launches waybar via its `bars` directive.
     systemd.enable = false;
 
+    style = lib.mkForce ''
+      @define-color base00 #${config.lib.stylix.colors.base00};
+      @define-color base01 #${config.lib.stylix.colors.base01};
+      @define-color base02 #${config.lib.stylix.colors.base02};
+      @define-color base03 #${config.lib.stylix.colors.base03};
+      @define-color base04 #${config.lib.stylix.colors.base04};
+      @define-color base05 #${config.lib.stylix.colors.base05};
+      @define-color base06 #${config.lib.stylix.colors.base06};
+      @define-color base07 #${config.lib.stylix.colors.base07};
+      @define-color base08 #${config.lib.stylix.colors.base08};
+      @define-color base09 #${config.lib.stylix.colors.base09};
+      @define-color base0A #${config.lib.stylix.colors.base0A};
+      @define-color base0B #${config.lib.stylix.colors.base0B};
+      @define-color base0C #${config.lib.stylix.colors.base0C};
+      @define-color base0D #${config.lib.stylix.colors.base0D};
+      @define-color base0E #${config.lib.stylix.colors.base0E};
+      @define-color base0F #${config.lib.stylix.colors.base0F};
+
+      * {
+          font-family: "Source Code Pro", "Font Awesome 7 Free Solid", "Font Awesome 7 Free", "Noto Color Emoji", sans-serif;
+          font-size: 14px;
+      }
+
+      window#waybar {
+          background: alpha(@base00, 0.500000);
+          color: @base05;
+          min-height: 36px;
+          transition-property: background-color;
+          transition-duration: .5s;
+      }
+
+      window#waybar.hidden {
+          opacity: 0.2;
+      }
+
+      tooltip {
+          background: alpha(@base00, 0.920000);
+          border-color: @base0D;
+      }
+
+      tooltip label {
+          color: @base05;
+      }
+
+      button {
+          box-shadow: inset 0 -3px transparent;
+          border: none;
+          border-radius: 0;
+      }
+
+      button:hover {
+          background: inherit;
+          box-shadow: inset 0 -3px @base05;
+      }
+
+      #workspaces button {
+          padding: 0 10px;
+          background-color: transparent;
+          color: @base05;
+          margin: 0 2px;
+          font-size: 16px;
+      }
+
+      #workspaces button:hover {
+          background: rgba(255, 255, 255, 0.15);
+          box-shadow: none;
+      }
+
+      #workspaces button.focused,
+      #workspaces button.active {
+          background-color: @base05;
+          color: @base00;
+          box-shadow: none;
+          border-radius: 2px;
+      }
+
+      #workspaces button.focused:hover,
+      #workspaces button.active:hover {
+          background-color: @base05;
+          color: @base00;
+      }
+
+      #workspaces button.urgent {
+          background-color: @base08;
+          color: @base05;
+      }
+
+      #mode {
+          background-color: @base02;
+          box-shadow: inset 0 -3px @base05;
+      }
+
+      #clock,
+      #battery,
+      #cpu,
+      #memory,
+      #disk,
+      #temperature,
+      #backlight,
+      #network,
+      #pulseaudio,
+      #wireplumber,
+      #custom-media,
+      #tray,
+      #mode,
+      #idle_inhibitor,
+      #scratchpad,
+      #power-profiles-daemon,
+      #custom-notification,
+      #mpd {
+          padding: 0 6px;
+          color: @base05;
+      }
+
+      .modules-right widget {
+          margin: 0 1px;
+      }
+
+      #window,
+      #workspaces {
+          margin: 0 4px;
+      }
+
+      .modules-left > widget:first-child > #workspaces {
+          margin-left: 0;
+      }
+
+      .modules-right > widget:last-child > #workspaces {
+          margin-right: 0;
+      }
+
+      #clock {
+          background-color: @base02;
+      }
+
+      #battery {
+          background-color: @base05;
+          color: @base00;
+      }
+
+      #battery.charging,
+      #battery.plugged {
+          color: @base05;
+          background-color: @base0B;
+      }
+
+      @keyframes blink {
+          to {
+              background-color: @base05;
+              color: @base00;
+          }
+      }
+
+      #battery.critical:not(.charging) {
+          background-color: @base08;
+          color: @base05;
+          animation-name: blink;
+          animation-duration: 0.5s;
+          animation-timing-function: steps(12);
+          animation-iteration-count: infinite;
+          animation-direction: alternate;
+      }
+
+      #network {
+          background-color: @base0D;
+      }
+
+      #network.disconnected {
+          background-color: @base08;
+      }
+
+      #tray {
+          background-color: @base0D;
+      }
+
+      #tray > .needs-attention {
+          background-color: @base08;
+      }
+
+      #custom-notification.notification,
+      #custom-notification.dnd-notification {
+          background-color: @base0D;
+      }
+    '';
+
     settings.mainBar = {
       layer = "top";
 
@@ -44,14 +229,17 @@
         format-wifi = builtins.fromJSON ''"{essid} ({signalStrength}%) \uf1eb"'';
         format-ethernet = builtins.fromJSON ''"{ipaddr}/{cidr} \uf6ff"'';
         tooltip-format = builtins.fromJSON ''"{ifname} via {gwaddr} \uf0ac"'';
+        tooltip-format-wifi = builtins.fromJSON ''"{essid}\nSignal: {signalStrength}% ({signaldBm} dBm)\nFreq: {frequency} GHz\nIP: {ipaddr}/{cidr}\nGW: {gwaddr}\nUp: {bandwidthUpBytes}  Down: {bandwidthDownBytes}"'';
+        tooltip-format-ethernet = builtins.fromJSON ''"{ifname}\nIP: {ipaddr}/{cidr}\nGW: {gwaddr}\nUp: {bandwidthUpBytes}  Down: {bandwidthDownBytes}"'';
         format-linked = builtins.fromJSON ''"{ifname} (No IP) \uf6ff"'';
-        format-disconnected = "Disconnected ⚠";
+        format-disconnected = builtins.fromJSON ''"Disconnected \uf071"'';
         format-alt = "{ifname}: {ipaddr}/{cidr}";
       };
 
       battery = {
         interval = 2;
-        format = "{power:.1f}w - {capacity}% {icon}";
+        format = "{capacity}% {icon}";
+        tooltip-format = "{power:.1f}W draw\n{capacity}% capacity\n{time} remaining\nHealth: {health}%";
         # fa-battery-empty, -quarter, -half, -three-quarters, -full
         format-icons = builtins.fromJSON ''[ "\uf244", "\uf243", "\uf242", "\uf241", "\uf240" ]'';
       };
@@ -72,18 +260,31 @@
       };
 
       clock = {
-        format = "{:%a, %d. %b  %H:%M:%S}";
-        interval = 1;
+        format = "{:%a %d %b %H:%M}";
+        interval = 5;
+        tooltip-format = "<tt><small>{calendar}</small></tt>";
+        calendar = {
+          mode = "month";
+          weeks-pos = "left";
+          on-scroll = 1;
+          format = {
+            months = "<span color='#${config.lib.stylix.colors.base05}'><b>{}</b></span>";
+            days = "<span color='#${config.lib.stylix.colors.base04}'><b>{}</b></span>";
+            weeks = "<span color='#${config.lib.stylix.colors.base0C}'><b>W{}</b></span>";
+            weekdays = "<span color='#${config.lib.stylix.colors.base0A}'><b>{}</b></span>";
+            today = "<span color='#${config.lib.stylix.colors.base08}'><b><u>{}</u></b></span>";
+          };
+        };
       };
 
       "custom/notification" = {
         tooltip = true;
         format = "{icon}";
         format-icons = {
-          notification = "🔔";
-          none = "⚪";
-          "dnd-notification" = "🔔";
-          "dnd-none" = "🔕";
+          notification = builtins.fromJSON ''"\uf0f3"'';
+          none = builtins.fromJSON ''"\uf0f3"'';
+          "dnd-notification" = builtins.fromJSON ''"\uf1f6"'';
+          "dnd-none" = builtins.fromJSON ''"\uf1f6"'';
         };
         return-type = "json";
         exec-if = "which swaync-client";
@@ -94,333 +295,5 @@
       };
     };
 
-    style = ''
-      * {
-          /* `otf-font-awesome` is required to be installed for icons */
-          font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
-          font-size: 13px;
-      }
-
-      window#waybar {
-          background-color: rgba(43, 48, 59, 0.5);
-          border-bottom: 3px solid rgba(100, 114, 125, 0.5);
-          color: #ffffff;
-          transition-property: background-color;
-          transition-duration: .5s;
-      }
-
-      window#waybar.hidden {
-          opacity: 0.2;
-      }
-
-      /*
-      window#waybar.empty {
-          background-color: transparent;
-      }
-      window#waybar.solo {
-          background-color: #FFFFFF;
-      }
-      */
-
-      window#waybar.termite {
-          background-color: #3F3F3F;
-      }
-
-      window#waybar.chromium {
-          background-color: #000000;
-          border: none;
-      }
-
-      button {
-          /* Use box-shadow instead of border so the text isn't offset */
-          box-shadow: inset 0 -3px transparent;
-          /* Avoid rounded borders under each button name */
-          border: none;
-          border-radius: 0;
-      }
-
-      /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
-      button:hover {
-          background: inherit;
-          box-shadow: inset 0 -3px #ffffff;
-      }
-
-      #workspaces button {
-          padding: 0 5px;
-          background-color: transparent;
-          color: #ffffff;
-      }
-
-      #workspaces button:hover {
-          background: rgba(0, 0, 0, 0.2);
-      }
-
-      #workspaces button.focused {
-          background-color: #64727D;
-          box-shadow: inset 0 -3px #ffffff;
-      }
-
-      #workspaces button.urgent {
-          background-color: #eb4d4b;
-      }
-
-      #mode {
-          background-color: #64727D;
-          box-shadow: inset 0 -3px #ffffff;
-      }
-
-      #clock,
-      #battery,
-      #cpu,
-      #memory,
-      #disk,
-      #temperature,
-      #backlight,
-      #network,
-      #pulseaudio,
-      #wireplumber,
-      #custom-media,
-      #tray,
-      #mode,
-      #idle_inhibitor,
-      #scratchpad,
-      #power-profiles-daemon,
-      #custom-notification,
-      #mpd {
-          padding: 0 10px;
-          color: #ffffff;
-      }
-
-      #window,
-      #workspaces {
-          margin: 0 4px;
-      }
-
-      /* If workspaces is the leftmost module, omit left margin */
-      .modules-left>widget:first-child>#workspaces {
-          margin-left: 0;
-      }
-
-      /* If workspaces is the rightmost module, omit right margin */
-      .modules-right>widget:last-child>#workspaces {
-          margin-right: 0;
-      }
-
-      #clock {
-          background-color: #64727D;
-      }
-
-      #battery {
-          background-color: #ffffff;
-          color: #000000;
-      }
-
-      #battery.charging,
-      #battery.plugged {
-          color: #ffffff;
-          background-color: #26A65B;
-      }
-
-      @keyframes blink {
-          to {
-              background-color: #ffffff;
-              color: #000000;
-          }
-      }
-
-      /* Using steps() instead of linear as a timing function to limit cpu usage */
-      #battery.critical:not(.charging) {
-          background-color: #f53c3c;
-          color: #ffffff;
-          animation-name: blink;
-          animation-duration: 0.5s;
-          animation-timing-function: steps(12);
-          animation-iteration-count: infinite;
-          animation-direction: alternate;
-      }
-
-      #power-profiles-daemon {
-          padding-left: 9px;
-          padding-right: 9px;
-          min-width: 15px;
-      }
-
-      #power-profiles-daemon.performance {
-          background-color: #f53c3c;
-          color: #ffffff;
-      }
-
-      #power-profiles-daemon.balanced {
-          background-color: #2980b9;
-          color: #ffffff;
-      }
-
-      #power-profiles-daemon.power-saver {
-          background-color: #2ecc71;
-          color: #000000;
-      }
-
-      label:focus {
-          background-color: #000000;
-      }
-
-      #cpu {
-          background-color: #2ecc71;
-          color: #000000;
-      }
-
-      #memory {
-          background-color: #9b59b6;
-      }
-
-      #disk {
-          background-color: #964B00;
-      }
-
-      #backlight {
-          background-color: #90b1b1;
-      }
-
-      #network {
-          background-color: #2980b9;
-      }
-
-      #network.disconnected {
-          background-color: #f53c3c;
-      }
-
-      #pulseaudio {
-          background-color: #f1c40f;
-          color: #000000;
-      }
-
-      #pulseaudio.muted {
-          background-color: #90b1b1;
-          color: #2a5c45;
-      }
-
-      #wireplumber {
-          background-color: #fff0f5;
-          color: #000000;
-      }
-
-      #wireplumber.muted {
-          background-color: #f53c3c;
-      }
-
-      #custom-media {
-          background-color: #66cc99;
-          color: #2a5c45;
-          min-width: 100px;
-      }
-
-      #custom-media.custom-spotify {
-          background-color: #66cc99;
-      }
-
-      #custom-media.custom-vlc {
-          background-color: #ffa000;
-      }
-
-      #temperature {
-          background-color: #f0932b;
-      }
-
-      #temperature.critical {
-          background-color: #eb4d4b;
-      }
-
-      #tray {
-          background-color: #2980b9;
-      }
-
-      #tray>.passive {
-          -gtk-icon-effect: dim;
-      }
-
-      #tray>.needs-attention {
-          -gtk-icon-effect: highlight;
-          background-color: #eb4d4b;
-      }
-
-      #idle_inhibitor {
-          background-color: #2d3436;
-      }
-
-      #idle_inhibitor.activated {
-          background-color: #ecf0f1;
-          color: #2d3436;
-      }
-
-      #mpd {
-          background-color: #66cc99;
-          color: #2a5c45;
-      }
-
-      #mpd.disconnected {
-          background-color: #f53c3c;
-      }
-
-      #mpd.stopped {
-          background-color: #90b1b1;
-      }
-
-      #mpd.paused {
-          background-color: #51a37a;
-      }
-
-      #language {
-          background: #00b093;
-          color: #740864;
-          padding: 0 5px;
-          margin: 0 5px;
-          min-width: 16px;
-      }
-
-      #keyboard-state {
-          background: #97e1ad;
-          color: #000000;
-          padding: 0 0px;
-          margin: 0 5px;
-          min-width: 16px;
-      }
-
-      #keyboard-state>label {
-          padding: 0 5px;
-      }
-
-      #keyboard-state>label.locked {
-          background: rgba(0, 0, 0, 0.2);
-      }
-
-      #scratchpad {
-          background: rgba(0, 0, 0, 0.2);
-      }
-
-      #scratchpad.empty {
-          background-color: transparent;
-      }
-
-      #privacy {
-          padding: 0;
-      }
-
-      #privacy-item {
-          padding: 0 5px;
-          color: white;
-      }
-
-      #privacy-item.screenshare {
-          background-color: #cf5700;
-      }
-
-      #privacy-item.audio-in {
-          background-color: #1ca000;
-      }
-
-      #privacy-item.audio-out {
-          background-color: #0069d4;
-      }
-    '';
   };
 }

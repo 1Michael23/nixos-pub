@@ -9,7 +9,7 @@
   programs.alacritty = {
     enable = true;
     settings = {
-      window.opacity = 0.96;
+      window.opacity = 0.85;
       font = {
         normal = {
           family = "Source Code Pro";

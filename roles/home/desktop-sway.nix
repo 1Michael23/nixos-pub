@@ -37,6 +37,7 @@
     ../../modules/home/desktop/alacritty.nix
     ../../modules/home/desktop/swaync.nix
     ../../modules/home/services/tailscale-tray.nix
+    ../../modules/home/theme/stylix.nix
   ];
 
 }

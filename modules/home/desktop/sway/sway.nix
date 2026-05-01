@@ -17,10 +17,6 @@
 
       startup = [
         {
-          command = "swaybg -i ${./000028930017-edit.JPG} -m stretch";
-          always = true;
-        }
-        {
           command = "swayosd-server";
           always = true;
         }

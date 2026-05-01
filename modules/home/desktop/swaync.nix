@@ -19,29 +19,5 @@
       control-center-margin-left = 0;
     };
 
-    style = ''
-      .notification {
-        background: rgba(43, 48, 59, 0.96);
-        border-radius: 8px;
-        margin: 6px 12px;
-      }
-
-      .notification-content {
-        background: transparent;
-      }
-
-      .control-center {
-        background: rgba(43, 48, 59, 0.96);
-        border-radius: 8px;
-      }
-
-      .widget-title {
-        background: transparent;
-      }
-
-      .widget-dnd {
-        background: transparent;
-      }
-    '';
   };
 }
