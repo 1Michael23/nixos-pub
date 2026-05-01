@@ -13,7 +13,11 @@
     ./hardware-configuration.nix
     ./networking.nix
     ./secrets.nix
+    ./nvidia.nix
+    ../../modules/system/services/ollama.nix
   ];
+
+  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_6_12;
 
   boot.kernelModules = [ "virtio_balloon" ];
 
