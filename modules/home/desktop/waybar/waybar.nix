@@ -32,6 +32,7 @@
         "battery"
         "power-profiles-daemon"
         "clock"
+        "custom/notification"
         "tray"
       ];
 
@@ -73,6 +74,23 @@
       clock = {
         format = "{:%a, %d. %b  %H:%M:%S}";
         interval = 1;
+      };
+
+      "custom/notification" = {
+        tooltip = true;
+        format = "{icon}";
+        format-icons = {
+          notification = "🔔";
+          none = "⚪";
+          "dnd-notification" = "🔔";
+          "dnd-none" = "🔕";
+        };
+        return-type = "json";
+        exec-if = "which swaync-client";
+        exec = "swaync-client -swb";
+        on-click = "swaync-client -t -sw";
+        on-click-right = "swaync-client -d -sw";
+        escape = true;
       };
     };
 
@@ -167,6 +185,7 @@
       #idle_inhibitor,
       #scratchpad,
       #power-profiles-daemon,
+      #custom-notification,
       #mpd {
           padding: 0 10px;
           color: #ffffff;

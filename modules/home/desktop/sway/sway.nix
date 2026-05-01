@@ -55,6 +55,7 @@
         "Mod4+f" = "fullscreen";
 
         "Mod4+u" = "exec usbguard-fuzzel";
+        "Mod4+Shift+n" = "exec swaync-client -t -sw";
 
         "Print" = "exec grimshot --notify savecopy screen";
         "Shift+Print" = "exec grimshot --notify savecopy area";
