@@ -9,14 +9,6 @@
         enable = true;
         maxretry = 5;
         bantime = "1h";
-        # ignoreIP = [
-        # "172.16.0.0/12"
-        # "192.168.0.0/16"
-        # "2601:881:8100:8de0:31e6:ac52:b5be:462a"
-        # "matrix.org"
-        # "app.element.io" # don't ratelimit matrix users
-        # ];
-
         bantime-increment = {
           enable = true; # Enable increment of bantime after each violation
           multipliers = "1 2 4 8 16 32 64 128 256";

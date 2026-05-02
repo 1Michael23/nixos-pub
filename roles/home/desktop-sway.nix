@@ -1,8 +1,3 @@
-#TODO find best way to organise sway config in multiple locations
-# roles/home/desktop-sway.nix
-# roles/system/desktop-sway.nix
-# modules/home/desktop/sway/sway.nix
-
 {
   config,
   pkgs,

@@ -45,24 +45,36 @@
 
   ];
 
-  services.tumbler.enable = true; # thumbnails for nautilus
+  services = {
+    tumbler.enable = true; # thumbnails for nautilus
 
-  services.gvfs.enable = true;
+    gvfs.enable = true;
 
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd sway";
-        user = "greeter";
+    greetd = {
+      enable = true;
+      settings = {
+        default_session = {
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd sway";
+          user = "greeter";
+        };
       };
+    };
+
+    flatpak.enable = true;
+    packagekit.enable = true;
+
+    nscd.enable = true;
+
+    dbus.enable = true;
+
+    pipewire = {
+      enable = true;
+      pulse.enable = true;
+      alsa.enable = true;
+      jack.enable = true;
     };
   };
 
-  services.flatpak.enable = true;
-  services.packagekit.enable = true;
-
-  services.nscd.enable = true;
   security.pam.services = {
     ly.fprintAuth = false;
     login.fprintAuth = false;
@@ -83,8 +95,6 @@
     ];
   };
 
-  services.dbus.enable = true;
-
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [
@@ -98,23 +108,18 @@
     ];
   };
 
-  fonts.packages = with pkgs; [
-    dejavu_fonts
-  ];
+  fonts = {
+    packages = with pkgs; [
+      dejavu_fonts
+    ];
 
-  fonts.fontconfig.defaultFonts = {
-    monospace = [ "DejaVu Sans Mono" ];
-    sansSerif = [ "DejaVu Sans" ];
-    serif = [ "DejaVu Serif" ];
+    fontconfig.defaultFonts = {
+      monospace = [ "DejaVu Sans Mono" ];
+      sansSerif = [ "DejaVu Sans" ];
+      serif = [ "DejaVu Serif" ];
+    };
   };
 
   security.polkit.enable = true;
-
-  services.pipewire = {
-    enable = true;
-    pulse.enable = true;
-    alsa.enable = true;
-    jack.enable = true;
-  };
 
 }

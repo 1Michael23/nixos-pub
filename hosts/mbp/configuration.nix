@@ -12,16 +12,20 @@
     inputs.nix-index-database.darwinModules.nix-index
   ];
 
-  system.stateVersion = 4;
-  system.primaryUser = "michael";
+  system = {
+    stateVersion = 4;
+    primaryUser = "michael";
+  };
+
   networking.hostName = "mbp";
   nixpkgs.config.allowUnfree = true;
-  environment.shells = [ pkgs.fish ];
+
   users.users.michael = {
     name = "michael";
     home = "/Users/michael";
     shell = pkgs.fish;
   };
+
   nix.settings = {
     experimental-features = [
       "nix-command"
@@ -29,8 +33,11 @@
     ];
   };
 
-  programs.nix-index-database.comma.enable = true;
-  programs.nix-index.enable = true;
+  programs = {
+    nix-index-database.comma.enable = true;
+    nix-index.enable = true;
+    fish.enable = true;
+  };
 
   system.defaults = {
     dock = {
@@ -137,11 +144,11 @@
 
   security.pam.services.sudo_local.touchIdAuth = true;
 
-  programs.fish.enable = true;
-
-  environment.systemPackages = with pkgs; [
-
-  ];
+  environment = {
+    shells = [ pkgs.fish ];
+    systemPackages = with pkgs; [ ];
+    variables.HOMEBREW_NO_ANALYTICS = "1";
+  };
 
   fonts.packages = with pkgs; [
     source-code-pro
@@ -179,8 +186,6 @@
       "onlyoffice"
     ];
   };
-
-  environment.variables.HOMEBREW_NO_ANALYTICS = "1";
 
   ids.gids.nixbld = 350;
 }

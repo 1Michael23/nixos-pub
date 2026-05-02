@@ -12,7 +12,6 @@
   users ? { },
   modules ? [ ],
   extraSpecialArgs ? { },
-  stateVersion ? 4,
 }:
 
 darwin.lib.darwinSystem {
@@ -28,20 +27,22 @@ darwin.lib.darwinSystem {
 
     home-manager.darwinModules.home-manager
     {
-      home-manager.useGlobalPkgs = true;
-      home-manager.useUserPackages = true;
-      home-manager.backupFileExtension = "backup";
-      home-manager.extraSpecialArgs = extraSpecialArgs // {
-        isLinux = false;
-        isDarwin = true;
+      home-manager = {
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        backupFileExtension = "backup";
+        extraSpecialArgs = extraSpecialArgs // {
+          isLinux = false;
+          isDarwin = true;
+        };
+
+        sharedModules = [
+          inputs.sops-nix.homeManagerModules.sops
+          inputs.nix-index-database.homeModules.default
+
+        ];
+        users = builtins.mapAttrs (_name: import) users;
       };
-
-      home-manager.sharedModules = [
-        inputs.sops-nix.homeManagerModules.sops
-        inputs.nix-index-database.homeModules.default
-
-      ];
-      home-manager.users = builtins.mapAttrs (name: import) users;
     }
   ]
   ++ modules;

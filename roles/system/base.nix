@@ -22,17 +22,18 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   imports = [
-    inputs.nix-index-database.darwinModules.nix-index
+    inputs.nix-index-database.nixosModules.nix-index
     ../../modules/system/networking/tailscale.nix
     ../../modules/system/networking/ssh-server.nix
     ../../modules/system/users/authorized-keys.nix
     ../../modules/system/services/vscode-server.nix
   ];
 
-  programs.fish.enable = true;
-
-  programs.nix-index-database.comma.enable = true;
-  programs.nix-index.enable = true;
+  programs = {
+    fish.enable = true;
+    nix-index-database.comma.enable = true;
+    nix-index.enable = true;
+  };
 
   security.sudo.enable = false;
   services.fwupd.enable = true;

@@ -36,19 +36,21 @@ nixpkgs.lib.nixosSystem {
 
     home-manager.nixosModules.home-manager
     {
-      home-manager.useGlobalPkgs = true;
-      home-manager.useUserPackages = true;
-      home-manager.backupFileExtension = "backup";
-      home-manager.extraSpecialArgs = extraSpecialArgs // {
-        isLinux = true;
-        isDarwin = false;
-      };
-      home-manager.sharedModules = [
-        inputs.sops-nix.homeManagerModules.sops
-        inputs.nix-index-database.homeModules.default
+      home-manager = {
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        backupFileExtension = "backup";
+        extraSpecialArgs = extraSpecialArgs // {
+          isLinux = true;
+          isDarwin = false;
+        };
+        sharedModules = [
+          inputs.sops-nix.homeManagerModules.sops
+          inputs.nix-index-database.homeModules.default
 
-      ];
-      home-manager.users = builtins.mapAttrs (name: import) users;
+        ];
+        users = builtins.mapAttrs (_name: import) users;
+      };
     }
   ]
   ++ modules
@@ -58,10 +60,12 @@ nixpkgs.lib.nixosSystem {
       environment.systemPackages = [
         nixpkgs.legacyPackages.${system}.sbctl
       ];
-      boot.loader.systemd-boot.enable = nixpkgs.lib.mkForce false;
-      boot.lanzaboote = {
-        enable = true;
-        pkiBundle = "/var/lib/sbctl";
+      boot = {
+        loader.systemd-boot.enable = nixpkgs.lib.mkForce false;
+        lanzaboote = {
+          enable = true;
+          pkiBundle = "/var/lib/sbctl";
+        };
       };
     }
   ];

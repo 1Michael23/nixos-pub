@@ -48,7 +48,6 @@
       python313
       python313Packages.notebook
       python313Packages.ipykernel
-      #python313Packages.conda
       python313Packages.pip
       python313Packages.jupyter
       python313Packages.tkinter
@@ -71,7 +70,6 @@
     ../../modules/home/shell/git.nix
     ../../modules/home/editors/vscodium.nix
     ../../modules/home/editors/opencode.nix
-    #../../modules/home/editors/zed.nix
     ../../modules/home/editors/neovim.nix
   ];
 

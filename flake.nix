@@ -1,7 +1,5 @@
 # flake.nix
 
-#NOTE investigate impermanance
-
 {
   description = "Nix";
 
@@ -87,7 +85,6 @@
     inputs@{
       nixpkgs,
       darwin,
-      mac-app-util,
       home-manager,
       sops-nix,
       ...
@@ -130,7 +127,6 @@
 
         modules = [
           ./roles/system/desktop-sway.nix
-          #./roles/system/desktop-gnome.nix
           ./modules/system/virtualization/libvirtd.nix
           inputs.run0-sudo-shim.nixosModules.default
           inputs.nix-mineral.nixosModules.nix-mineral

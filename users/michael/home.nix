@@ -51,7 +51,6 @@
     ../../modules/home/desktop/librewolf.nix
     ../../roles/home/pentesting.nix
     ../../roles/home/desktop-sway.nix
-    #../../roles/home/desktop-gnome.nix
     ../../modules/home/personal/tf2-game.nix
     ../../modules/home/services/syncthing.nix
   ];
@@ -60,14 +59,6 @@
     enable = true;
     defaultKey = "0xAABE0C32D79DFF9B";
   };
-
-  # sops - Linux only (framework laptop)
-  #sops = lib.mkIf pkgs.stdenv.isLinux {
-  #  age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
-  #  defaultSopsFile = ../../secrets/framework.yaml;
-  #  secrets."syncthing/device_id_mbp" = { };
-  #  secrets."syncthing/device_id_fedora" = { };
-  #};
 
   programs.btop = {
     enable = true;

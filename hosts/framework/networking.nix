@@ -37,18 +37,4 @@
     };
   };
 
-  # environment.etc."ssl/openssl.cnf".text = ''
-  #   openssl_conf = default_conf
-
-  #   [default_conf]
-  #   ssl_conf = ssl_sect
-
-  #   [ssl_sect]
-  #   system_default = system_default_sect
-
-  #   [system_default_sect]
-  #   MinProtocol = TLSv1
-  #   CipherString = DEFAULT:@SECLEVEL=1
-  # ''; # fix macquarie onenet
-
 }

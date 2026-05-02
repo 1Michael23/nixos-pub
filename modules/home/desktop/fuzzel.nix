@@ -10,7 +10,7 @@
     enable = true;
     settings = {
       main = {
-      terminal = "alacritty -e";
+        terminal = "alacritty -e";
         prompt = "› ";
         width = 50; # % of screen width
         lines = 10; # number of rows shown

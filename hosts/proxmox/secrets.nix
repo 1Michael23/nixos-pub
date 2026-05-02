@@ -1,7 +1,7 @@
 { config, ... }:
 {
   sops = {
-    defaultSopsFile = ../../secrets/common.yaml;
+    defaultSopsFile = ../../secrets/proxmox.yaml;
     age.keyFile = "/var/lib/sops-nix/key.txt";
 
   };
