@@ -19,6 +19,6 @@
     vscode.enable = false;
     zed.enable = true;
     librewolf.profileNames = [ "default" ];
-    opencode.enable = true;
+    opencode.enable = false;
   };
 }

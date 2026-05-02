@@ -44,6 +44,7 @@
           background: alpha(@base00, 0.500000);
           color: @base05;
           min-height: 36px;
+          padding: 4px 8px;
           transition-property: background-color;
           transition-duration: .5s;
       }
@@ -53,12 +54,13 @@
       }
 
       tooltip {
-          background: alpha(@base00, 0.920000);
-          border-color: @base0D;
+          background: @base00;
+          border: 1px solid @base0D;
+          border-radius: 4px;
       }
 
       tooltip label {
-          color: @base05;
+          color: @base06;
       }
 
       button {
@@ -104,11 +106,6 @@
           color: @base05;
       }
 
-      #mode {
-          background-color: @base02;
-          box-shadow: inset 0 -3px @base05;
-      }
-
       #clock,
       #battery,
       #cpu,
@@ -127,12 +124,16 @@
       #power-profiles-daemon,
       #custom-notification,
       #mpd {
-          padding: 0 6px;
-          color: @base05;
+          padding: 0px 10px;
+          margin: 0 3px;
+          border-radius: 4px;
+          background-color: @base00;
+          color: @base06;
+          border: none;
       }
 
       .modules-right widget {
-          margin: 0 1px;
+          margin: 0;
       }
 
       #window,
@@ -148,19 +149,24 @@
           margin-right: 0;
       }
 
-      #clock {
+      #mode {
           background-color: @base02;
+          box-shadow: inset 0 -3px @base05;
       }
 
-      #battery {
-          background-color: @base05;
-          color: @base00;
+      #clock:hover,
+      #battery:hover,
+      #network:hover,
+      #tray:hover,
+      #custom-notification:hover,
+      #power-profiles-daemon:hover {
+          background-color: @base01;
       }
 
       #battery.charging,
       #battery.plugged {
-          color: @base05;
           background-color: @base0B;
+          color: @base00;
       }
 
       @keyframes blink {
@@ -172,7 +178,7 @@
 
       #battery.critical:not(.charging) {
           background-color: @base08;
-          color: @base05;
+          color: @base00;
           animation-name: blink;
           animation-duration: 0.5s;
           animation-timing-function: steps(12);
@@ -182,23 +188,28 @@
 
       #network {
           background-color: @base0D;
+          color: @base00;
       }
 
       #network.disconnected {
           background-color: @base08;
+          color: @base00;
       }
 
       #tray {
           background-color: @base0D;
+          color: @base00;
       }
 
       #tray > .needs-attention {
           background-color: @base08;
+          color: @base00;
       }
 
       #custom-notification.notification,
       #custom-notification.dnd-notification {
           background-color: @base0D;
+          color: @base00;
       }
     '';
 
@@ -260,7 +271,7 @@
       };
 
       clock = {
-        format = "{:%a %d %b %H:%M}";
+        format = "{:%a %d %b %I:%M %p}";
         interval = 5;
         tooltip-format = "<tt><small>{calendar}</small></tt>";
         calendar = {
