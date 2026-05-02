@@ -9,7 +9,8 @@
   stylix = {
     enable = true;
 
-    image = ../../home/desktop/sway/000028930017-edit.JPG;
+    #    image = ../../home/desktop/sway/000028930017-edit.JPG;
+    image = ../../home/desktop/wallpapers/current.png;
     polarity = "dark";
     imageScalingMode = "fill";
 

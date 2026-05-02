@@ -23,6 +23,7 @@
     pavucontrol
     playerctl
     junction
+    yazi
   ];
 
   imports = [

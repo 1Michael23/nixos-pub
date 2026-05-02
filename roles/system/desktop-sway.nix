@@ -21,10 +21,8 @@
     sway
     dbus
 
-    nautilus
-    adwaita-icon-theme
+    thunar
     file-roller
-    sushi
     ffmpegthumbnailer
     poppler-utils
 

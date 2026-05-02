@@ -101,6 +101,10 @@
           color: @base00;
       }
 
+      #workspaces button.empty {
+          color: @base02;
+      }
+
       #workspaces button.urgent {
           background-color: @base08;
           color: @base05;
@@ -231,6 +235,21 @@
         "custom/notification"
         "tray"
       ];
+
+      "sway/workspaces" = {
+        persistent-workspaces = {
+          "1" = [];
+          "2" = [];
+          "3" = [];
+          "4" = [];
+          "5" = [];
+          "6" = [];
+          "7" = [];
+          "8" = [];
+          "9" = [];
+          "10" = [];
+        };
+      };
 
       "sway/window" = {
         max-length = 50;
