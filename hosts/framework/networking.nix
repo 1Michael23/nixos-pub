@@ -51,10 +51,4 @@
   #   CipherString = DEFAULT:@SECLEVEL=1
   # ''; # fix macquarie onenet
 
-  programs.wireshark = {
-    enable = true;
-    dumpcap.enable = true;
-    usbmon.enable = true;
-  };
-
 }
