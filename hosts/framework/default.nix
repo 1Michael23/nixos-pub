@@ -28,6 +28,10 @@
   nixpkgs.config.allowUnfree = true;
 
   boot = {
+    kernelParams = [
+      "mem_sleep_default=deep"
+    ];
+
     extraModulePackages = with config.boot.kernelPackages; [
       rtw88
     ];
@@ -86,10 +90,16 @@
     optimise.automatic = true;
   };
 
+  systemd.sleep.settings.Sleep.HibernateDelaySec = 1800;
+
   services = {
     logind.settings.Login = {
       HandleLidSwitch = "suspend-then-hibernate";
+      HandleLidSwitchExternalPower = "ignore";
+      HandleLidSwitchDocked = "ignore";
       HandlePowerKey = "hibernate";
+      HandleSuspendKey = "suspend";
+      HandleHibernateKey = "hibernate";
       HandlePowerKeyLongPress = "poweroff";
     };
 
@@ -109,7 +119,7 @@
 
     udev = {
       extraRules = ''
-        SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="5", RUN+="/run/current-system/systemd/bin/systemctl hibernate"
+        SUBSYSTEM=="power_supply", KERNEL=="BAT*", ATTR{status}=="Discharging", ATTR{capacity}=="5", RUN+="/run/current-system/systemd/bin/systemctl hibernate"
         KERNEL=="renderD*", GROUP="render", MODE="0660"
         KERNEL=="card*",   GROUP="video",  MODE="0660"
         KERNEL=="kfd",     GROUP="render", MODE="0660"

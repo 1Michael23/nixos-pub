@@ -13,11 +13,6 @@
     username = "michael";
     homeDirectory = if pkgs.stdenv.isDarwin then "/Users/michael" else "/home/michael";
     stateVersion = "25.05";
-
-    file.".local/bin/set-wallpaper" = {
-      source = ../../set-wallpaper.sh;
-      executable = true;
-    };
   };
 
   sops = {
@@ -44,6 +39,7 @@
     ../../roles/home/photography.nix
     ../../modules/home/shell/ssh.nix
     ../../modules/home/shell/gpg-agent.nix
+    ../../modules/home/shell/fastfetch.nix
 
   ]
   ++ lib.optionals isDarwin [

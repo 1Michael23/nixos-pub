@@ -7,7 +7,7 @@
 }:
 
 {
-  programs.vscode = {
+  programs.vscodium = {
     enable = true;
     package = pkgs.vscodium;
 
@@ -37,6 +37,7 @@
         ++ (with vscodeExtensions.open-vsx; [
           semgrep.semgrep
           jeanp413.open-remote-ssh
+          sst-dev.opencode
         ]);
 
       userSettings = {

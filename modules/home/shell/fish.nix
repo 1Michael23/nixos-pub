@@ -6,7 +6,10 @@
 }:
 
 {
-  home.packages = with pkgs; [ grc ];
+  home.packages = with pkgs; [
+    grc
+    lsd
+  ];
 
   programs = {
     fish = {
@@ -17,8 +20,11 @@
         set -gx SOPS_AGE_KEY_FILE ~/.config/sops/age/keys.txt
       '';
       shellAliases = {
-        ll = "ls -la";
-        la = "ls -A";
+        ls = "lsd --group-dirs first";
+        ll = "lsd -l --group-dirs first";
+        la = "lsd -A --group-dirs first";
+        ff = "fastfetch";
+
       };
       plugins = [
         {

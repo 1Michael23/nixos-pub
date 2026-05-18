@@ -10,7 +10,6 @@
   environment.systemPackages = with pkgs; [
     inputs.run0-sudo-shim.packages.${stdenv.hostPlatform.system}.default
     btop
-    fastfetch
     tlrc # tldr
     pfetch-rs
     duf

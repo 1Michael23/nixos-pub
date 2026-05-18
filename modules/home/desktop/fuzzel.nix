@@ -4,7 +4,6 @@
   pkgs,
   ...
 }:
-
 {
   programs.fuzzel = {
     enable = true;
@@ -17,9 +16,11 @@
         layer = "overlay"; # stays on top in Sway
         icons-enabled = true;
         icon-theme = "Papirus-Dark";
-        border-width = 2;
-        border-radius = 12;
         inner-pad = 8;
+      };
+      border = {
+        width = 4;
+        radius = 10;
       };
 
     };

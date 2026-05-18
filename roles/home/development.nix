@@ -36,10 +36,11 @@
       cargo
       bat
       unzip
-      fastfetch
       source-code-pro
       sops
       age
+
+      kicad
 
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [

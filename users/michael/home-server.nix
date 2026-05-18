@@ -22,7 +22,6 @@
 
   home.packages = with pkgs; [
     btop
-    fastfetch
     ripgrep
     fd
     tree
@@ -36,6 +35,7 @@
   imports = [
     ../../modules/home/shell/fish.nix
     ../../modules/home/shell/git.nix
+    ../../modules/home/shell/fastfetch.nix
     ../../roles/home/development.nix
 
   ];

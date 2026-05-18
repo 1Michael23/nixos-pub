@@ -159,12 +159,35 @@
       }
 
       #clock:hover,
-      #battery:hover,
-      #network:hover,
       #tray:hover,
       #custom-notification:hover,
       #power-profiles-daemon:hover {
           background-color: @base01;
+      }
+
+      #battery:hover {
+          background-color: @base01;
+      }
+
+      #battery.charging:hover,
+      #battery.plugged:hover {
+          background-color: @base0B;
+      }
+
+      #battery.warning:hover {
+          background-color: @base0A;
+      }
+
+      #battery.critical:not(.charging):hover {
+          background-color: @base08;
+      }
+
+      #network:hover {
+          background-color: @base0D;
+      }
+
+      #network.disconnected:hover {
+          background-color: @base08;
       }
 
       #battery.charging,
@@ -173,10 +196,15 @@
           color: @base00;
       }
 
+      #battery.warning {
+          background-color: @base0A;
+          color: @base00;
+      }
+
       @keyframes blink {
           to {
-              background-color: @base05;
-              color: @base00;
+              background-color: @base00;
+              color: @base08;
           }
       }
 
@@ -197,6 +225,11 @@
 
       #network.disconnected {
           background-color: @base08;
+          color: @base00;
+      }
+
+      #idle_inhibitor.activated {
+          background-color: @base0D;
           color: @base00;
       }
 
@@ -231,6 +264,7 @@
         "network"
         "battery"
         "power-profiles-daemon"
+        "idle_inhibitor"
         "clock"
         "custom/notification"
         "tray"
@@ -238,16 +272,16 @@
 
       "sway/workspaces" = {
         persistent-workspaces = {
-          "1" = [];
-          "2" = [];
-          "3" = [];
-          "4" = [];
-          "5" = [];
-          "6" = [];
-          "7" = [];
-          "8" = [];
-          "9" = [];
-          "10" = [];
+          "1" = [ ];
+          "2" = [ ];
+          "3" = [ ];
+          "4" = [ ];
+          "5" = [ ];
+          "6" = [ ];
+          "7" = [ ];
+          "8" = [ ];
+          "9" = [ ];
+          "10" = [ ];
         };
       };
 
@@ -268,10 +302,17 @@
 
       battery = {
         interval = 2;
+        states = {
+          warning = 30;
+          critical = 15;
+        };
         format = "{capacity}% {icon}";
-        tooltip-format = "{power:.1f}W draw\n{capacity}% capacity\n{time} remaining\nHealth: {health}%";
+        tooltip-format = "{power:.1f}W\n{capacity}% capacity\n{time} remaining\nHealth: {health}%";
         # fa-battery-empty, -quarter, -half, -three-quarters, -full
-        format-icons = builtins.fromJSON ''[ "\uf244", "\uf243", "\uf242", "\uf241", "\uf240" ]'';
+        format-icons = {
+          default = builtins.fromJSON ''[ "\uf244", "\uf243", "\uf242", "\uf241", "\uf240" ]'';
+          charging = builtins.fromJSON ''"\uf0e7"'';
+        };
       };
 
       "power-profiles-daemon" = {
@@ -304,6 +345,14 @@
             weekdays = "<span color='#${config.lib.stylix.colors.base0A}'><b>{}</b></span>";
             today = "<span color='#${config.lib.stylix.colors.base08}'><b><u>{}</u></b></span>";
           };
+        };
+      };
+
+      "idle_inhibitor" = {
+        format = "{icon}";
+        format-icons = {
+          activated = "";
+          deactivated = "";
         };
       };
 

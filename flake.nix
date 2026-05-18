@@ -75,8 +75,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixarr = {
+      url = "github:nix-media-server/nixarr";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     stylix = {
       url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    vibelock = {
+      url = "git+file:///home/michael/dev/vibelock";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -132,6 +142,7 @@
           inputs.nix-mineral.nixosModules.nix-mineral
           inputs.solaar.nixosModules.default
           inputs.nixos-hardware.nixosModules.framework-13-7040-amd
+          inputs.vibelock.nixosModules.default
 
         ];
 
@@ -150,6 +161,7 @@
 
         modules = [
           inputs.disko.nixosModules.disko
+          inputs.nixarr.nixosModules.default
         ];
       };
 

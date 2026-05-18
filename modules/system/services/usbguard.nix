@@ -1,4 +1,3 @@
-# TODO wire up usbguard prompt with fuzzel
 {
   config,
   lib,

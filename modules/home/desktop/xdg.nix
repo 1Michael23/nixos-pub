@@ -1,5 +1,3 @@
-# TODO fix xdg bookmarks
-
 { config, pkgs, ... }:
 
 let
@@ -15,10 +13,8 @@ in
       defaultApplications = {
         "x-scheme-handler/http" = [ "re.sonny.Junction.desktop" ];
         "x-scheme-handler/https" = [ "re.sonny.Junction.desktop" ];
-
         "x-scheme-handler/file" = [ "re.sonny.Junction.desktop" ];
         "inode/directory" = [ "org.gnome.Nautilus.desktop" ];
-
       };
 
       associations.added = {
