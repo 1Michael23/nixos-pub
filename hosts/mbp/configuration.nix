@@ -10,7 +10,15 @@
   imports = [
     ./secrets.nix
     inputs.nix-index-database.darwinModules.nix-index
+    inputs.mac-app-util.darwinModules.default
   ];
+
+  home-manager.users.michael = import ../../users/michael/home.nix;
+
+  home-manager.extraSpecialArgs = {
+    inherit inputs;
+    vscodeExtensions = inputs.nix-vscode-extensions.extensions.${pkgs.system};
+  };
 
   system = {
     stateVersion = 4;
@@ -84,7 +92,7 @@
       FXPreferredViewStyle = "Nlsv"; # list view
       FXEnableExtensionChangeWarning = false;
       NewWindowTarget = "Other";
-      NewWindowTargetPath = "file://${builtins.getEnv "HOME"}/";
+      NewWindowTargetPath = "file:///Users/michael/";
     };
 
     CustomUserPreferences = {

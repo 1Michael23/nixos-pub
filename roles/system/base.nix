@@ -8,7 +8,7 @@
 
 {
   environment.systemPackages = with pkgs; [
-    inputs.run0-sudo-shim.packages.${stdenv.hostPlatform.system}.default
+    inputs.run0-sudo-shim.packages.${pkgs.stdenv.hostPlatform.system}.default
     btop
     tlrc # tldr
     pfetch-rs

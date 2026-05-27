@@ -1,5 +1,3 @@
-# flake.nix
-
 {
   description = "Nix";
 
@@ -61,18 +59,15 @@
 
     tf2-nix.url = "gitlab:msyds/tf2-nix";
 
-    usbguard-fuzzel.url = "github:1Michael23/usbguard-fuzzel";
+    usbguard-fuzzel.url = "path:/home/michael/dev/usbguard-fuzzel";
 
-    darwin.url = "github:lnl7/nix-darwin";
-    darwin.inputs.nixpkgs.follows = "nixpkgs";
+    darwin = {
+      url = "github:lnl7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     mac-app-util = {
       url = "github:hraban/mac-app-util";
-    };
-
-    nh = {
-      url = "github:nix-community/nh";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixarr = {
@@ -92,19 +87,21 @@
   };
 
   outputs =
-    inputs@{
+    {
       nixpkgs,
       darwin,
       home-manager,
       sops-nix,
+      nix-index-database,
       ...
-    }:
+    }@inputs:
     let
       mkHost = import ./lib/mkHost.nix {
         inherit
           nixpkgs
           home-manager
           sops-nix
+          nix-index-database
           inputs
           ;
       };
@@ -114,6 +111,7 @@
           darwin
           home-manager
           sops-nix
+          nix-index-database
           inputs
           ;
       };
@@ -122,59 +120,15 @@
       nixosConfigurations.framework = mkHost {
         hostname = "framework";
         system = "x86_64-linux";
-        secureBoot = true;
-
-        users.michael = ./users/michael/home.nix;
-
-        extraSpecialArgs = {
-          nix-mineral = {
-            enable = true;
-          };
-          tf2Nix = inputs.tf2-nix;
-          firefox-addons = inputs.firefox-addons.packages.x86_64-linux;
-          vscodeExtensions = inputs.nix-vscode-extensions.extensions.x86_64-linux;
-        };
-
-        modules = [
-          ./roles/system/desktop-sway.nix
-          ./modules/system/virtualization/libvirtd.nix
-          inputs.run0-sudo-shim.nixosModules.default
-          inputs.nix-mineral.nixosModules.nix-mineral
-          inputs.solaar.nixosModules.default
-          inputs.nixos-hardware.nixosModules.framework-13-7040-amd
-          inputs.vibelock.nixosModules.default
-
-        ];
-
       };
 
       nixosConfigurations.proxmox = mkHost {
         hostname = "proxmox";
         system = "x86_64-linux";
-        secureBoot = false;
-
-        users.michael = ./users/michael/home-server.nix;
-
-        extraSpecialArgs = {
-          vscodeExtensions = inputs.nix-vscode-extensions.extensions.x86_64-linux;
-        };
-
-        modules = [
-          inputs.disko.nixosModules.disko
-          inputs.nixarr.nixosModules.default
-        ];
       };
 
       darwinConfigurations.mbp = mkDarwinHost {
         hostname = "mbp";
-        users.michael = ./users/michael/home.nix;
-        modules = [
-          inputs.mac-app-util.darwinModules.default
-        ];
-        extraSpecialArgs = {
-          inherit inputs;
-          vscodeExtensions = inputs.nix-vscode-extensions.extensions.aarch64-darwin;
-        };
       };
     };
 }

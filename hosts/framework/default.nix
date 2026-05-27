@@ -12,17 +12,44 @@
     ./networking.nix
     ./hardening.nix
     ./secrets.nix
-
+    ../../roles/system/desktop-niri.nix
+    ../../modules/system/virtualization/libvirtd.nix
     ../../modules/system/services/usbguard.nix
     inputs.stylix.nixosModules.stylix
     ../../modules/system/theme/stylix.nix
 
+    inputs.lanzaboote.nixosModules.lanzaboote
+    inputs.run0-sudo-shim.nixosModules.default
+    inputs.nix-mineral.nixosModules.nix-mineral
+    inputs.solaar.nixosModules.default
+    inputs.nixos-hardware.nixosModules.framework-13-7040-amd
+    inputs.vibelock.nixosModules.default
   ];
+
+  home-manager.users.michael = import ../../users/michael/home.nix;
+
+  home-manager.extraSpecialArgs = {
+    inherit inputs;
+    nix-mineral = {
+      enable = true;
+    };
+    tf2Nix = inputs.tf2-nix;
+    firefox-addons = inputs.firefox-addons.packages.${pkgs.system};
+    vscodeExtensions = inputs.nix-vscode-extensions.extensions.${pkgs.system};
+  };
+
+  system.stateVersion = "25.05";
+
+  boot.loader.systemd-boot.enable = lib.mkForce false;
+  boot.lanzaboote = {
+    enable = true;
+    pkiBundle = "/var/lib/sbctl";
+  };
 
   environment.systemPackages = with pkgs; [
     powertop
     piper
-    inputs.nh.packages.x86_64-linux.nh
+    sbctl
   ];
 
   nixpkgs.config.allowUnfree = true;

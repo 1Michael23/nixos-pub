@@ -16,7 +16,18 @@
     ./nvidia.nix
     ../../modules/system/services/ollama.nix
     ../../modules/system/services/media.nix
+
+    inputs.disko.nixosModules.disko
+    inputs.nixarr.nixosModules.default
   ];
+
+  home-manager.users.michael = import ../../users/michael/home-server.nix;
+
+  home-manager.extraSpecialArgs = {
+    vscodeExtensions = inputs.nix-vscode-extensions.extensions.${pkgs.system};
+  };
+
+  system.stateVersion = "25.05";
 
   nixpkgs.config.allowUnfree = true;
 
