@@ -15,6 +15,7 @@
     ./secrets.nix
     ./nvidia.nix
     ../../modules/system/services/ollama.nix
+    ../../modules/system/services/media.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -34,6 +35,10 @@
       interval = "weekly";
     };
     tailscale.extraSetFlags = [ "--advertise-exit-node" ];
+    iperf3 = {
+      enable = true;
+      openFirewall = true;
+    };
   };
 
   nix = {
@@ -55,6 +60,14 @@
       dates = "weekly";
       options = "--delete-older-than 14d";
     };
+  };
+
+  system.autoUpgrade = {
+    enable = false;
+    flake = "github:1Michael23/nixos-pub";
+    dates = "04:00";
+    allowReboot = true;
+    persistent = true;
   };
 
   security.sudo = {
