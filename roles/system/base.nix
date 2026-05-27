@@ -18,7 +18,7 @@
     gdu
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_zen;
 
   imports = [
     inputs.nix-index-database.nixosModules.nix-index
@@ -30,6 +30,7 @@
 
   programs = {
     fish.enable = true;
+    nix-ld.enable = true;
     nix-index-database.comma.enable = true;
     nix-index.enable = true;
   };
