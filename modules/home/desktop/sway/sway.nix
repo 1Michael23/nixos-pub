@@ -1,19 +1,16 @@
 {
   config,
-  lib,
-  pkgs,
   ...
 }:
 
 {
-
   wayland.windowManager.sway = {
     enable = true;
 
     config = {
       modifier = "Mod4";
       terminal = "alacritty";
-      menu = "fuzzel";
+      menu = "vicinae toggle";
 
       startup = [
         {
@@ -33,8 +30,7 @@
           always = true;
         }
         {
-          command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_DATA_DIRS && systemctl --user restart xdg-desktop-portal xdg-desktop-portal-gtk";
-          always = false;
+          command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP";
         }
       ];
 
@@ -45,12 +41,12 @@
         "Mod4+q" = "kill";
         "Mod4+Shift+e" =
           ''exec swaynag -t warning -m "You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session." -B "Yes, exit sway" "swaymsg exit"'';
-        "Mod4+space" = "exec fuzzel";
+        "Mod4+space" = "exec vicinae toggle";
         "Mod4+Shift+c" = "reload";
         "Mod4+Shift+space" = "floating toggle";
         "Mod4+f" = "fullscreen";
 
-        "Mod4+u" = "exec usbguard-fuzzel";
+        "Mod4+u" = "exec usbguard-dmenu vicinae dmenu --placeholder";
         "Mod4+Shift+n" = "exec swaync-client -t -sw";
 
         "Print" = "exec grimshot --notify savecopy screen";
@@ -70,6 +66,9 @@
 
         "Mod4+greater" = "move workspace to output right";
         "Mod4+less" = "move workspace to output left";
+
+        "Mod4+Shift+greater" = "move container to output right";
+        "Mod4+Shift+less" = "move container to output left";
 
         "Mod4+1" = "workspace number 1";
         "Mod4+2" = "workspace number 2";
@@ -93,18 +92,29 @@
         "Mod4+Shift+9" = "move container to workspace number 9";
         "Mod4+Shift+0" = "move container to workspace number 10";
 
-        "Mod4+v" = "exec cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"; # clipboard history
-
-        "XF86AudioRaiseVolume" = "exec playerctl -p spotify volume 0.02+";
-        "XF86AudioLowerVolume" = "exec playerctl -p spotify volume 0.02-";
+        "XF86AudioRaiseVolume" = "exec swayosd-client --output-volume raise";
+        "XF86AudioLowerVolume" = "exec swayosd-client --output-volume lower";
+        "Mod4+XF86AudioRaiseVolume" = "exec playerctl -p spotify volume 0.02+";
+        "Mod4+XF86AudioLowerVolume" = "exec playerctl -p spotify volume 0.02-";
         "XF86AudioMute" = "exec swayosd-client --output-volume mute-toggle";
-        "XF86AudioNext" = "exec playerctl next";
-        "XF86AudioPrev" = "exec playerctl previous";
-        "XF86AudioPlay" = "exec playerctl play-pause";
+        "XF86AudioNext" = "exec swayosd-client --playerctl next";
+        "XF86AudioPrev" = "exec swayosd-client --playerctl previous";
+        "XF86AudioPlay" = "exec swayosd-client --playerctl play-pause";
         "XF86AudioMicMute" = "exec swayosd-client --input-volume mute-toggle";
-        "--release Caps_Lock" = "exec swayosd-client --caps-lock";
         "XF86MonBrightnessUp" = "exec swayosd-client --brightness raise";
         "XF86MonBrightnessDown" = "exec swayosd-client --brightness lower";
+        "XF86KbdBrightnessUp" = "exec brightnessctl -d platform::kbd_backlight set +10%";
+        "XF86KbdBrightnessDown" = "exec brightnessctl -d platform::kbd_backlight set 10%-";
+
+        "Mod4+minus" = "scratchpad show";
+        "Mod4+Shift+minus" = "move container to scratchpad";
+
+        "Mod4+w" = "layout tabbed";
+        "Mod4+Shift+w" = "layout stacking";
+        "Mod4+e" = "layout toggle split";
+
+        "Mod4+Shift+t" = "sticky toggle";
+        "Mod4+v" = "exec cliphist list | vicinae dmenu | cliphist decode | wl-copy"; # clipboard history
       };
 
       modes = {
@@ -113,6 +123,10 @@
           "Down" = "resize grow height 10px";
           "Up" = "resize shrink height 10px";
           "Right" = "resize grow width 10px";
+          "h" = "resize shrink width 10px";
+          "j" = "resize grow height 10px";
+          "k" = "resize shrink height 10px";
+          "l" = "resize grow width 10px";
           "Return" = "mode default";
           "Escape" = "mode default";
         };
@@ -150,25 +164,38 @@
       gaps = {
         inner = 5;
       };
+
     };
 
     extraConfig = ''
       default_border pixel 2
       default_floating_border none
 
-      # Lid behavior
-      bindswitch lid:on  output eDP-1 disable
-      bindswitch lid:off output eDP-1 enable
+      focus_follows_mouse yes
+      mouse_warping none
+      default_orientation horizontal
+      workspace_auto_back_and_forth yes
+      focus_wrapping workspace
+      tiling_drag disable
+      floating_maximum_size -1 x -1
+
+      # Gestures
+      bindgesture swipe:3:left workspace next_on_output
+      bindgesture swipe:3:right workspace prev_on_output
+      bindgesture swipe:3:up fullscreen toggle
+      bindgesture swipe:3:down floating toggle
 
       # Window rules
       for_window [title="Junction"] floating enable
       for_window [title="Junction"] nofocus
       for_window [title="Mullvad VPN"] floating enable
+
+      bindswitch lid:off output eDP-1 disable
+      bindswitch lid:on output eDP-1 enable
     '';
   };
 
   home.sessionVariables = {
     NIXOS_OZONE_WL = "1";
-    XDG_DATA_DIRS = "$XDG_DATA_DIRS:$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share";
   };
 }

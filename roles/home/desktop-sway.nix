@@ -12,13 +12,13 @@
     swaybg
     cliphist
     alacritty
-    fuzzel
+    vicinae
     grim
     slurp
     sway-contrib.grimshot
     wl-clipboard
-    swayosd
     autotiling-rs
+    swayosd
     brightnessctl
     pavucontrol
     playerctl
@@ -28,7 +28,7 @@
   imports = [
     ../../modules/home/desktop/sway/sway.nix
     ../../modules/home/desktop/waybar/waybar.nix
-    ../../modules/home/desktop/fuzzel.nix
+    ../../modules/home/desktop/vicinae.nix
     ../../modules/home/desktop/alacritty.nix
     ../../modules/home/desktop/swaync.nix
     ../../modules/home/services/tailscale-tray.nix
