@@ -6,10 +6,6 @@
 }:
 
 {
-  imports = [
-    ../../modules/home/personal/ansel.nix
-  ];
-
   home.packages =
     with pkgs;
     [
@@ -28,8 +24,6 @@
       gimp
 
       digikam
-
-      siril
 
       nomacs
     ];
