@@ -40,11 +40,10 @@
       sops
       age
 
-      kicad
-
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
       imhex
+      kicad
 
       python313
       python313Packages.notebook
