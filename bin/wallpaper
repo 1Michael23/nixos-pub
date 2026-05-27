@@ -1,0 +1,94 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REPO="${NH_FLAKE:-$HOME/dev/nixos-pub}"
+WALLPAPER_DIR="$REPO/modules/home/desktop/wallpapers"
+TARGET="$WALLPAPER_DIR/current.png"
+
+usage() {
+  cat >&2 <<'EOF'
+Usage: wallpaper <command> [args]
+
+Commands:
+  set   <path>   Copy image to current.png and rebuild
+  pick            Select wallpaper via dmenu launcher
+  list            List available wallpapers
+  current         Show current wallpaper path
+EOF
+  exit 1
+}
+
+cmd_set() {
+  local src="$1"
+  if [ ! -f "$src" ]; then
+    echo "Error: file not found: $src" >&2
+    exit 1
+  fi
+  mkdir -p "$WALLPAPER_DIR"
+  cp "$src" "$TARGET"
+  echo "Wallpaper set to: $src"
+  echo "Rebuilding NixOS..."
+  nh os switch
+  systemctl --user restart swaybg 2>/dev/null || true
+}
+
+cmd_list() {
+  find "$WALLPAPER_DIR" -maxdepth 1 -type f \
+    \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' \) \
+    ! -name 'current.png' -printf '%f\n' 2>/dev/null | sort
+}
+
+cmd_pick() {
+  local wallpapers
+  wallpapers=$(cmd_list)
+  if [ -z "$wallpapers" ]; then
+    echo "No wallpapers found in $WALLPAPER_DIR" >&2
+    echo "Add images to that directory and try again." >&2
+    exit 1
+  fi
+
+  local launcher selected
+  if command -v vicinae &>/dev/null; then
+    launcher="vicinae dmenu"
+  elif command -v fuzzel &>/dev/null; then
+    launcher="fuzzel --dmenu"
+  elif command -v dmenu &>/dev/null; then
+    launcher="dmenu"
+  elif command -v wofi &>/dev/null; then
+    launcher="wofi --dmenu"
+  elif command -v rofi &>/dev/null; then
+    launcher="rofi -dmenu"
+  elif command -v bemenu &>/dev/null; then
+    launcher="bemenu"
+  else
+    echo "No dmenu-compatible launcher found" >&2
+    echo "Install vicinae, fuzzel, dmenu, wofi, rofi, or bemenu" >&2
+    exit 1
+  fi
+
+  selected=$(echo "$wallpapers" | $launcher 2>/dev/null)
+  [ -z "$selected" ] && exit 0
+  cmd_set "$WALLPAPER_DIR/$selected"
+}
+
+cmd_current() {
+  if [ -f "$TARGET" ]; then
+    echo "$TARGET"
+  else
+    echo "No current wallpaper set" >&2
+    exit 1
+  fi
+}
+
+[ $# -eq 0 ] && usage
+
+case "$1" in
+  set)
+    [ $# -lt 2 ] && { echo "Usage: wallpaper set <path>" >&2; exit 1; }
+    shift; cmd_set "$@"
+    ;;
+  pick)  cmd_pick  ;;
+  list)  cmd_list  ;;
+  current) cmd_current ;;
+  *) usage ;;
+esac

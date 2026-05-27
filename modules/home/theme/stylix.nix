@@ -9,16 +9,14 @@
   stylix.targets = {
     waybar.enable = true;
     swaync.enable = true;
-    alacritty.enable = false;
     sway.enable = true;
-    fuzzel.enable = true;
-    btop.enable = false;
     bat.enable = true;
-    fish.enable = false;
     neovim.enable = true;
-    vscode.enable = false;
     zed.enable = true;
-    librewolf.profileNames = [ "default" ];
+    alacritty.enable = false;
+    btop.enable = false;
+    fish.enable = false;
+    vscode.enable = false;
     opencode.enable = false;
   };
 }
