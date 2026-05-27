@@ -16,15 +16,13 @@
       "--disable-features=UseChromeOSDirectVideoDecoder"
     ];
 
-    #TODO declarative extensions
-    #TODO declarative bookmarks
-
   };
 
   xdg.desktopEntries.chromium-browser = {
     name = "Chromium";
     genericName = "Web Browser";
-    exec = "${pkgs.ungoogled-chromium}/bin/chromium %U";
+    exec = "${config.programs.chromium.finalPackage}/bin/chromium %U";
+    icon = "chromium";
     terminal = false;
     categories = [
       "Application"
