@@ -9,7 +9,13 @@
   programs.alacritty = {
     enable = true;
     settings = {
-      window.opacity = 0.85;
+      window = {
+        opacity = 0.7;
+        padding = {
+          x = 6;
+          y = 6;
+        };
+      };
       font = {
         normal = {
           family = "Source Code Pro";
