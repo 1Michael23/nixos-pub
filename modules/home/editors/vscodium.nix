@@ -28,7 +28,6 @@
             ms-toolsai.jupyter-renderers
             ms-python.python
             ms-vscode.cpptools
-            charliermarsh.ruff
           ]
           ++ lib.optionals pkgs.stdenv.isLinux [
             mkhl.direnv

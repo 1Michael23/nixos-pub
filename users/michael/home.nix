@@ -29,9 +29,7 @@
       openssh
       jq
       freecad
-      orca-slicer
-      discord
-
+      bitwarden-cli
     ];
 
   imports = [
@@ -51,7 +49,7 @@
     ../../modules/home/desktop/chromium.nix
     ../../modules/home/desktop/librewolf.nix
     ../../roles/home/pentesting.nix
-    ../../roles/home/desktop-sway.nix
+    ../../roles/home/desktop-niri.nix
     ../../modules/home/personal/tf2-game.nix
     ../../modules/home/services/syncthing.nix
   ];
@@ -83,10 +81,19 @@
     EDITOR = "nvim";
     LANG = "en_AU.UTF-8";
     NH_FLAKE = "$HOME/dev/nixos-pub";
+    MODS_API_BASE = "http://127.0.0.1:11434";
   }
   // lib.optionalAttrs pkgs.stdenv.isLinux {
     TERMINAL = "alacritty";
-    BROWSER = "chromium";
 
+  };
+
+  home.sessionPath = lib.mkIf isLinux [ "${config.home.homeDirectory}/.local/bin" ];
+
+  home.file = lib.mkIf isLinux {
+    ".local/bin/wallpaper" = {
+      source = ../../bin/wallpaper;
+      executable = true;
+    };
   };
 }

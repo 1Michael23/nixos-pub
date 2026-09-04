@@ -18,19 +18,19 @@
           always = true;
         }
         {
+          command = "swaybg -i ${config.stylix.image} -m fill";
+          always = true;
+        }
+        {
           command = "autotiling-rs";
           always = true;
         }
         {
-          command = "wl-paste --type text  --watch cliphist store";
-          always = true;
-        }
-        {
-          command = "wl-paste --type image --watch cliphist store";
-          always = true;
-        }
-        {
           command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP";
+        }
+        {
+          command = "swaync";
+          always = true;
         }
       ];
 
@@ -45,6 +45,7 @@
         "Mod4+Shift+c" = "reload";
         "Mod4+Shift+space" = "floating toggle";
         "Mod4+f" = "fullscreen";
+        "Mod4+l" = "exec vibelock";
 
         "Mod4+u" = "exec usbguard-dmenu vicinae dmenu --placeholder";
         "Mod4+Shift+n" = "exec swaync-client -t -sw";
@@ -114,7 +115,7 @@
         "Mod4+e" = "layout toggle split";
 
         "Mod4+Shift+t" = "sticky toggle";
-        "Mod4+v" = "exec cliphist list | vicinae dmenu | cliphist decode | wl-copy"; # clipboard history
+        "Mod4+v" = "exec vicinae deeplink vicinae://launch/clipboard/history";
       };
 
       modes = {
@@ -143,6 +144,9 @@
         "type:mouse" = {
           pointer_accel = "0";
           scroll_factor = "1";
+        };
+        "type:keyboard" = {
+          xkb_numlock = "enabled";
         };
       };
 
@@ -189,6 +193,11 @@
       for_window [title="Junction"] floating enable
       for_window [title="Junction"] nofocus
       for_window [title="Mullvad VPN"] floating enable
+      for_window [app_id="pavucontrol"] floating enable
+      for_window [app_id="blueman-manager"] floating enable
+      for_window [app_id="imv"] floating enable
+      for_window [app_id="Lxpolkit"] floating enable
+      for_window [class="Steam" title="notificationtoasts"] floating enable
 
       bindswitch lid:off output eDP-1 disable
       bindswitch lid:on output eDP-1 enable

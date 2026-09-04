@@ -8,6 +8,8 @@
 {
   programs.zed-editor = {
     enable = true;
+    mutableUserSettings = false;
+    installRemoteServer = true;
 
     extensions = [
       "nix"
@@ -17,26 +19,13 @@
     ];
 
     userSettings = {
-      assistant = {
+      agent = {
         enabled = false;
-        version = "2";
-        default_open_ai_model = null;
+      };
 
-        # Provider options:
-        # - zed.dev models (claude-3-5-sonnet-latest) requires GitHub connected
-        # - anthropic models (claude-3-5-sonnet-latest, claude-3-haiku-latest, claude-3-opus-latest) requires API_KEY
-        # - copilot_chat models (gpt-4o, gpt-4, gpt-3.5-turbo, o1-preview) requires GitHub connected
-        default_model = {
-          provider = "zed.dev";
-          model = "claude-3-5-sonnet-latest";
-        };
-
-        # inline_alternatives = [
-        #   {
-        #     provider = "copilot_chat";
-        #     model = "gpt-3.5-turbo";
-        #   }
-        # ];
+      telemetry = {
+        diagnostics = false;
+        metrics = false;
       };
 
       hour_format = "hour24";
@@ -96,9 +85,25 @@
       load_direnv = "shell_hook";
       base_keymap = "VSCode";
 
+      format_on_save = "on";
+      tab_size = 4;
+      soft_wrap = "none";
       show_whitespaces = "all";
-      ui_font_size = 12;
-      buffer_font_size = 12;
+
+      minimap = {
+        enabled = true;
+      };
+
+      project_panel = {
+        dock = "left";
+      };
+
+      toolbar = {
+        breadcrumbs = false;
+      };
+
+      buffer_font_size = lib.mkForce 14;
+      ui_font_size = lib.mkForce 14;
     };
   };
 

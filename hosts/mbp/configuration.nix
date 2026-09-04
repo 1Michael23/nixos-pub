@@ -185,7 +185,6 @@
       "adobe-creative-cloud"
       "lm-studio"
       "utm"
-      "orcaslicer"
       "imazing"
       "imaging-edge"
       "tor-browser"

@@ -16,6 +16,10 @@
     ./nvidia.nix
     ../../modules/system/services/ollama.nix
     ../../modules/system/services/media.nix
+    # Disabled: frigate's onnxruntime GPU detector requires cuDNN >= 7.5,
+    # but the Quadro P5000 (Pascal, CC 6.1) is unsupported by cuDNN 9.x.
+    # ../../modules/system/services/frigate.nix
+    ../../modules/system/services/minecraft-server.nix
 
     inputs.disko.nixosModules.disko
     inputs.nixarr.nixosModules.default

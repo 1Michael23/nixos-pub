@@ -14,7 +14,10 @@
     polarity = "dark";
     imageScalingMode = "fill";
 
-    targets.fish.enable = false;
+    targets = {
+      fish.enable = false;
+      chromium.enable = true;
+    };
 
     fonts = {
       monospace = {

@@ -33,6 +33,7 @@
     ../../modules/home/desktop/swaync.nix
     ../../modules/home/services/tailscale-tray.nix
     ../../modules/home/theme/stylix.nix
+    ../../modules/home/desktop/vesktop.nix
   ];
 
 }

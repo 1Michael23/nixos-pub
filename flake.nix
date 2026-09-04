@@ -52,11 +52,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    vscode-server = {
-      url = "github:nix-community/nixos-vscode-server";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     tf2-nix.url = "gitlab:msyds/tf2-nix";
 
     usbguard-fuzzel.url = "path:/home/michael/dev/usbguard-fuzzel";
@@ -80,10 +75,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    vibelock = {
-      url = "git+file:///home/michael/dev/vibelock";
+    niri = {
+      url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    vibelock.url = "path:/home/michael/dev/vibelock";
+
   };
 
   outputs =

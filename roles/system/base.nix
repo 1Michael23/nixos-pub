@@ -18,14 +18,14 @@
     gdu
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_zen;
+  boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
 
   imports = [
     inputs.nix-index-database.nixosModules.nix-index
     ../../modules/system/networking/tailscale.nix
     ../../modules/system/networking/ssh-server.nix
     ../../modules/system/users/authorized-keys.nix
-    ../../modules/system/services/vscode-server.nix
+    #../../modules/system/services/vscode-server.nix
   ];
 
   programs = {

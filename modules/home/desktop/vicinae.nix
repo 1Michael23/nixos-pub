@@ -58,11 +58,11 @@ in
     };
     theme = {
       dark = {
-        name = "Stylix";
+        name = "stylix";
         icon_theme = "auto";
       };
       light = {
-        name = "Stylix";
+        name = "stylix";
         icon_theme = "auto";
       };
     };
@@ -71,7 +71,7 @@ in
     fallbacks = [ "files:search" ];
   };
 
-  xdg.configFile."vicinae/themes/stylix.toml".text = ''
+  xdg.dataFile."vicinae/themes/stylix.toml".text = ''
     [meta]
     name = "Stylix"
     description = "Generated from stylix base16 scheme"

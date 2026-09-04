@@ -18,30 +18,23 @@
       extensions.packages = with firefox-addons; [
         ublock-origin
         bitwarden
-        privacy-badger
-        clearurls
-        decentraleyes
-        terms-of-service-didnt-read
         sponsorblock
-        return-youtube-dislikes
         violentmonkey
+        darkreader
+        consent-o-matic
+        dearrow
       ];
 
       settings = {
-
         "browser.compactmode.show" = true;
         "browser.uidensity" = 1;
         "ui.systemUsesDarkTheme" = 1;
 
         "media.ffmpeg.vaapi.enabled" = true;
         "media.hardware-video-decoding.force-enabled" = true;
-        "media.hardware-video-decoding.enabled" = true;
         "gfx.webrender.all" = true;
-        "gfx.webrender.compositor" = true;
-        "gfx.webrender.compositor.force-enabled" = true;
-        "widget.dmabuf.force-enabled" = true;
+        "widget.dmabuf.force-enabled" = false;
         "media.av1.enabled" = true;
-        "media.ffvpx.enabled" = false;
         "media.navigator.mediadatadecoder_vpx_enabled" = true;
 
         "widget.use-xdg-desktop-portal.mime-handler" = 1;
@@ -53,24 +46,14 @@
         "browser.tabs.closeWindowWithLastTab" = false;
         "browser.tabs.warnOnClose" = false;
         "browser.aboutConfig.showWarning" = false;
-        "full-screen-api.ignore-widgets" = true; # proper fullscreen in tiling WMs
-        "apz.gtk.kinetic_scroll.enabled" = true; # smooth scrolling on touchpad
+        "apz.gtk.kinetic_scroll.enabled" = true;
 
-        "privacy.resistFingerprinting" = true;
-        "privacy.resistFingerprinting.letterboxing" = false;
+        "privacy.fingerprintingProtection" = true;
+        "privacy.fingerprintingProtection.overrides" = "+AllTargets,-CSSPrefersColorScheme,-JSDateTimeUTC";
         "webgl.disabled" = false;
-        "identity.fxa.enabled" = false;
         "privacy.clearOnShutdown.cookies" = false;
-
-        "privacy.resistFingerprinting.autoDeclineNoUserInputCanvasPrompts" = false;
-        "layout.css.prefers-color-scheme.content-override" = 2;
+        "layout.css.prefers-color-scheme.content-override" = 0;
       };
     };
-  };
-
-  home.sessionVariables = {
-    MOZ_ENABLE_WAYLAND = "1";
-    MOZ_WEBRENDER = "1";
-    LIBVA_DRIVER_NAME = "radeonsi";
   };
 }

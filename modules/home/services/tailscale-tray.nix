@@ -11,7 +11,7 @@
         PartOf = [ "graphical-session.target" ];
       };
       Service = {
-        ExecStart = "${pkgs.trayscale}/bin/trayscale";
+        ExecStart = "${pkgs.trayscale}/bin/trayscale --hide-window";
         Restart = "on-failure";
       };
       Install.WantedBy = [ "graphical-session.target" ];

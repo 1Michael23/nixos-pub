@@ -48,7 +48,16 @@
         "@tarquinen/opencode-dcp@latest"
         "@howaboua/opencode-tps-counter@latest"
         "@ramtinj95/opencode-tokenscope@latest"
+        "opencode-background-agents@latest"
+
       ];
+
+      mcp = {
+        nixos = {
+          type = "local";
+          command = ["${pkgs.mcp-nixos}/bin/mcp-nixos"];
+        };
+      };
     };
 
     tui = {

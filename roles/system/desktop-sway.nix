@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 
@@ -21,16 +22,22 @@
     sway
     dbus
 
-    thunar
+    nautilus
+    nautilus-open-any-terminal
     file-roller
-    ffmpegthumbnailer
-    poppler-utils
+
+    gst_all_1.gstreamer
+    gst_all_1.gst-plugins-base
+    gst_all_1.gst-plugins-good
+    gst_all_1.gst-plugins-bad
+    gst_all_1.gst-libav
 
     networkmanagerapplet
     source-code-pro
     font-awesome
     tuigreet
     piper
+    swayidle
 
     flatpak
     gnome-software
@@ -41,10 +48,24 @@
 
     libva-utils
 
+    gnome-disk-utility
+
+    mpv
+    imv
+    ffmpeg
+    unzip
+    p7zip
+    unrar
+    trash-cli
+    wf-recorder
+    wlsunset
+    easyeffects
+    lm_sensors
+
   ];
 
   services = {
-    tumbler.enable = true; # thumbnails for nautilus
+    udev.packages = [ pkgs.swayosd ];
 
     gvfs.enable = true;
 
@@ -61,7 +82,19 @@
     flatpak.enable = true;
     packagekit.enable = true;
 
+    avahi = {
+      enable = true;
+      nssmdns = true;
+      publish.enable = true;
+    };
+
+    printing = {
+      enable = true;
+      drivers = [ pkgs.gutenprint ];
+    };
+
     nscd.enable = true;
+    upower.enable = true;
 
     dbus.enable = true;
 
@@ -78,6 +111,7 @@
     login.fprintAuth = false;
     sudo.fprintAuth = true;
     polkit-1.fprintAuth = true;
+    greetd.enableGnomeKeyring = true;
   };
 
   hardware.graphics = {
@@ -93,12 +127,27 @@
     ];
   };
 
+  programs.obs-studio = {
+    enable = true;
+    enableVirtualCamera = true;
+
+    plugins = with pkgs.obs-studio-plugins; [
+      wlrobs
+      obs-backgroundremoval
+      obs-pipewire-audio-capture
+      obs-vaapi
+      obs-gstreamer
+      obs-vkcapture
+    ];
+  };
+
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [
       xdg-desktop-portal-wlr
       xdg-desktop-portal-gtk
     ];
+    configPackages = [ pkgs.sway ];
     xdgOpenUsePortal = true;
     config.common.default = [
       "wlr"
@@ -119,5 +168,16 @@
   };
 
   security.polkit.enable = true;
+
+  programs.dconf = {
+    enable = true;
+    profiles.user.databases = [
+      {
+        settings."com/github/stunkymonkey/nautilus-open-any-terminal" = {
+          terminal = "'alacritty'";
+        };
+      }
+    ];
+  };
 
 }

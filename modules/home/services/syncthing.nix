@@ -9,6 +9,7 @@
   services.syncthing = {
     enable = true;
     tray.enable = true;
+    tray.command = "syncthingtray qt-widgets-gui --single-instance --wait";
 
     overrideDevices = true;
     overrideFolders = true;

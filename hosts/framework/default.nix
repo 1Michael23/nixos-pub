@@ -7,6 +7,10 @@
 }:
 
 {
+  nixpkgs.overlays = [
+    inputs.niri.overlays.niri
+  ];
+
   imports = [
     ./hardware-configuration.nix
     ./networking.nix
@@ -15,15 +19,17 @@
     ../../roles/system/desktop-niri.nix
     ../../modules/system/virtualization/libvirtd.nix
     ../../modules/system/services/usbguard.nix
+    ../../modules/system/services/vibelock.nix
+    ../../modules/system/services/ollama-local.nix
     inputs.stylix.nixosModules.stylix
     ../../modules/system/theme/stylix.nix
 
     inputs.lanzaboote.nixosModules.lanzaboote
     inputs.run0-sudo-shim.nixosModules.default
     inputs.nix-mineral.nixosModules.nix-mineral
-    inputs.solaar.nixosModules.default
     inputs.nixos-hardware.nixosModules.framework-13-7040-amd
     inputs.vibelock.nixosModules.default
+    inputs.vibelock.nixosModules.stylix
   ];
 
   home-manager.users.michael = import ../../users/michael/home.nix;
@@ -50,19 +56,19 @@
     powertop
     piper
     sbctl
+    amd-debug-tools
   ];
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    # permittedInsecurePackages = [
+    #   "librewolf-151.0.2-1"
+    #   "librewolf-unwrapped-151.0.2-1"
+    #   # TODO: monitor upstream for active nixpkgs maintainer status
+    # ];
+  };
 
   boot = {
-    kernelParams = [
-      "mem_sleep_default=deep"
-    ];
-
-    extraModulePackages = with config.boot.kernelPackages; [
-      rtw88
-    ];
-
     tmp = {
       useTmpfs = true;
       tmpfsSize = "50%";
@@ -117,25 +123,20 @@
     optimise.automatic = true;
   };
 
-  systemd.sleep.settings.Sleep.HibernateDelaySec = 1800;
+  systemd.sleep.settings.Sleep = {
+    HibernateDelaySec = "45min";
+    SuspendEstimationSec = "20min";
+  };
 
   services = {
     logind.settings.Login = {
       HandleLidSwitch = "suspend-then-hibernate";
       HandleLidSwitchExternalPower = "ignore";
       HandleLidSwitchDocked = "ignore";
-      HandlePowerKey = "hibernate";
+      HandlePowerKey = "suspend-then-hibernate";
       HandleSuspendKey = "suspend";
       HandleHibernateKey = "hibernate";
-      HandlePowerKeyLongPress = "poweroff";
-    };
-
-    solaar = {
-      enable = true;
-      package = pkgs.solaar;
-      window = "hide";
-      batteryIcons = "regular";
-      extraArgs = "";
+      HandlePowerKeyLongPress = "hibernate";
     };
 
     blueman.enable = true;
@@ -182,8 +183,12 @@
         };
       };
     };
-
-    framework.laptop13.audioEnhancement.enable = true;
+    framework = {
+      enableKmod = true;
+      laptop13.audioEnhancement.enable = true;
+    };
+    sane.enable = true; # scanning support
+    amdgpu.opencl.enable = true;
   };
 
   programs = {
@@ -193,8 +198,13 @@
       dedicatedServer.openFirewall = false;
       localNetworkGameTransfers.openFirewall = true;
     };
+    wireshark.enable = true;
     gamescope.enable = true;
     gamemode.enable = true;
+    solaar = {
+      enable = true;
+      userService.enable = true;
+    };
   };
 
   time.timeZone = "Australia/Sydney";
@@ -217,6 +227,8 @@
       "libvirtd"
       "wireshark"
       "dialout"
+      "scanner"
+      "lp" # printing stuff
     ];
 
     shell = pkgs.fish;

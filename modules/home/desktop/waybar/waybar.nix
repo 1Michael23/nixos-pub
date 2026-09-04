@@ -271,6 +271,7 @@
       ];
 
       "sway/workspaces" = {
+        all-outputs = true;
         persistent-workspaces = {
           "1" = [ ];
           "2" = [ ];

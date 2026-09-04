@@ -39,6 +39,10 @@
       source-code-pro
       sops
       age
+      oterm
+      gollama
+      mods
+      fabric-ai
 
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
@@ -70,6 +74,8 @@
     ../../modules/home/shell/git.nix
     ../../modules/home/editors/vscodium.nix
     ../../modules/home/editors/opencode.nix
+    ../../modules/home/editors/pi.nix
+    ../../modules/home/editors/zed.nix
     ../../modules/home/editors/neovim.nix
   ];
 

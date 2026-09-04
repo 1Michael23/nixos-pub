@@ -1,4 +1,5 @@
 result
 result-*
 .direnv/
-modules/home/desktop/wallpapers/
+modules/home/desktop/wallpapers/*
+!modules/home/desktop/wallpapers/current.png
