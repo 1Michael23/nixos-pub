@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   lib,
   ...
@@ -15,7 +14,7 @@
       jpegoptim
       oxipng
     ]
-    ++ lib.optionals pkgs.stdenv.isLinux [
+    ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
       ansel
 
       gphoto2
@@ -28,7 +27,7 @@
       nomacs
     ];
 
-  home.sessionVariables = lib.mkIf pkgs.stdenv.isLinux {
+  home.sessionVariables = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
     GDK_BACKEND = "wayland,x11";
   };
 }

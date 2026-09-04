@@ -1,5 +1,4 @@
 {
-  config,
   lib,
   pkgs,
   ...
@@ -40,7 +39,7 @@
       enableFishIntegration = true;
     };
 
-    direnv = lib.mkIf pkgs.stdenv.isLinux {
+    direnv = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
       # NOTE broken on nix-darwin temporarily
       enable = true;
       nix-direnv.enable = true;

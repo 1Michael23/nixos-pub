@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   lib,
   inputs,
@@ -28,7 +27,7 @@
   home-manager.users.michael = import ../../users/michael/home-server.nix;
 
   home-manager.extraSpecialArgs = {
-    vscodeExtensions = inputs.nix-vscode-extensions.extensions.${pkgs.system};
+    vscodeExtensions = inputs.nix-vscode-extensions.extensions.${pkgs.stdenv.hostPlatform.system};
   };
 
   system.stateVersion = "25.05";

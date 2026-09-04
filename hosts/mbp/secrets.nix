@@ -1,5 +1,4 @@
-{ config, ... }:
-{
+_: {
   sops = {
     defaultSopsFile = ../../secrets/mbp.yaml;
     age.keyFile = "/Users/michael/.config/sops/age/keys.txt";

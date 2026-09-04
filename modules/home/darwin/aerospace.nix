@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+_:
 
 {
   xdg.configFile."aerospace/aerospace.toml".text = ''

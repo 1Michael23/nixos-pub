@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   lib,
   inputs,
@@ -40,17 +39,11 @@
       enable = true;
     };
     tf2Nix = inputs.tf2-nix;
-    firefox-addons = inputs.firefox-addons.packages.${pkgs.system};
-    vscodeExtensions = inputs.nix-vscode-extensions.extensions.${pkgs.system};
+    firefox-addons = inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system};
+    vscodeExtensions = inputs.nix-vscode-extensions.extensions.${pkgs.stdenv.hostPlatform.system};
   };
 
   system.stateVersion = "25.05";
-
-  boot.loader.systemd-boot.enable = lib.mkForce false;
-  boot.lanzaboote = {
-    enable = true;
-    pkiBundle = "/var/lib/sbctl";
-  };
 
   environment.systemPackages = with pkgs; [
     powertop
@@ -69,6 +62,13 @@
   };
 
   boot = {
+    loader.systemd-boot.enable = lib.mkForce false;
+
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
+    };
+
     tmp = {
       useTmpfs = true;
       tmpfsSize = "50%";

@@ -1,5 +1,4 @@
 {
-  config,
   lib,
   pkgs,
   vscodeExtensions,
@@ -29,7 +28,7 @@
             ms-python.python
             ms-vscode.cpptools
           ]
-          ++ lib.optionals pkgs.stdenv.isLinux [
+          ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
             mkhl.direnv
           ]
         )

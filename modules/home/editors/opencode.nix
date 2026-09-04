@@ -1,6 +1,4 @@
 {
-  config,
-  lib,
   pkgs,
   ...
 }:
@@ -55,7 +53,7 @@
       mcp = {
         nixos = {
           type = "local";
-          command = ["${pkgs.mcp-nixos}/bin/mcp-nixos"];
+          command = [ "${pkgs.mcp-nixos}/bin/mcp-nixos" ];
         };
       };
     };

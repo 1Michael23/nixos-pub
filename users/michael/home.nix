@@ -11,7 +11,7 @@
 {
   home = {
     username = "michael";
-    homeDirectory = if pkgs.stdenv.isDarwin then "/Users/michael" else "/home/michael";
+    homeDirectory = if pkgs.stdenv.hostPlatform.isDarwin then "/Users/michael" else "/home/michael";
     stateVersion = "25.05";
   };
 
@@ -66,14 +66,14 @@
       theme_background = false;
       truecolor = true;
       proc_sorting = "cpu lazy";
-      show_gpu = pkgs.stdenv.isLinux;
+      show_gpu = pkgs.stdenv.hostPlatform.isLinux;
       update_ms = 500;
     };
   };
 
   programs.bat.enable = true;
 
-  services.gnome-keyring = lib.mkIf pkgs.stdenv.isLinux {
+  services.gnome-keyring = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
     enable = true;
   };
 
@@ -83,7 +83,7 @@
     NH_FLAKE = "$HOME/dev/nixos-pub";
     MODS_API_BASE = "http://127.0.0.1:11434";
   }
-  // lib.optionalAttrs pkgs.stdenv.isLinux {
+  // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
     TERMINAL = "alacritty";
 
   };

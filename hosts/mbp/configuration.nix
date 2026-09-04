@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   inputs,
   ...
@@ -17,7 +16,7 @@
 
   home-manager.extraSpecialArgs = {
     inherit inputs;
-    vscodeExtensions = inputs.nix-vscode-extensions.extensions.${pkgs.system};
+    vscodeExtensions = inputs.nix-vscode-extensions.extensions.${pkgs.stdenv.hostPlatform.system};
   };
 
   system = {

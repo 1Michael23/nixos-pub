@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   lib,
   ...
@@ -45,7 +44,7 @@
       fabric-ai
 
     ]
-    ++ lib.optionals pkgs.stdenv.isLinux [
+    ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
       imhex
       kicad
 
@@ -56,7 +55,7 @@
       python313Packages.jupyter
       python313Packages.tkinter
     ]
-    ++ lib.optionals pkgs.stdenv.isDarwin [
+    ++ lib.optionals pkgs.stdenv.hostPlatform.isDarwin [
       python314
       python314Packages.notebook
       python314Packages.ipykernel

@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   lib,
   ...
 }:
@@ -60,47 +59,51 @@
     };
   };
 
-  services.jellyfin = {
-    hardwareAcceleration = {
-      enable = true;
-      type = "nvenc";
-      device = "/dev/nvidia0";
-    };
-    forceEncodingConfig = true;
+  services = {
+    jellyfin = {
+      hardwareAcceleration = {
+        enable = true;
+        type = "nvenc";
+        device = "/dev/nvidia0";
+      };
+      forceEncodingConfig = true;
 
-    transcoding = {
-      enableHardwareEncoding = true;
-      hardwareDecodingCodecs = {
-        h264 = true;
-        hevc = true;
-        vp9 = true;
-        av1 = true;
-      };
-      hardwareEncodingCodecs = {
-        hevc = true;
+      transcoding = {
+        enableHardwareEncoding = true;
+        hardwareDecodingCodecs = {
+          h264 = true;
+          hevc = true;
+          vp9 = true;
+          av1 = true;
+        };
+        hardwareEncodingCodecs = {
+          hevc = true;
+        };
       };
     };
+
+    prowlarr.settings.auth.required = "DisabledForLocalAddresses";
+    sonarr.settings.auth.required = "DisabledForLocalAddresses";
+    radarr.settings.auth.required = "DisabledForLocalAddresses";
+    lidarr.settings.auth.required = "DisabledForLocalAddresses";
   };
 
-  services.prowlarr.settings.auth.required = "DisabledForLocalAddresses";
-  services.sonarr.settings.auth.required = "DisabledForLocalAddresses";
-  services.radarr.settings.auth.required = "DisabledForLocalAddresses";
-  services.lidarr.settings.auth.required = "DisabledForLocalAddresses";
+  users = {
+    groups.media.gid = lib.mkForce 950;
 
-  users.groups.media.gid = lib.mkForce 950;
+    users.jellyfin.extraGroups = [
+      "video"
+      "render"
+    ];
 
-  users.users.jellyfin.extraGroups = [
-    "video"
-    "render"
-  ];
+    users.michael.extraGroups = [ "media" ];
+  };
 
   systemd.services.jellyfin.serviceConfig.DeviceAllow = lib.mkAfter [
     "/dev/nvidia0 rw"
     "/dev/nvidiactl rw"
     "/dev/nvidia-uvm rw"
   ];
-
-  users.users.michael.extraGroups = [ "media" ];
 
   networking.firewall.interfaces."tailscale0" = {
     allowedTCPPorts = [

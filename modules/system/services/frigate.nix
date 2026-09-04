@@ -1,13 +1,8 @@
 {
-  config,
-  pkgs,
   lib,
   ...
 }:
 
-let
-  cfg = config.services.frigate;
-in
 {
   nixpkgs.config = {
     packageOverrides = pkgs: {
@@ -47,20 +42,31 @@ in
 
   services.mosquitto = {
     enable = true;
-    listeners = [{
-      address = "0.0.0.0";
-      port = 1883;
-      settings = { allow_anonymous = true; };
-    }];
+    listeners = [
+      {
+        address = "0.0.0.0";
+        port = 1883;
+        settings = {
+          allow_anonymous = true;
+        };
+      }
+    ];
   };
 
-  users.users.frigate.extraGroups = [ "video" "render" ];
-
-  systemd.services.frigate.serviceConfig.DeviceAllow = lib.mkAfter [
-    "/dev/nvidia0 rw"
-    "/dev/nvidiactl rw"
-    "/dev/nvidia-uvm rw"
+  users.users.frigate.extraGroups = [
+    "video"
+    "render"
   ];
+
+  systemd.services.frigate = {
+    requires = lib.mkAfter [ "mnt-media.mount" ];
+    after = lib.mkAfter [ "mnt-media.mount" ];
+    serviceConfig.DeviceAllow = lib.mkAfter [
+      "/dev/nvidia0 rw"
+      "/dev/nvidiactl rw"
+      "/dev/nvidia-uvm rw"
+    ];
+  };
 
   systemd.tmpfiles.rules = [
     "d /mnt/media/frigate 0750 frigate frigate -"
@@ -69,13 +75,10 @@ in
     "d /mnt/media/frigate/exports 0750 frigate frigate -"
   ];
 
-  systemd.services.frigate.requires = lib.mkAfter [ "mnt-media.mount" ];
-  systemd.services.frigate.after = lib.mkAfter [ "mnt-media.mount" ];
-
   networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
-    80    # Frigate nginx WebUI
-    8554  # Frigate RTSP restream
-    8555  # Frigate WebRTC
-    1883  # MQTT (Home Assistant)
+    80 # Frigate nginx WebUI
+    8554 # Frigate RTSP restream
+    8555 # Frigate WebRTC
+    1883 # MQTT (Home Assistant)
   ];
 }

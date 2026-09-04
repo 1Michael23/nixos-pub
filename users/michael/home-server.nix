@@ -1,10 +1,6 @@
 {
   config,
   pkgs,
-  lib,
-  inputs,
-  isLinux ? false,
-  isDarwin ? false,
   ...
 }:
 

@@ -1,4 +1,4 @@
-{ ... }:
+_:
 
 {
   programs.fastfetch = {
@@ -35,7 +35,10 @@
         "cpu"
         "gpu"
         "memory"
-        { type = "disk"; folders = "/"; }
+        {
+          type = "disk";
+          folders = "/";
+        }
         "colors"
       ];
     };

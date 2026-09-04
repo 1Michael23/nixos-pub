@@ -1,6 +1,4 @@
 {
-  config,
-  lib,
   pkgs,
   ...
 }:
@@ -15,7 +13,7 @@
     extraPackages = with pkgs; [
       nil
       nixd
-      nixfmt-rfc-style
+      nixfmt
       rust-analyzer
       pyright
       ruff

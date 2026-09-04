@@ -7,7 +7,7 @@
 {
   services.vibelock = {
     enable = true;
-    package = inputs.vibelock.packages.${pkgs.system}.default;
+    package = inputs.vibelock.packages.${pkgs.stdenv.hostPlatform.system}.default;
     pamServiceName = "vibelock";
     startAtLogin = false;
     beforeSleep = true;

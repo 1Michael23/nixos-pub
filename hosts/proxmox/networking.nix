@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+_:
 
 {
   networking = {
@@ -32,10 +27,12 @@
 
   services.resolved = {
     enable = true;
-    dnssec = "false";
-    fallbackDns = [
-      "1.1.1.1"
-      "9.9.9.9"
-    ];
+    settings.Resolve = {
+      DNSSEC = "false";
+      FallbackDNS = [
+        "1.1.1.1"
+        "9.9.9.9"
+      ];
+    };
   };
 }

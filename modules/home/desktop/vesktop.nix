@@ -1,9 +1,5 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+_:
+
 {
   programs.vesktop = {
     enable = true;

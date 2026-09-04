@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
+_:
 
 {
   stylix.targets = {
@@ -17,6 +12,7 @@
     gdu.enable = true;
     vesktop.enable = true;
     firefox.enable = true;
+    librewolf.profileNames = [ "default" ];
     gtk.enable = true;
     qt.enable = true;
     alacritty.enable = false;
