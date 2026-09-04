@@ -113,6 +113,13 @@
           inputs
           ;
       };
+
+      forAllSystems =
+        f:
+        nixpkgs.lib.genAttrs [
+          "x86_64-linux"
+          "aarch64-darwin"
+        ] (system: f nixpkgs.legacyPackages.${system});
     in
     {
       nixosConfigurations.framework = mkHost {
@@ -128,5 +135,39 @@
       darwinConfigurations.mbp = mkDarwinHost {
         hostname = "mbp";
       };
+
+      formatter = forAllSystems (pkgs: pkgs.nixfmt);
+
+      devShells = forAllSystems (pkgs: {
+        default = pkgs.mkShell {
+          packages = with pkgs; [
+            age
+            deadnix
+            nixfmt
+            sops
+            statix
+          ];
+        };
+      });
+
+      apps = forAllSystems (pkgs: {
+        check = {
+          type = "app";
+          program = "${pkgs.writeShellScript "check" ''
+            set -euo pipefail
+            echo ">> statix"
+            statix check
+            echo ">> deadnix"
+            deadnix --fail .
+            echo ">> eval framework"
+            nix eval --raw .#nixosConfigurations.framework.config.system.build.toplevel.drvPath > /dev/null
+            echo ">> eval proxmox"
+            nix eval --raw .#nixosConfigurations.proxmox.config.system.build.toplevel.drvPath > /dev/null
+            echo ">> eval mbp"
+            nix eval --raw .#darwinConfigurations.mbp.config.system.build.toplevel.drvPath > /dev/null
+            echo ">> OK: lint clean, all hosts eval"
+          ''}";
+        };
+      });
     };
 }
