@@ -2,17 +2,16 @@
 
 My public NixOS + nix-darwin work.
 
+If you are an agent (or want machine-navigable docs), start with [AGENTS.md](AGENTS.md) — it is the verified, kept-current reference. This README only gives the overview.
+
 ## Features
 
+- niri desktop on framework (sway config kept as an inactive alternative)
 - Hibernation to disk with encrypted swap
 - Self-signed Secure Boot via lanzaboote
 - Secrets via sops-nix
 - System hardening via nix-mineral, hardened ssh, run0 with sudo shim
-
-## Resources
-
-- [saylesss88's NixOS hardening guide](https://saylesss88.github.io/nix/hardening_NixOS.html) - Amazing security focused nix guide.
-- [msyds/tf2-nix](https://gitlab.com/msyds/tf2-nix) - Declarative TF2 config
+- flake-native agent tooling: `nix fmt`, `nix run .#check`, pinned devShell via direnv
 
 ## Directory Structure
 
@@ -20,7 +19,7 @@ My public NixOS + nix-darwin work.
 .
 ├── flake.nix
 ├── lib/           # mkHost / mkDarwinHost builders
-├── hosts/         # per-device config (framework, mbp)
+├── hosts/         # per-device config (framework, proxmox, mbp)
 ├── roles/         # composed sets of modules
 │   ├── system/    # nixos-level roles
 │   └── home/      # home-manager roles
@@ -39,12 +38,15 @@ flake.nix
 ├── framework (mkHost)
 │   ├── hosts/framework/
 │   ├── roles/system/base.nix
-│   ├── roles/system/desktop-sway.nix 
+│   ├── roles/system/desktop-niri.nix   # niri is the active desktop
 │   └── home-manager → users/michael/home.nix
-│       ├── roles/home/development.nix
-│       ├── roles/home/desktop-sway.nix 
-│       └── roles/home/pentesting.nix
+│       ├── roles/home/desktop-niri.nix
+│       └── roles/home/development.nix
 │           └── (modules/home/**)
+│
+├── proxmox (mkHost)
+│   ├── hosts/proxmox/
+│   └── home-manager → users/michael/home-server.nix
 │
 └── mbp (mkDarwinHost)
     ├── hosts/mbp/
@@ -54,3 +56,4 @@ flake.nix
             └── (modules/home/**)
 ```
 
+The sway roles (`roles/*/desktop-sway.nix`) are intentionally kept as an inactive alternative to niri.
