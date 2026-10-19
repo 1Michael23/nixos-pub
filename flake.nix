@@ -4,6 +4,8 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    opencode.url = "github:anomalyco/opencode";
+
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nix-mineral.url = "github:cynicsketch/nix-mineral/";
 
@@ -75,11 +77,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    niri = {
-      url = "github:sodiboo/niri-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     vibelock.url = "path:/home/michael/dev/vibelock";
 
   };
@@ -120,20 +117,34 @@
           "x86_64-linux"
           "aarch64-darwin"
         ] (system: f nixpkgs.legacyPackages.${system});
-    in
-    {
-      nixosConfigurations.framework = mkHost {
+
+      framework = mkHost {
         hostname = "framework";
         system = "x86_64-linux";
       };
 
-      nixosConfigurations.proxmox = mkHost {
+      proxmox = mkHost {
         hostname = "proxmox";
         system = "x86_64-linux";
       };
 
-      darwinConfigurations.mbp = mkDarwinHost {
+      mbp = mkDarwinHost {
         hostname = "mbp";
+      };
+    in
+    {
+      nixosConfigurations = {
+        inherit framework proxmox;
+      };
+
+      darwinConfigurations = {
+        inherit mbp;
+      };
+
+      hydraJobs = {
+        framework = framework.config.system.build.toplevel;
+        proxmox = proxmox.config.system.build.toplevel;
+        mbp = mbp.config.system.build.toplevel;
       };
 
       formatter = forAllSystems (pkgs: pkgs.nixfmt);
@@ -143,6 +154,7 @@
           packages = with pkgs; [
             age
             deadnix
+            nix-eval-jobs
             nixfmt
             sops
             statix
@@ -153,20 +165,48 @@
       apps = forAllSystems (pkgs: {
         check = {
           type = "app";
-          program = "${pkgs.writeShellScript "check" ''
-            set -euo pipefail
-            echo ">> statix"
-            statix check
-            echo ">> deadnix"
-            deadnix --fail .
-            echo ">> eval framework"
-            nix eval --raw .#nixosConfigurations.framework.config.system.build.toplevel.drvPath > /dev/null
-            echo ">> eval proxmox"
-            nix eval --raw .#nixosConfigurations.proxmox.config.system.build.toplevel.drvPath > /dev/null
-            echo ">> eval mbp"
-            nix eval --raw .#darwinConfigurations.mbp.config.system.build.toplevel.drvPath > /dev/null
-            echo ">> OK: lint clean, all hosts eval"
-          ''}";
+          program = "${
+            pkgs.writeShellApplication {
+              name = "check";
+              runtimeInputs = with pkgs; [
+                deadnix
+                statix
+              ];
+              text = ''
+                echo ">> statix"
+                statix check
+                echo ">> deadnix"
+                deadnix --fail .
+                echo ">> OK: lint clean"
+              '';
+            }
+          }/bin/check";
+        };
+
+        check-eval = {
+          type = "app";
+          program = "${
+            pkgs.writeShellApplication {
+              name = "check-eval";
+              runtimeInputs = with pkgs; [
+                coreutils
+                gnugrep
+                nix-eval-jobs
+              ];
+              text = ''
+                set -euo pipefail
+                echo ">> eval framework + proxmox + mbp (parallel)"
+                out="$(mktemp)"
+                trap 'rm -f "$out"' EXIT
+                nix-eval-jobs --flake .#hydraJobs --workers 3 --no-instantiate --show-trace > "$out"
+                if grep -q '"error"' "$out"; then
+                  echo ">> FAILED: at least one host failed to evaluate (see error above)" >&2
+                  exit 1
+                fi
+                echo ">> OK: all hosts eval"
+              '';
+            }
+          }/bin/check-eval";
         };
       });
     };
