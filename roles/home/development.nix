@@ -38,10 +38,6 @@
       source-code-pro
       sops
       age
-      oterm
-      gollama
-      mods
-      fabric-ai
 
     ]
     ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [

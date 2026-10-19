@@ -26,8 +26,4 @@
 
       nomacs
     ];
-
-  home.sessionVariables = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
-    GDK_BACKEND = "wayland,x11";
-  };
 }

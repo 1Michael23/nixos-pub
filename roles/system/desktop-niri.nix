@@ -100,11 +100,9 @@
   };
 
   security.pam.services = {
-    ly.fprintAuth = false;
-    login.fprintAuth = false;
-    sudo.fprintAuth = true;
-    polkit-1.fprintAuth = true;
-    login.enableGnomeKeyring = true; # TODO  change to greetd.enableGnomeKeyring if not working
+    login.fprintAuth = true; # greetd substacks login, so this enables fingerprint at login
+    polkit-1.fprintAuth = true; # run0 privilege escalation
+    login.enableGnomeKeyring = true; # greetd's session stack includes login
   };
 
   hardware.graphics = {
@@ -142,10 +140,13 @@
     ];
     configPackages = [ pkgs.niri ];
     xdgOpenUsePortal = true;
-    config.common.default = [
-      "gnome"
-      "gtk"
-    ];
+    config.common = {
+      default = [
+        "gnome"
+        "gtk"
+      ];
+      "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
+    };
   };
 
   fonts = {

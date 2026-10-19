@@ -104,11 +104,9 @@
   };
 
   security.pam.services = {
-    ly.fprintAuth = false;
-    login.fprintAuth = false;
-    sudo.fprintAuth = true;
-    polkit-1.fprintAuth = true;
-    greetd.enableGnomeKeyring = true;
+    login.fprintAuth = true; # greetd substacks login, so this enables fingerprint at login
+    polkit-1.fprintAuth = true; # run0 privilege escalation
+    login.enableGnomeKeyring = true; # greetd's session stack includes login
   };
 
   hardware.graphics = {
