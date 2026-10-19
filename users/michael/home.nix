@@ -23,12 +23,12 @@
   home.packages =
     with pkgs;
     lib.optionals isLinux [
-      gcr
       onlyoffice-desktopeditors
       moonlight-qt
       openssh
       jq
-      freecad
+      # TODO: re-enable once nixpkgs vtk/PEGTL configure bug is fixed
+      # freecad
       bitwarden-cli
     ];
 
@@ -81,7 +81,6 @@
     EDITOR = "nvim";
     LANG = "en_AU.UTF-8";
     NH_FLAKE = "$HOME/dev/nixos-pub";
-    MODS_API_BASE = "http://127.0.0.1:11434";
   }
   // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
     TERMINAL = "alacritty";
@@ -93,6 +92,10 @@
   home.file = lib.mkIf isLinux {
     ".local/bin/wallpaper" = {
       source = ../../bin/wallpaper;
+      executable = true;
+    };
+    ".local/bin/waybar-performance" = {
+      source = ../../bin/waybar-performance;
       executable = true;
     };
   };

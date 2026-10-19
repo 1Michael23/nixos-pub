@@ -9,6 +9,7 @@
   home.packages = with pkgs; [
     font-awesome
     jq
+    btop
   ];
 
   programs.waybar = {
@@ -127,6 +128,7 @@
       #scratchpad,
       #power-profiles-daemon,
       #custom-notification,
+      #custom-performance,
       #mpd {
           padding: 0px 10px;
           margin: 0 3px;
@@ -248,6 +250,25 @@
           background-color: @base0D;
           color: @base00;
       }
+
+      #custom-performance {
+          font-size: 12px;
+          padding: 0px 8px;
+      }
+
+      #custom-performance:hover {
+          background-color: @base01;
+      }
+
+      #custom-performance.warning {
+          background-color: @base0A;
+          color: @base00;
+      }
+
+      #custom-performance.critical {
+          background-color: @base08;
+          color: @base00;
+      }
     '';
 
     settings.mainBar = {
@@ -263,6 +284,7 @@
       modules-right = [
         "network"
         "battery"
+        "custom/performance"
         "power-profiles-daemon"
         "idle_inhibitor"
         "clock"
@@ -314,6 +336,16 @@
           default = builtins.fromJSON ''[ "\uf244", "\uf243", "\uf242", "\uf241", "\uf240" ]'';
           charging = builtins.fromJSON ''"\uf0e7"'';
         };
+      };
+
+      "custom/performance" = {
+        exec = "${config.home.homeDirectory}/.local/bin/waybar-performance";
+        return-type = "json";
+        format = "{}";
+        tooltip = true;
+        restart-interval = 10;
+        on-click = "alacritty -e btop";
+        escape = true;
       };
 
       "power-profiles-daemon" = {
