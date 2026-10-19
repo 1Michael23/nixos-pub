@@ -5,9 +5,7 @@
 }:
 {
 
-  programs.niri.package = pkgs.niri;
-
-  programs.niri.config = ''
+  wayland.windowManager.niri.extraConfig = ''
     cursor {
         xcursor-theme "${config.stylix.cursor.name}"
         xcursor-size ${toString config.stylix.cursor.size}
@@ -238,7 +236,6 @@
         }
     }
 
-    spawn-at-startup "waybar"
     spawn-at-startup "swaync"
     spawn-at-startup "systemctl" "--user" "start" "swaybg"
     spawn-at-startup "swayosd-server"

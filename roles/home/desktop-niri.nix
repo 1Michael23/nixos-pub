@@ -1,10 +1,9 @@
 {
   pkgs,
-  inputs,
   ...
 }:
 {
-  programs.niri.enable = true;
+  wayland.windowManager.niri.enable = true;
 
   home.packages = with pkgs; [
     cliphist
@@ -18,7 +17,6 @@
   ];
 
   imports = [
-    inputs.niri.homeModules.niri
     ../../modules/home/desktop/niri/niri.nix
     ../../modules/home/desktop/waybar/waybar-niri.nix
     ../../modules/home/desktop/vicinae.nix
