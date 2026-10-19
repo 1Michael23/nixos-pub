@@ -14,10 +14,6 @@
     journald = {
       storage = "persistent"; # TODO change to volatile
       upload.enable = false; # Disable remote log upload (the default)
-      extraConfig = ''
-        SystemMaxUse=500M
-        SystemMaxFileSize=50M
-      '';
     };
   };
 
@@ -48,7 +44,15 @@
     LimitMEMLOCK = lib.mkForce "8M";
   };
 
-  boot.kernelModules = [ "tun" ];
+  # af_packet is a module (CONFIG_PACKET=m), not built in, and is only loaded
+  # on demand when wpa_supplicant first calls socket(PF_PACKET). security.
+  # lockKernelModules disables module loading ~30s after boot, so if that on-demand
+  # load races past the lock, wpa_supplicant gets EAFNOSUPPORT for the whole boot.
+  # Preload it explicitly so WiFi never depends on boot timing.
+  boot.kernelModules = [
+    "tun"
+    "af_packet"
+  ];
 
   environment.systemPackages = with pkgs; [
     kernel-hardening-checker
@@ -56,7 +60,7 @@
 
   security = {
     protectKernelImage = false; # needed for hibernation
-    lockKernelModules = true; # TODO TEMP
+    lockKernelModules = false; # TODO needed for sd cards and other useless things
 
     forcePageTableIsolation = true;
 
