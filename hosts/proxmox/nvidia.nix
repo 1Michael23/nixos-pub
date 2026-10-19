@@ -36,8 +36,4 @@
   environment.systemPackages = with pkgs; [
     nvtopPackages.nvidia
   ];
-
-  # Quadro P5000 = Pascal, CC 6.1. CUDA 12.9 drops 6.1 from its default
-  # capabilities, so pin it here for ollama-cuda (and any CUDA source builds).
-  nixpkgs.config.cudaCapabilities = [ "6.1" ];
 }

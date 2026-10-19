@@ -16,11 +16,6 @@ _:
         8686 # Lidarr
         9696 # Prowlarr
         6767 # Bazarr
-
-        8080 # openwebui
-
-        8554 # Frigate RTSP restream
-        8555 # Frigate WebRTC
       ];
     };
   };

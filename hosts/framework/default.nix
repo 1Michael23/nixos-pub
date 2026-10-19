@@ -6,10 +6,6 @@
 }:
 
 {
-  nixpkgs.overlays = [
-    inputs.niri.overlays.niri
-  ];
-
   imports = [
     ./hardware-configuration.nix
     ./networking.nix
@@ -19,7 +15,6 @@
     ../../modules/system/virtualization/libvirtd.nix
     ../../modules/system/services/usbguard.nix
     ../../modules/system/services/vibelock.nix
-    ../../modules/system/services/ollama-local.nix
     inputs.stylix.nixosModules.stylix
     ../../modules/system/theme/stylix.nix
 
@@ -54,11 +49,7 @@
 
   nixpkgs.config = {
     allowUnfree = true;
-    # permittedInsecurePackages = [
-    #   "librewolf-151.0.2-1"
-    #   "librewolf-unwrapped-151.0.2-1"
-    #   # TODO: monitor upstream for active nixpkgs maintainer status
-    # ];
+
   };
 
   boot = {
