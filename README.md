@@ -11,7 +11,7 @@ If you are an agent (or want machine-navigable docs), start with [AGENTS.md](AGE
 - Self-signed Secure Boot via lanzaboote
 - Secrets via sops-nix
 - System hardening via nix-mineral, hardened ssh, run0 with sudo shim
-- flake-native agent tooling: `nix fmt`, `nix run .#check`, pinned devShell via direnv
+- flake-native agent tooling: `nix fmt`, `nix run .#check`, on-demand devShell via `nix develop`
 
 ## Directory Structure
 
