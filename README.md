@@ -1,23 +1,23 @@
 # nixos-pub
 
-My public NixOS + nix-darwin work.
-
-If you are an agent (or want machine-navigable docs), start with [AGENTS.md](AGENTS.md) — it is the verified, kept-current reference. This README only gives the overview.
+My personal NixOS + nix-darwin configuration.
 
 ## Features
 
-- niri desktop on framework (sway config kept as an inactive alternative)
-- Hibernation to disk with encrypted swap
-- Self-signed Secure Boot via lanzaboote
+- Hibernation to disk with encrypted swap (framework)
+- Self-signed Secure Boot via lanzaboote (framework)
 - Secrets via sops-nix
-- System hardening via nix-mineral, hardened ssh, run0 with sudo shim
-- flake-native agent tooling: `nix fmt`, `nix run .#check`, on-demand devShell via `nix develop`
+- System hardening via nix-mineral and run0 sudo shim (framework), hardened ssh
+- flake-native developer tooling: `nix fmt`, `nix run .#check`, on-demand devShell via `nix develop`
 
 ## Directory Structure
 
 ```
 .
 ├── flake.nix
+├── flake.lock
+├── .sops.yaml     # sops age recipient rules
+├── bin/           # helper scripts (wallpaper, waybar-performance)
 ├── lib/           # mkHost / mkDarwinHost builders
 ├── hosts/         # per-device config (framework, proxmox, mbp)
 ├── roles/         # composed sets of modules
@@ -26,34 +26,35 @@ If you are an agent (or want machine-navigable docs), start with [AGENTS.md](AGE
 ├── modules/       # individual building blocks
 │   ├── system/    # nixos modules
 │   └── home/      # home-manager modules
-├── users/         # per-user home.nix
+├── users/         # per-user home configs
 └── secrets/       # sops-encrypted yaml
 ```
 
 ## Import Hierarchy
 
 ```
+# Simplified: not every imported module is shown.
 flake.nix
 │
 ├── framework (mkHost)
 │   ├── hosts/framework/
 │   ├── roles/system/base.nix
-│   ├── roles/system/desktop-niri.nix   # niri is the active desktop
+│   ├── roles/system/desktop-niri.nix
 │   └── home-manager → users/michael/home.nix
-│       ├── roles/home/desktop-niri.nix
-│       └── roles/home/development.nix
-│           └── (modules/home/**)
+│       ├── roles/home/development.nix
+│       ├── roles/home/photography.nix
+│       └── roles/home/desktop-niri.nix
 │
 ├── proxmox (mkHost)
 │   ├── hosts/proxmox/
+│   ├── roles/system/base.nix
 │   └── home-manager → users/michael/home-server.nix
+│       └── roles/home/development.nix
 │
 └── mbp (mkDarwinHost)
     ├── hosts/mbp/
     └── home-manager → users/michael/home.nix
         ├── roles/home/development.nix
+        ├── roles/home/photography.nix
         └── modules/home/darwin/aerospace.nix
-            └── (modules/home/**)
 ```
-
-The sway roles (`roles/*/desktop-sway.nix`) are intentionally kept as an inactive alternative to niri.
