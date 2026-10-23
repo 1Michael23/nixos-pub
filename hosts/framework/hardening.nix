@@ -12,8 +12,8 @@
     dbus.implementation = "broker";
     logrotate.enable = true;
     journald = {
-      storage = "persistent"; # TODO change to volatile
-      upload.enable = false; # Disable remote log upload (the default)
+      settings.Journal.Storage = "persistent";
+      upload.enable = false;
     };
   };
 
@@ -21,6 +21,7 @@
     enable = true;
     settings = {
       system.multilib = true; # NOTE disable when/if steam no longer needs it
+      debug.quiet-boot = false;
     };
     filesystems.enable = false;
   };
@@ -60,7 +61,7 @@
 
   security = {
     protectKernelImage = false; # needed for hibernation
-    lockKernelModules = false; # TODO needed for sd cards and other useless things
+    lockKernelModules = false; # Intentional: required for SD cards/removable media.
 
     forcePageTableIsolation = true;
 

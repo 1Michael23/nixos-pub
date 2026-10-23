@@ -19,7 +19,6 @@
       nix-output-monitor
       nh
       nixfmt
-      semgrep
       ruff
       deadnix
       nil

@@ -33,7 +33,6 @@
           ]
         )
         ++ (with vscodeExtensions.open-vsx; [
-          semgrep.semgrep
           jeanp413.open-remote-ssh
           sst-dev.opencode
         ]);
@@ -70,13 +69,6 @@
         "[nix]" = {
           "editor.tabSize" = 4;
         };
-
-        "semgrep.scan.onSave" = true;
-        "semgrep.scan.configuration" = [ "~/dev/semgrep-rules" ];
-        "semgrep.path" = "${pkgs.semgrep}/bin/semgrep";
-        "semgrep.doLogin" = false;
-        "semgrep.scan.onlyGitDirty" = false;
-        "semgrep.metrics" = false;
 
         "todo-tree.general.statusBar" = "total";
         "todo-tree.general.tags" = [

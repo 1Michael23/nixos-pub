@@ -22,7 +22,7 @@
 
       gimp
 
-      digikam
+      #digikam #TODO i dont want to build this rn
 
       nomacs
     ];

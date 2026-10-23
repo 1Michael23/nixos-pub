@@ -42,6 +42,10 @@
       allow id 04b4:521a serial "" name "USB-I2C Bridge" hash "FW1i/NYxIgZbwwR1aoQhld2mwHcWIa8evtb9NDK2UyU=" parent-hash "zZYYfrUbupQM8DZXGy8czWNditt0hnauSHtIeYx1TZk=" via-port "7-1.3.3.1" with-interface { ff:03:00 ff:05:00 } with-connect-type "unknown"
       allow id 17ef:30d1 serial "000000000000" name "ThinkPad USB-C Dock Gen2 USB Audio" hash "HlVxQidTq+BJltIp/8wG3BpGG4rrfyLsp6uUWiDQWp0=" parent-hash "zZYYfrUbupQM8DZXGy8czWNditt0hnauSHtIeYx1TZk=" with-interface { 01:01:20 01:02:20 01:02:20 01:02:20 01:02:20 01:02:20 03:00:00 } with-connect-type "unknown"
       allow id 0d8c:0089 serial "201805" name "ATGM1-USB" hash "tng4pAFyMqx5m744cszNY35tcXz3akcAEtNW6quryUo=" parent-hash "zZYYfrUbupQM8DZXGy8czWNditt0hnauSHtIeYx1TZk=" with-interface { 01:01:00 01:02:00 01:02:00 03:00:00 } with-connect-type "unknown"
+      allow id 3434:d030 serial "" name "Keychron Link " hash "gfm9dUg3k4ERginO0CR4zhvckjZ/kZ+to/WtGxgHdZ8=" parent-hash "CbRB9LX/JdGjNWCYSOcIwMVXE0UpOR03LCotWrTbuCM=" via-port "7-1.3.4.1" with-interface { 03:01:02 03:01:01 03:01:01 03:00:00 } with-connect-type "unknown"
+      allow id 046d:c547 serial "" name "USB Receiver" hash "gFx7kcPo3OnfDcPhrJk3PxeBiF1o6/JGeTevInhob4A=" parent-hash "CbRB9LX/JdGjNWCYSOcIwMVXE0UpOR03LCotWrTbuCM=" via-port "7-1.3.4.2" with-interface { 03:01:02 03:01:01 03:00:00 } with-connect-type "unknown"
+      allow id 2b5a:0020 serial "22112036022592" name "Volt 1" hash "UwPt9+AtN/gu7VAytdu1nw7K6MoSMOaMDgQjRx3unyU=" parent-hash "CbRB9LX/JdGjNWCYSOcIwMVXE0UpOR03LCotWrTbuCM=" with-interface { 01:01:20 01:02:20 01:02:20 01:02:20 01:02:20 01:02:20 01:02:20 01:01:00 01:03:00 fe:01:01 03:00:00 01:01:20 01:02:20 01:02:20 01:02:20 01:02:20 01:02:20 01:02:20 01:01:00 01:03:00 fe:01:01 03:00:00 } with-connect-type "unknown"
+      allow id 1050:0407 serial "" name "YubiKey OTP+FIDO+CCID" hash "Q+A8QQReKclmBSaDIYja0w4Bx6ld2IU6wF7HFKdtJ3Q=" parent-hash "CbRB9LX/JdGjNWCYSOcIwMVXE0UpOR03LCotWrTbuCM=" via-port "7-1.3.4.4" with-interface { 03:01:01 03:00:00 0b:00:00 } with-connect-type "unknown"
 
     '';
   };

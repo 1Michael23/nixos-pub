@@ -2,7 +2,8 @@
   description = "Nix";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # TODO: revert to github:NixOS/nixpkgs/nixos-unstable once it contains 82139be (NixOS/nixpkgs#575818, fixes #575192 .ko.cer aggregation).
+    nixpkgs.url = "github:NixOS/nixpkgs/9a43e55823aec87065693b5b78092a49421177f5";
 
     opencode.url = "github:anomalyco/opencode";
 
@@ -147,7 +148,8 @@
         mbp = mbp.config.system.build.toplevel;
       };
 
-      formatter = forAllSystems (pkgs: pkgs.nixfmt);
+      # nixfmt-tree wraps treefmt so bare `nix fmt` formats the whole repo.
+      formatter = forAllSystems (pkgs: pkgs.nixfmt-tree);
 
       devShells = forAllSystems (pkgs: {
         default = pkgs.mkShell {

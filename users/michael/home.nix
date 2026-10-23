@@ -27,8 +27,7 @@
       moonlight-qt
       openssh
       jq
-      # TODO: re-enable once nixpkgs vtk/PEGTL configure bug is fixed
-      # freecad
+      freecad
       bitwarden-cli
     ];
 
