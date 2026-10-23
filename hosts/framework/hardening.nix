@@ -67,7 +67,8 @@
     forcePageTableIsolation = true;
 
     allowUserNamespaces = true;
-    chromiumSuidSandbox.enable = true;
+    # Chromium uses the user-namespace sandbox; enable the SUID fallback only
+    # if chrome://sandbox reports it is not sandboxed.
 
     allowSimultaneousMultithreading = true;
   };

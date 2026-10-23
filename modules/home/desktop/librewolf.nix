@@ -31,6 +31,8 @@
         "media.ffmpeg.vaapi.enabled" = true;
         "media.hardware-video-decoding.force-enabled" = true;
         "gfx.webrender.all" = true;
+        #NOTE: fractional scaling causes crash with youtube comments
+        "widget.wayland.fractional-scale.enabled" = false;
         "widget.dmabuf.force-enabled" = false;
         "media.av1.enabled" = true;
         "media.navigator.mediadatadecoder_vpx_enabled" = true;

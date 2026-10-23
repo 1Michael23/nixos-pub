@@ -9,12 +9,9 @@
     enable = true;
     package = pkgs.ungoogled-chromium;
     commandLineArgs = [
-      "--ozone-platform=wayland"
-      "--enable-zero-copy"
       "--enable-features=VaapiVideoDecoder"
       "--disable-features=UseChromeOSDirectVideoDecoder"
     ];
-
   };
 
   xdg.desktopEntries.chromium-browser = {

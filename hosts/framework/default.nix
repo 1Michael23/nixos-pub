@@ -13,6 +13,7 @@
     ./secrets.nix
     ../../roles/system/desktop-niri.nix
     ../../modules/system/virtualization/libvirtd.nix
+    ../../modules/system/browsers.nix
     ../../modules/system/services/usbguard.nix
     ../../modules/system/services/vibelock.nix
     ../../modules/system/theme/fonts.nix
