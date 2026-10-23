@@ -65,41 +65,49 @@ let
     @define-color base0E {{colors.purple.default.hex}};
     @define-color base0F {{colors.error_container.default.hex}};
 
+    :root {
+        --cc-bg: {{colors.surface.default.hex}};
+        --noti-border-color: {{colors.surface_container_high.default.hex}};
+        --noti-bg-darker: {{colors.surface.default.hex}};
+        --noti-bg-hover: {{colors.surface_container_low.default.hex}};
+        --noti-bg-focus: {{colors.surface_container.default.hex}};
+        --noti-close-bg: {{colors.surface_container_low.default.hex}};
+        --noti-close-bg-hover: {{colors.surface_container.default.hex}};
+        --text-color: {{colors.on_surface.default.hex}};
+        --text-color-disabled: {{colors.on_surface_variant.default.hex}};
+        --bg-selected: {{colors.primary.default.hex}};
+    }
+
     .control-center {
         background: @base00;
         color: @base05;
         border: 1px solid @base0D;
     }
 
-    .control-center .notification-row .notification-background {
+    .notification-row .notification-background .notification {
         background: @base00;
+        color: @base05;
+        border: 1px solid @base0D;
+    }
+
+    .notification-row .notification-background .notification.low {
+        border-color: @base03;
+    }
+
+    .notification-row .notification-background .notification.normal {
+        border-color: @base0D;
+    }
+
+    .notification-row .notification-background .notification.critical {
+        border-color: @base08;
+    }
+
+    .notification-row .notification-background .notification .notification-default-action {
         color: @base05;
     }
 
-    .control-center .notification-row .notification-background:hover {
+    .notification-row .notification-background .notification .notification-default-action:hover {
         background: @base01;
-    }
-
-    .control-center .notification-row .notification-background:active {
-        background: @base0F;
-        color: @base05;
-    }
-
-    .notification.low {
-        border: 1px solid @base03;
-    }
-
-    .notification.normal {
-        border: 1px solid @base0D;
-    }
-
-    .notification.critical {
-        border: 1px solid @base08;
-    }
-
-    .notification-content {
-        background: @base00;
-        border: 1px solid @base0D;
     }
 
     .notification-content .text-box .summary {
@@ -116,7 +124,7 @@ let
     }
 
     .notification-action:hover {
-        background: @base01;
+        background: @base02;
         color: @base05;
     }
 
@@ -126,12 +134,12 @@ let
     }
 
     .close-button {
-        background: @base08;
-        color: @base00;
+        background: @base01;
+        color: @base05;
     }
 
     .close-button:hover {
-        background: @base0F;
+        background: @base02;
         color: @base05;
     }
 
@@ -142,10 +150,6 @@ let
     .widget-title > button {
         background: @base01;
         border: 1px solid @base0D;
-        color: @base05;
-    }
-
-    .widget-buttons {
         color: @base05;
     }
 
@@ -164,32 +168,6 @@ let
 
     .widget-dnd > switch slider {
         background: @base06;
-    }
-
-    .widget-volume {
-        color: @base05;
-    }
-
-    .widget-volume trough {
-        background: @base01;
-        border: 1px solid @base0D;
-    }
-
-    .widget-volume progress {
-        background: @base0D;
-    }
-
-    .widget-mpris {
-        color: @base05;
-    }
-
-    .widget-mpris .widget-mpris-player {
-        background: @base01;
-        border: 1px solid @base0D;
-    }
-
-    .widget-mpris .widget-mpris-player button:hover {
-        background: @base01;
     }
   '';
 
@@ -389,7 +367,7 @@ let
       waybar = {
         input_path = "${waybarTemplate}";
         output_path = "${stateDir}/waybar.css";
-        post_hook = "${pkgs.procps}/bin/pkill -SIGUSR2 waybar || true";
+        post_hook = "${pkgs.systemd}/bin/systemctl --user reload waybar || true";
       };
 
       niri = {
@@ -440,6 +418,7 @@ let
 
       Commands:
         set   <path>   Set the wallpaper and regenerate colors
+        apply          Regenerate colors from the current wallpaper
         pick           Select a wallpaper via a dmenu launcher
         list           List available wallpapers
         current        Show the current wallpaper path
@@ -455,28 +434,54 @@ let
         fi
       }
 
+      render() {
+        matugen image "$1" \
+          --config "$matugen_config" \
+          --mode dark \
+          --source-color-index 0
+      }
+
       cmd_set() {
         if [ "$#" -lt 1 ] || [ -z "$1" ]; then
           usage
         fi
 
         local src
-        src=$(readlink -f -- "$1")
+        if ! src=$(readlink -f -- "$1" 2>/dev/null); then
+          echo "Error: file not found: $1" >&2
+          exit 1
+        fi
         if [ ! -f "$src" ]; then
           echo "Error: file not found: $1" >&2
           exit 1
         fi
 
         mkdir -p "$(dirname "$wallpaper_link")"
-        ln -sfn "$src" "$wallpaper_link"
 
         matugen image "$src" \
           --config "$matugen_config" \
           --mode dark \
-          --source-color-index 0
+          --source-color-index 0 \
+          --dry-run
+        render "$src"
+        ln -sfn "$src" "$wallpaper_link"
 
-        systemctl --user restart swaybg >/dev/null 2>&1 || true
+        if ! systemctl --user restart swaybg; then
+          echo "warning: wallpaper set but swaybg did not restart" >&2
+          exit 1
+        fi
         echo "Wallpaper set to: $src"
+      }
+
+      cmd_apply() {
+        local target
+        if ! target=$(readlink -f -- "$wallpaper_link" 2>/dev/null) || [ ! -f "$target" ]; then
+          echo "Error: no current wallpaper: $wallpaper_link" >&2
+          exit 1
+        fi
+
+        render "$target"
+        echo "Colors regenerated from: $target"
       }
 
       cmd_pick() {
@@ -516,8 +521,9 @@ let
       }
 
       cmd_current() {
-        if [ -e "$wallpaper_link" ] || [ -L "$wallpaper_link" ]; then
-          readlink -f "$wallpaper_link"
+        local target
+        if target=$(readlink -f -- "$wallpaper_link" 2>/dev/null) && [ -f "$target" ]; then
+          printf '%s\n' "$target"
         else
           echo "No current wallpaper set" >&2
           exit 1
@@ -531,6 +537,7 @@ let
           shift
           cmd_set "$@"
           ;;
+        apply) cmd_apply ;;
         pick) cmd_pick ;;
         list) cmd_list ;;
         current) cmd_current ;;
@@ -561,16 +568,30 @@ in
       run ${pkgs.coreutils}/bin/mkdir -p "$stateDir" \
         "$(${pkgs.coreutils}/bin/dirname "$link")"
 
-      if [ ! -e "$link" ] && [ ! -L "$link" ]; then
-        run ${pkgs.coreutils}/bin/ln -s \
-          ${lib.escapeShellArg (toString defaultWallpaper)} "$link"
+      default=${lib.escapeShellArg (toString defaultWallpaper)}
+
+      if [ ! -e "$link" ]; then
+        if [ -L "$link" ]; then
+          echo "warning: wallpaper link is dangling; falling back to default" >&2
+        fi
+        run ${pkgs.coreutils}/bin/ln -sfn "$default" "$link"
       fi
 
-      target=$(${pkgs.coreutils}/bin/readlink -f "$link")
-      run ${pkgs.matugen}/bin/matugen image "$target" \
-        --config ${matugenConfig} \
-        --mode dark \
-        --source-color-index 0
+      target=$(${pkgs.coreutils}/bin/readlink -f "$link" 2>/dev/null || true)
+      if [ -z "$target" ] || [ ! -f "$target" ]; then
+        echo "warning: current wallpaper is missing; falling back to default" >&2
+        target=$default
+        run ${pkgs.coreutils}/bin/ln -sfn "$target" "$link"
+      fi
+
+      if [ -f "$target" ]; then
+        run ${pkgs.matugen}/bin/matugen image "$target" \
+          --config ${matugenConfig} \
+          --mode dark \
+          --source-color-index 0
+      else
+        echo "warning: default wallpaper is missing; keeping existing colors" >&2
+      fi
     '';
   };
 

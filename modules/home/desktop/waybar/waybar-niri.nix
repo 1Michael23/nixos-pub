@@ -325,11 +325,11 @@
           weeks-pos = "left";
           on-scroll = 1;
           format = {
-            months = "<span color='#ffffff'><b>{}</b></span>";
-            days = "<span color='#cccccc'><b>{}</b></span>";
-            weeks = "<span color='#00ffff'><b>W{}</b></span>";
-            weekdays = "<span color='#ffd700'><b>{}</b></span>";
-            today = "<span color='#ff8800'><b><u>{}</u></b></span>";
+            months = "<b>{}</b>";
+            days = "<b>{}</b>";
+            weeks = "<b>W{}</b>";
+            weekdays = "<b>{}</b>";
+            today = "<b><u>{}</u></b>";
           };
         };
       };

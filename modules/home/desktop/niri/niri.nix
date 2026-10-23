@@ -228,7 +228,7 @@
         background-effect { blur true; }
     }
 
-    spawn-at-startup "swaync"
+    spawn-at-startup "systemctl" "--user" "start" "swaync"
     spawn-at-startup "systemctl" "--user" "start" "swaybg"
     spawn-at-startup "swayosd-server"
 
