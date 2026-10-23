@@ -6,7 +6,6 @@ _:
     swaync.enable = true;
     bat.enable = true;
     neovim.enable = true;
-    zed.enable = true;
     starship.enable = true;
     mpv.enable = true;
     gdu.enable = true;

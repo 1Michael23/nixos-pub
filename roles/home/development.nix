@@ -69,7 +69,6 @@
     ../../modules/home/editors/vscodium.nix
     ../../modules/home/editors/opencode.nix
     ../../modules/home/editors/pi.nix
-    ../../modules/home/editors/zed.nix
     ../../modules/home/editors/neovim.nix
   ];
 
