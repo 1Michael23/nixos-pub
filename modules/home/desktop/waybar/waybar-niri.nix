@@ -123,10 +123,8 @@
       #custom-media,
       #tray,
       #mode,
-      #idle_inhibitor,
       #scratchpad,
       #power-profiles-daemon,
-      #custom-notification,
       #custom-performance,
       #mpd {
           padding: 0px 10px;
@@ -161,7 +159,6 @@
 
       #clock:hover,
       #tray:hover,
-      #custom-notification:hover,
       #power-profiles-daemon:hover {
           background-color: @base01;
       }
@@ -229,11 +226,6 @@
           color: @base00;
       }
 
-      #idle_inhibitor.activated {
-          background-color: @base0D;
-          color: @base00;
-      }
-
       #tray {
           background-color: @base0D;
           color: @base00;
@@ -241,12 +233,6 @@
 
       #tray > .needs-attention {
           background-color: @base08;
-          color: @base00;
-      }
-
-      #custom-notification.notification,
-      #custom-notification.dnd-notification {
-          background-color: @base0D;
           color: @base00;
       }
 
@@ -286,9 +272,7 @@
         "battery"
         "custom/performance"
         "power-profiles-daemon"
-        "idle_inhibitor"
         "clock"
-        "custom/notification"
         "tray"
       ];
 
@@ -363,31 +347,6 @@
             today = "<span color='#${config.lib.stylix.colors.base08}'><b><u>{}</u></b></span>";
           };
         };
-      };
-
-      "idle_inhibitor" = {
-        format = "{icon}";
-        format-icons = {
-          activated = "";
-          deactivated = "";
-        };
-      };
-
-      "custom/notification" = {
-        tooltip = true;
-        format = "{icon}";
-        format-icons = {
-          notification = builtins.fromJSON ''"\uf0f3"'';
-          none = builtins.fromJSON ''"\uf0f3"'';
-          "dnd-notification" = builtins.fromJSON ''"\uf1f6"'';
-          "dnd-none" = builtins.fromJSON ''"\uf1f6"'';
-        };
-        return-type = "json";
-        exec-if = "which swaync-client";
-        exec = "swaync-client -swb";
-        on-click = "swaync-client -t -sw";
-        on-click-right = "swaync-client -d -sw";
-        escape = true;
       };
     };
 
