@@ -73,11 +73,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    stylix = {
-      url = "github:nix-community/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     vibelock.url = "path:/home/michael/dev/vibelock";
 
   };
@@ -177,7 +172,7 @@
                 echo ">> statix"
                 statix check
                 echo ">> deadnix"
-                deadnix --fail .
+                deadnix --fail --exclude docs/refs .
                 echo ">> OK: lint clean"
               '';
             }

@@ -27,6 +27,5 @@
       color = "aaaacc";
       fontSize = 100.0;
     };
-    stylix.enable = true;
   };
 }

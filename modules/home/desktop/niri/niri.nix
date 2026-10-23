@@ -6,9 +6,11 @@
 {
 
   wayland.windowManager.niri.extraConfig = ''
+    include optional=true "${config.xdg.stateHome}/matugen/niri.kdl"
+
     cursor {
-        xcursor-theme "${config.stylix.cursor.name}"
-        xcursor-size ${toString config.stylix.cursor.size}
+        xcursor-theme "${config.home.pointerCursor.name}"
+        xcursor-size ${toString config.home.pointerCursor.size}
         hide-when-typing
         hide-after-inactive-ms 3000
     }
@@ -59,12 +61,9 @@
         }
         focus-ring {
             width 2
-            active-color "#${config.lib.stylix.colors.base0D}"
-            inactive-color "#${config.lib.stylix.colors.base02}"
-            urgent-color "#${config.lib.stylix.colors.base08}"
         }
         border { off; }
-        background-color "transparent" 
+        background-color "transparent"
         empty-workspace-above-first
     }
 
@@ -229,13 +228,6 @@
         background-effect { blur true; }
     }
 
-    recent-windows {
-        highlight {
-            active-color "#${config.lib.stylix.colors.base0D}ff"
-            urgent-color "#${config.lib.stylix.colors.base08}ff"
-        }
-    }
-
     spawn-at-startup "swaync"
     spawn-at-startup "systemctl" "--user" "start" "swaybg"
     spawn-at-startup "swayosd-server"
@@ -331,7 +323,7 @@
       PartOf = [ "graphical-session.target" ];
     };
     Service = {
-      ExecStart = "${pkgs.swaybg}/bin/swaybg -i ${config.stylix.image} -m fill";
+      ExecStart = "${pkgs.swaybg}/bin/swaybg -i ${config.xdg.stateHome}/wallpaper/current -m fill";
       Restart = "always";
       RestartSec = 3;
     };

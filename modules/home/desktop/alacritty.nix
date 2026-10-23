@@ -1,9 +1,13 @@
-_:
+{
+  config,
+  ...
+}:
 
 {
   programs.alacritty = {
     enable = true;
     settings = {
+      general.import = [ "${config.xdg.stateHome}/matugen/alacritty.toml" ];
       window = {
         opacity = 0.7;
         padding = {

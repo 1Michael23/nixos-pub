@@ -18,22 +18,7 @@
     systemd.enable = true;
 
     style = lib.mkForce ''
-      @define-color base00 #${config.lib.stylix.colors.base00};
-      @define-color base01 #${config.lib.stylix.colors.base01};
-      @define-color base02 #${config.lib.stylix.colors.base02};
-      @define-color base03 #${config.lib.stylix.colors.base03};
-      @define-color base04 #${config.lib.stylix.colors.base04};
-      @define-color base05 #${config.lib.stylix.colors.base05};
-      @define-color base06 #${config.lib.stylix.colors.base06};
-      @define-color base07 #${config.lib.stylix.colors.base07};
-      @define-color base08 #${config.lib.stylix.colors.base08};
-      @define-color base09 #${config.lib.stylix.colors.base09};
-      @define-color base0A #${config.lib.stylix.colors.base0A};
-      @define-color base0B #${config.lib.stylix.colors.base0B};
-      @define-color base0C #${config.lib.stylix.colors.base0C};
-      @define-color base0D #${config.lib.stylix.colors.base0D};
-      @define-color base0E #${config.lib.stylix.colors.base0E};
-      @define-color base0F #${config.lib.stylix.colors.base0F};
+      @import url("file://${config.xdg.stateHome}/matugen/waybar.css");
 
       * {
           font-family: "Source Code Pro", "Font Awesome 7 Free Solid", "Font Awesome 7 Free", "Noto Color Emoji", sans-serif;
@@ -340,11 +325,11 @@
           weeks-pos = "left";
           on-scroll = 1;
           format = {
-            months = "<span color='#${config.lib.stylix.colors.base05}'><b>{}</b></span>";
-            days = "<span color='#${config.lib.stylix.colors.base04}'><b>{}</b></span>";
-            weeks = "<span color='#${config.lib.stylix.colors.base0C}'><b>W{}</b></span>";
-            weekdays = "<span color='#${config.lib.stylix.colors.base0A}'><b>{}</b></span>";
-            today = "<span color='#${config.lib.stylix.colors.base08}'><b><u>{}</u></b></span>";
+            months = "<span color='#ffffff'><b>{}</b></span>";
+            days = "<span color='#cccccc'><b>{}</b></span>";
+            weeks = "<span color='#00ffff'><b>W{}</b></span>";
+            weekdays = "<span color='#ffd700'><b>{}</b></span>";
+            today = "<span color='#ff8800'><b><u>{}</u></b></span>";
           };
         };
       };

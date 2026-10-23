@@ -78,7 +78,7 @@
   home.sessionVariables = {
     EDITOR = "nvim";
     LANG = "en_AU.UTF-8";
-    NH_FLAKE = "$HOME/dev/nixos-pub";
+    NH_FLAKE = "$HOME/dev/nix-pub-matugen";
   }
   // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
     TERMINAL = "alacritty";
@@ -88,10 +88,6 @@
   home.sessionPath = lib.mkIf isLinux [ "${config.home.homeDirectory}/.local/bin" ];
 
   home.file = lib.mkIf isLinux {
-    ".local/bin/wallpaper" = {
-      source = ../../bin/wallpaper;
-      executable = true;
-    };
     ".local/bin/waybar-performance" = {
       source = ../../bin/waybar-performance;
       executable = true;

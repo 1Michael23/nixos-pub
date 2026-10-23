@@ -30,7 +30,7 @@
     ../../modules/home/desktop/alacritty.nix
     ../../modules/home/desktop/swaync.nix
     ../../modules/home/services/tailscale-tray.nix
-    ../../modules/home/theme/stylix.nix
+    ../../modules/home/theme/matugen.nix
     ../../modules/home/desktop/vesktop.nix
   ];
 

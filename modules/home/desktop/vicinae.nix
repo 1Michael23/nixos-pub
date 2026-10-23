@@ -1,11 +1,7 @@
 {
-  config,
   pkgs,
   ...
 }:
-let
-  c = config.lib.stylix.colors;
-in
 {
   home.packages = [ pkgs.vicinae ];
 
@@ -58,11 +54,11 @@ in
     };
     theme = {
       dark = {
-        name = "stylix";
+        name = "matugen";
         icon_theme = "auto";
       };
       light = {
-        name = "stylix";
+        name = "matugen";
         icon_theme = "auto";
       };
     };
@@ -71,81 +67,4 @@ in
     fallbacks = [ "files:search" ];
   };
 
-  xdg.dataFile."vicinae/themes/stylix.toml".text = ''
-    [meta]
-    name = "Stylix"
-    description = "Generated from stylix base16 scheme"
-    variant = "dark"
-    inherits = "vicinae-dark"
-
-    [colors.core]
-    accent = "#${c.base0D}"
-    accent_foreground = "#${c.base00}"
-    background = "#${c.base00}"
-    foreground = "#${c.base05}"
-    secondary_background = "#${c.base01}"
-    border = "#${c.base02}"
-
-    [colors.main_window]
-    border = "#${c.base02}"
-    footer = { background = "colors.core.secondary_background" }
-
-    [colors.settings_window]
-    border = "#${c.base01}"
-
-    [colors.accents]
-    blue = "#${c.base0D}"
-    green = "#${c.base0B}"
-    magenta = "#${c.base0E}"
-    orange = "#${c.base09}"
-    red = "#${c.base08}"
-    yellow = "#${c.base0A}"
-    cyan = "#${c.base0C}"
-    purple = "#${c.base0E}"
-
-    [colors.text]
-    default = "colors.core.foreground"
-    muted = "#${c.base03}"
-    danger = "#${c.base08}"
-    success = "#${c.base0B}"
-    placeholder = "#${c.base03}"
-    selection = { background = "#${c.base0D}", foreground = "#${c.base00}" }
-
-    [colors.text.links]
-    default = "#${c.base0A}"
-    visited = "#${c.base0E}"
-
-    [colors.input]
-    border = "#${c.base02}"
-    border_focus = "#${c.base0D}"
-    border_error = "#${c.base08}"
-
-    [colors.button.primary]
-    background = "#${c.base01}"
-    foreground = "#${c.base05}"
-    hover = { background = "#${c.base02}" }
-    focus = { outline = "colors.core.accent" }
-
-    [colors.list.item.hover]
-    foreground = "#${c.base05}"
-    secondary_foreground = "#${c.base04}"
-
-    [colors.list.item.selection]
-    background = "#${c.base02}"
-    foreground = "#${c.base05}"
-    secondary_background = "#${c.base01}"
-    secondary_foreground = "#${c.base04}"
-
-    [colors.grid.item]
-    background = "#${c.base01}"
-    hover = { outline = "#${c.base05}" }
-    selection = { outline = "#${c.base05}" }
-
-    [colors.scrollbars]
-    background = "#${c.base02}"
-
-    [colors.loading]
-    bar = "#${c.base0D}"
-    spinner = "#${c.base05}"
-  '';
 }

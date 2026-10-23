@@ -1,6 +1,17 @@
-_: {
+{ config, ... }:
+{
   services.swaync = {
     enable = true;
+
+    style = ''
+      @import url("file://${config.xdg.stateHome}/matugen/swaync.css");
+
+      * {
+        font-family: "DejaVu Sans";
+        font-size: 11pt;
+      }
+    '';
+
     settings = {
       positionX = "right";
       positionY = "top";

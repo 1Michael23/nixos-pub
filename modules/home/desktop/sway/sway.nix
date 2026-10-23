@@ -18,7 +18,7 @@
           always = true;
         }
         {
-          command = "swaybg -i ${config.stylix.image} -m fill";
+          command = "swaybg -i ${config.xdg.stateHome}/wallpaper/current -m fill";
           always = true;
         }
         {
