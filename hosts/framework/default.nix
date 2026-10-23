@@ -44,13 +44,27 @@
     powertop
     piper
     sbctl
-    amd-debug-tools
   ];
 
   nixpkgs.config = {
     allowUnfree = true;
-
   };
+
+  # TODO: remove when NixOS/nixpkgs#577109 (fastmcp-slim with mcp 1.x) lands.
+  # nixpkgs 9a43e55 marks fastmcp-slim broken because mcp 2.x renamed McpError,
+  # but mcp-nixos (used by the opencode MCP server) still needs the old API.
+  nixpkgs.overlays = [
+    (_final: prev: {
+      mcp-nixos = prev.mcp-nixos.override {
+        python3Packages = prev.python3Packages.override {
+          overrides = self: super: {
+            fastmcp-slim = super.fastmcp-slim.override { mcp = self.mcp_1; };
+            fastmcp = super.fastmcp.override { inherit (self) fastmcp-slim; };
+          };
+        };
+      };
+    })
+  ];
 
   boot = {
     loader.systemd-boot.enable = lib.mkForce false;
@@ -79,7 +93,8 @@
     resumeDevice = "/dev/mapper/cryptswap";
   };
 
-  swapDevices = [ { device = "/dev/mapper/cryptswap"; } ];
+  # Force one swap unit; hardware-configuration.nix also declares this by UUID.
+  swapDevices = lib.mkForce [ { device = "/dev/mapper/cryptswap"; } ];
 
   documentation = {
     enable = true;

@@ -1,4 +1,6 @@
 {
+  config,
+  lib,
   pkgs,
   ...
 }:
@@ -99,10 +101,21 @@
     };
   };
 
-  security.pam.services = {
-    login.fprintAuth = true; # greetd substacks login, so this enables fingerprint at login
-    polkit-1.fprintAuth = true; # run0 privilege escalation
-    login.enableGnomeKeyring = true; # greetd's session stack includes login
+  security = {
+    rtkit.enable = true; # PipeWire realtime scheduling
+    polkit.enable = true;
+
+    pam.services = {
+      login.fprintAuth = true; # greetd substacks login, so this enables fingerprint at login
+      polkit-1.fprintAuth = true; # run0 privilege escalation
+      login.enableGnomeKeyring = true; # greetd's session stack includes login
+      # greetd lacks PAM_TTY, so drop login's pam_securetty rule.
+      greetd.rules.auth = lib.mkForce (
+        builtins.mapAttrs (_: rule: builtins.removeAttrs rule [ "name" ]) (
+          builtins.removeAttrs config.security.pam.services.login.rules.auth [ "securetty" ]
+        )
+      );
+    };
   };
 
   hardware.graphics = {
@@ -160,8 +173,6 @@
       serif = [ "DejaVu Serif" ];
     };
   };
-
-  security.polkit.enable = true;
 
   programs.dconf = {
     enable = true;

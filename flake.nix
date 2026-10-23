@@ -148,7 +148,6 @@
         mbp = mbp.config.system.build.toplevel;
       };
 
-      # nixfmt-tree wraps treefmt so bare `nix fmt` formats the whole repo.
       formatter = forAllSystems (pkgs: pkgs.nixfmt-tree);
 
       devShells = forAllSystems (pkgs: {

@@ -27,7 +27,6 @@
       moonlight-qt
       openssh
       jq
-      freecad
       bitwarden-cli
     ];
 

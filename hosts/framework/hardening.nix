@@ -22,6 +22,7 @@
     settings = {
       system.multilib = true; # NOTE disable when/if steam no longer needs it
       debug.quiet-boot = false;
+      debug.coredump = true; # TODO disable for security
     };
     filesystems.enable = false;
   };
