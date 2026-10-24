@@ -1,5 +1,6 @@
 {
   config,
+  isLinux ? false,
   lib,
   pkgs,
   vscodeExtensions,
@@ -63,7 +64,7 @@ in
             ms-python.python
             ms-vscode.cpptools
           ]
-          ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
+          ++ lib.optionals isLinux [
             mkhl.direnv
           ]
         )
@@ -71,10 +72,15 @@ in
           jeanp413.open-remote-ssh
           sst-dev.opencode
         ])
-        ++ [ noctaliaVscodeTheme ];
+        # Noctalia only runs on framework and seeds the theme JSON at activation;
+        # on Darwin that symlink would stay dangling, so fall back to Catppuccin.
+        ++ lib.optionals isLinux [ noctaliaVscodeTheme ]
+        ++ lib.optionals (!isLinux) [
+          pkgs.vscode-extensions.catppuccin.catppuccin-vsc
+        ];
 
       userSettings = {
-        "workbench.colorTheme" = "NoctaliaTheme";
+        "workbench.colorTheme" = if isLinux then "NoctaliaTheme" else "Catppuccin Mocha";
 
         "telemetry.telemetryLevel" = "off";
         "telemetry.enableCrashReporter" = false;
