@@ -7,6 +7,12 @@
 {
   programs.opencode = {
     enable = true;
+
+    # OpenCode 2 rewrites cli.json from the TUI. Keep the declarative layer in
+    # home-manager*.json so Home Manager and OpenCode do not fight over the
+    # same files.
+    mutableSettings = true;
+
     package =
       inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.opencode.overrideAttrs
         (prev: {
