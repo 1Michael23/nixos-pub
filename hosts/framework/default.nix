@@ -39,7 +39,6 @@
 
   environment.systemPackages = with pkgs; [
     powertop
-    piper
     sbctl
   ];
 

@@ -108,8 +108,6 @@
         }
     }
 
-    screenshot-path "~/Pictures/Screenshots/%Y-%m-%d_%H-%M-%S.png"
-
     hotkey-overlay {
         skip-at-startup
     }
@@ -167,11 +165,6 @@
     }
 
     window-rule {
-        match app-id="^Lxpolkit$"
-        open-floating true
-    }
-
-    window-rule {
         match app-id="^xdg-desktop-portal$"
         open-floating true
     }
@@ -221,11 +214,6 @@
 
     layer-rule {
         match namespace="noctalia-window-switcher"
-        background-effect { blur true; xray false; }
-    }
-
-    layer-rule {
-        match namespace="^launcher$"
         background-effect { blur true; xray false; }
     }
 

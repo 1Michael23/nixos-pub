@@ -25,10 +25,7 @@ in
         niri_overview_type_to_launch_enabled = true;
         settings_show_advanced = false;
 
-        animation = {
-          enabled = false;
-          speed = 3.0;
-        };
+        animation.enabled = false;
 
         launcher = {
           compact = true;
@@ -98,7 +95,6 @@ in
         directory = "${home}/Pictures/wallpapers";
         fill_mode = "crop";
         transition = [ ];
-        transition_duration = 1500;
         transition_on_startup = false;
 
         default.path = "${home}/Pictures/wallpapers/film.png";
@@ -183,10 +179,6 @@ in
         clock = {
           type = "clock";
           format = "{:%a %d %b %I:%M %p}";
-        };
-
-        caffeine = {
-          type = "caffeine";
         };
 
         network = {

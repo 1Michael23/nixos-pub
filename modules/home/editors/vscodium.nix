@@ -54,7 +54,6 @@ in
         (
           with pkgs.vscode-extensions;
           [
-            catppuccin.catppuccin-vsc
             jnoortheen.nix-ide
             gruntfuggly.todo-tree
             rust-lang.rust-analyzer
