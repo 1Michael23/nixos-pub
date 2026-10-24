@@ -4,4 +4,4 @@ result-*
 docs/refs/
 amd-s2idle-report-*.html
 modules/home/desktop/wallpapers/*
-!modules/home/desktop/wallpapers/current.png
+!modules/home/desktop/wallpapers/default.jpg

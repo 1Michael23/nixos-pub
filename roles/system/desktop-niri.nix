@@ -29,10 +29,8 @@
 
     networkmanagerapplet
     source-code-pro
-    font-awesome
     tuigreet
     piper
-    swayidle
 
     flatpak
     gnome-software
@@ -53,15 +51,12 @@
     unrar
     trash-cli
     wf-recorder
-    wlsunset
     easyeffects
     lm_sensors
 
   ];
 
   services = {
-    udev.packages = [ pkgs.swayosd ];
-
     gvfs.enable = true;
 
     greetd = {

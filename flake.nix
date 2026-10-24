@@ -75,8 +75,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    vibelock.url = "path:/home/michael/dev/vibelock";
-
   };
 
   outputs =

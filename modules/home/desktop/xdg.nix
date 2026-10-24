@@ -1,9 +1,47 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 let
   home = config.home.homeDirectory;
 in
 {
+  home = {
+    pointerCursor = {
+      enable = true;
+      package = pkgs.adwaita-icon-theme;
+      name = "Adwaita";
+      size = 24;
+      gtk.enable = true;
+    };
+
+    file = {
+      ".config/gtk-3.0/bookmarks".text = ''
+        file://${home}/Downloads Downloads
+        file://${home}/Documents Documents
+        file://${home}/dev Dev
+        file://${home}/Pictures Pictures
+        file://${home}/Videos Videos
+        file://${home}/Music Music
+      '';
+
+      ".config/gtk-4.0/bookmarks".text = ''
+        file://${home}/Downloads Downloads
+        file://${home}/Documents Documents
+        file://${home}/dev Dev
+        file://${home}/Pictures Pictures
+        file://${home}/Videos Videos
+        file://${home}/Music Music
+      '';
+    };
+  };
+
+  gtk = {
+    enable = true;
+    font = {
+      name = "DejaVu Sans";
+      size = 11;
+      package = pkgs.dejavu_fonts;
+    };
+  };
 
   xdg = {
     enable = true;
@@ -123,22 +161,4 @@ in
     templates = "${home}/Templates";
     videos = "${home}/Videos";
   };
-
-  home.file.".config/gtk-3.0/bookmarks".text = ''
-    file://${home}/Downloads Downloads
-    file://${home}/Documents Documents
-    file://${home}/dev Dev
-    file://${home}/Pictures Pictures
-    file://${home}/Videos Videos
-    file://${home}/Music Music
-  '';
-
-  home.file.".config/gtk-4.0/bookmarks".text = ''
-    file://${home}/Downloads Downloads
-    file://${home}/Documents Documents
-    file://${home}/dev Dev
-    file://${home}/Pictures Pictures
-    file://${home}/Videos Videos
-    file://${home}/Music Music
-  '';
 }

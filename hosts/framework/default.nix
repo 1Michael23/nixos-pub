@@ -15,14 +15,12 @@
     ../../modules/system/virtualization/libvirtd.nix
     ../../modules/system/browsers.nix
     ../../modules/system/services/usbguard.nix
-    ../../modules/system/services/vibelock.nix
     ../../modules/system/theme/fonts.nix
 
     inputs.lanzaboote.nixosModules.lanzaboote
     inputs.run0-sudo-shim.nixosModules.default
     inputs.nix-mineral.nixosModules.nix-mineral
     inputs.nixos-hardware.nixosModules.framework-13-7040-amd
-    inputs.vibelock.nixosModules.default
   ];
 
   home-manager.users.michael = import ../../users/michael/home.nix;

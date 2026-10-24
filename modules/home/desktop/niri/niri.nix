@@ -1,12 +1,11 @@
 {
   config,
-  pkgs,
   ...
 }:
 {
 
   wayland.windowManager.niri.extraConfig = ''
-    include optional=true "${config.xdg.stateHome}/matugen/niri.kdl"
+    include optional=true "${config.xdg.configHome}/niri/noctalia.kdl"
 
     cursor {
         xcursor-theme "${config.home.pointerCursor.name}"
@@ -207,10 +206,22 @@
         open-maximized true
     }
 
-    // Put swaybg inside the overview backdrop.
+    // Keep the wallpaper visible through niri's overview (stationary mode).
     layer-rule {
-        match namespace="^wallpaper$"
+        match namespace="^noctalia-wallpaper"
         place-within-backdrop true
+    }
+
+    // Noctalia publishes blur regions for its surfaces; disable xray so the
+    // blur samples windows rather than the wallpaper.
+    layer-rule {
+        match namespace="^noctalia-(bar-[^\"]+|notification|dock|panel|attached-panel|osd)$"
+        background-effect { xray false; }
+    }
+
+    layer-rule {
+        match namespace="noctalia-window-switcher"
+        background-effect { blur true; xray false; }
     }
 
     layer-rule {
@@ -223,22 +234,27 @@
         background-effect { blur true; xray false; }
     }
 
-    layer-rule {
-        match namespace="^waybar$"
-        background-effect { blur true; }
+    window-rule {
+        match app-id="dev.noctalia.Noctalia"
+        open-floating true
+        default-column-width { fixed 1080; }
+        default-window-height { fixed 920; }
     }
 
-    spawn-at-startup "systemctl" "--user" "start" "swaync"
-    spawn-at-startup "systemctl" "--user" "start" "swaybg"
-    spawn-at-startup "swayosd-server"
+    debug {
+        honor-xdg-activation-with-invalid-serial
+    }
+
+    spawn-at-startup "systemctl" "--user" "start" "noctalia"
 
     binds {
         Mod+Return { spawn "alacritty"; }
-        Mod+Space { spawn "vicinae" "toggle"; }
+        Mod+Space { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
+        Mod+Alt+Space { spawn "vicinae" "toggle"; }
 
         Mod+Q { close-window; }
         Mod+F { maximize-column; }
-        Mod+L allow-when-locked=true { spawn "vibelock"; }
+        Mod+L allow-when-locked=true { spawn "noctalia" "msg" "session" "lock"; }
         Mod+Shift+F { fullscreen-window; }
         Mod+Shift+Space { toggle-window-floating; }
 
@@ -285,24 +301,27 @@
         Mod+Shift+Period { move-workspace-to-monitor-right; }
         Mod+Shift+Comma  { move-workspace-to-monitor-left; }
 
-        Print { screenshot; }
-        Mod+Print { screenshot-screen; }
-        Alt+Print { screenshot-window; }
+        Print { spawn "noctalia" "msg" "screenshot-region"; }
+        Mod+Print { spawn "noctalia" "msg" "screenshot-fullscreen"; }
+        Mod+Shift+Print { spawn "noctalia" "msg" "screenshot-annotate"; }
 
         Mod+Escape allow-inhibiting=false { quit; }
 
         Mod+U { spawn "usbguard-dmenu" "vicinae" "dmenu" "--placeholder"; }
-        Mod+Shift+N { spawn "swaync-client" "-t" "-sw"; }
-        Mod+V { spawn-sh "vicinae deeplink vicinae://launch/clipboard/history"; }
+        Mod+V { spawn "noctalia" "msg" "panel-toggle" "clipboard"; }
+        Mod+Alt+V { spawn-sh "vicinae deeplink vicinae://launch/clipboard/history"; }
+        Mod+S { spawn "noctalia" "msg" "panel-toggle" "control-center"; }
+        Mod+Comma { spawn "noctalia" "msg" "settings-toggle"; }
+        Mod+Shift+E { spawn "noctalia" "msg" "panel-toggle" "session"; }
         Mod+O { toggle-overview; }
         Mod+R { switch-preset-column-width; }
         Mod+T { toggle-column-tabbed-display; }
 
 
-        XF86AudioRaiseVolume allow-when-locked=true { spawn "swayosd-client" "--output-volume" "raise"; }
-        XF86AudioLowerVolume allow-when-locked=true { spawn "swayosd-client" "--output-volume" "lower"; }
-        XF86AudioMute allow-when-locked=true { spawn "swayosd-client" "--output-volume" "mute-toggle"; }
-        XF86AudioMicMute allow-when-locked=true { spawn "swayosd-client" "--input-volume" "mute-toggle"; }
+        XF86AudioRaiseVolume allow-when-locked=true { spawn "noctalia" "msg" "volume-up"; }
+        XF86AudioLowerVolume allow-when-locked=true { spawn "noctalia" "msg" "volume-down"; }
+        XF86AudioMute allow-when-locked=true { spawn "noctalia" "msg" "volume-mute"; }
+        XF86AudioMicMute allow-when-locked=true { spawn "noctalia" "msg" "mic-mute"; }
         XF86AudioNext { spawn "playerctl" "next"; }
         XF86AudioPrev { spawn "playerctl" "previous"; }
         XF86AudioPlay { spawn "playerctl" "play-pause"; }
@@ -310,22 +329,10 @@
         Mod+XF86AudioRaiseVolume { spawn "playerctl" "-p" "spotify" "volume" "0.02+"; }
         Mod+XF86AudioLowerVolume { spawn "playerctl" "-p" "spotify" "volume" "0.02-"; }
 
-        XF86MonBrightnessUp { spawn "swayosd-client" "--brightness" "raise"; }
-        XF86MonBrightnessDown { spawn "swayosd-client" "--brightness" "lower"; }
-        XF86KbdBrightnessUp { spawn "brightnessctl" "-d" "platform::kbd_backlight" "set" "+10%"; }
-        XF86KbdBrightnessDown { spawn "brightnessctl" "-d" "platform::kbd_backlight" "set" "10%-"; }
+        XF86MonBrightnessUp { spawn "noctalia" "msg" "brightness-up"; }
+        XF86MonBrightnessDown { spawn "noctalia" "msg" "brightness-down"; }
+        XF86KbdBrightnessUp { spawn "noctalia" "msg" "keyboard-backlight-up"; }
+        XF86KbdBrightnessDown { spawn "noctalia" "msg" "keyboard-backlight-down"; }
     }
   '';
-
-  systemd.user.services.swaybg = {
-    Unit = {
-      Description = "Swaybg wallpaper daemon";
-      PartOf = [ "graphical-session.target" ];
-    };
-    Service = {
-      ExecStart = "${pkgs.swaybg}/bin/swaybg -i ${config.xdg.stateHome}/wallpaper/current -m fill";
-      Restart = "always";
-      RestartSec = 3;
-    };
-  };
 }

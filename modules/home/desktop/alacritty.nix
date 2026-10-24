@@ -1,13 +1,12 @@
-{
-  config,
-  ...
-}:
+_:
 
 {
   programs.alacritty = {
     enable = true;
     settings = {
-      general.import = [ "${config.xdg.stateHome}/matugen/alacritty.toml" ];
+      # Keep this exact tilde path: Noctalia's built-in Alacritty template
+      # rewrites the import in place and must see no diff through the HM symlink.
+      general.import = [ "~/.config/alacritty/themes/noctalia.toml" ];
       window = {
         opacity = 0.7;
         padding = {

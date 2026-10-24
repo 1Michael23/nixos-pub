@@ -87,11 +87,4 @@
   };
 
   home.sessionPath = lib.mkIf isLinux [ "${config.home.homeDirectory}/.local/bin" ];
-
-  home.file = lib.mkIf isLinux {
-    ".local/bin/waybar-performance" = {
-      source = ../../bin/waybar-performance;
-      executable = true;
-    };
-  };
 }

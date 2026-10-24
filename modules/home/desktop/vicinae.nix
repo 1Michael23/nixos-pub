@@ -52,16 +52,6 @@
       opacity = 0.7;
       blur.enabled = true;
     };
-    theme = {
-      dark = {
-        name = "matugen";
-        icon_theme = "auto";
-      };
-      light = {
-        name = "matugen";
-        icon_theme = "auto";
-      };
-    };
     pixmap_cache_mb = 50;
     favorites = [ "clipboard:history" ];
     fallbacks = [ "files:search" ];

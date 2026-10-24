@@ -8,6 +8,7 @@ My personal NixOS + nix-darwin configuration.
 - Self-signed Secure Boot via lanzaboote (framework)
 - Secrets via sops-nix
 - System hardening via nix-mineral and run0 sudo shim (framework), hardened ssh
+- Niri + Noctalia Shell desktop on framework: bar, launcher, clipboard, notifications, OSD, lock/session, screenshots, and wallpaper-derived theming for GTK, Alacritty, and Niri
 - flake-native developer tooling: `nix fmt`, `nix run .#check`, on-demand devShell via `nix develop`
 
 ## Directory Structure
@@ -17,7 +18,6 @@ My personal NixOS + nix-darwin configuration.
 ├── flake.nix
 ├── flake.lock
 ├── .sops.yaml     # sops age recipient rules
-├── bin/           # helper scripts (wallpaper, waybar-performance)
 ├── lib/           # mkHost / mkDarwinHost builders
 ├── hosts/         # per-device config (framework, proxmox, mbp)
 ├── roles/         # composed sets of modules
@@ -44,6 +44,8 @@ flake.nix
 │       ├── roles/home/development.nix
 │       ├── roles/home/photography.nix
 │       └── roles/home/desktop-niri.nix
+│           ├── modules/home/desktop/niri/niri.nix
+│           └── modules/home/desktop/noctalia.nix
 │
 ├── proxmox (mkHost)
 │   ├── hosts/proxmox/
