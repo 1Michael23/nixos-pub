@@ -350,6 +350,11 @@ let
     spinner = "{{colors.on_surface.default.hex}}"
   '';
 
+  # Post-hooks run from home.activation at boot, before any graphical session
+  # exists. Cap them so a blocking client cannot wedge the oneshot activation
+  # until systemd's 5-minute TimeoutStartSec kills it.
+  reload = cmd: "${pkgs.coreutils}/bin/timeout 3 ${cmd} || true";
+
   matugenConfig = (pkgs.formats.toml { }).generate "matugen-config.toml" {
     config = {
       version_check = false;
@@ -367,7 +372,7 @@ let
       waybar = {
         input_path = "${waybarTemplate}";
         output_path = "${stateDir}/waybar.css";
-        post_hook = "${pkgs.systemd}/bin/systemctl --user reload waybar || true";
+        post_hook = reload "${pkgs.systemd}/bin/systemctl --user reload waybar";
       };
 
       niri = {
@@ -378,7 +383,10 @@ let
       swaync = {
         input_path = "${swayncTemplate}";
         output_path = "${stateDir}/swaync.css";
-        post_hook = "${pkgs.swaynotificationcenter}/bin/swaync-client -rs || true";
+        # The client blocks on "Could not connect to CC service" when swaync
+        # is not running (boot activations have no session bus), so rely on
+        # the timeout wrapper rather than any --skip-wait flag.
+        post_hook = reload "${pkgs.swaynotificationcenter}/bin/swaync-client -rs";
       };
 
       gtk = {
@@ -394,7 +402,7 @@ let
       vicinae = {
         input_path = "${vicinaeTemplate}";
         output_path = "${config.xdg.dataHome}/vicinae/themes/matugen.toml";
-        post_hook = "${pkgs.systemd}/bin/systemctl --user try-restart vicinae || true";
+        post_hook = reload "${pkgs.systemd}/bin/systemctl --user try-restart vicinae";
       };
     };
   };
