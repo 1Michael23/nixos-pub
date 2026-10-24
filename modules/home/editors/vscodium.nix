@@ -1,10 +1,46 @@
 {
+  config,
   lib,
   pkgs,
   vscodeExtensions,
   ...
 }:
 
+let
+  noctaliaThemePath = "${config.home.homeDirectory}/.local/state/noctalia/vscode/NoctaliaTheme-color-theme.json";
+
+  noctaliaVscodeTheme =
+    pkgs.runCommand "noctalia-vscode-theme"
+      {
+        vscodeExtUniqueId = "noctalia.noctaliatheme-0.0.5";
+        vscodeExtPublisher = "noctalia";
+        version = "0.0.5";
+      }
+      ''
+        ext="$out/share/vscode/extensions/noctalia.noctaliatheme-0.0.5"
+        mkdir -p "$ext/themes"
+        cat > "$ext/package.json" <<'EOF'
+        {
+          "name": "noctaliatheme",
+          "displayName": "NoctaliaTheme",
+          "description": "Noctalia Shell color theme",
+          "publisher": "noctalia",
+          "version": "0.0.5",
+          "engines": { "vscode": "^1.60.0" },
+          "contributes": {
+            "themes": [
+              {
+                "label": "NoctaliaTheme",
+                "uiTheme": "vs-dark",
+                "path": "./themes/NoctaliaTheme-color-theme.json"
+              }
+            ]
+          }
+        }
+        EOF
+        ln -s ${lib.escapeShellArg noctaliaThemePath} "$ext/themes/NoctaliaTheme-color-theme.json"
+      '';
+in
 {
   programs.vscodium = {
     enable = true;
@@ -35,10 +71,11 @@
         ++ (with vscodeExtensions.open-vsx; [
           jeanp413.open-remote-ssh
           sst-dev.opencode
-        ]);
+        ])
+        ++ [ noctaliaVscodeTheme ];
 
       userSettings = {
-        "workbench.colorTheme" = "Catppuccin Mocha";
+        "workbench.colorTheme" = "NoctaliaTheme";
 
         "telemetry.telemetryLevel" = "off";
         "telemetry.enableCrashReporter" = false;

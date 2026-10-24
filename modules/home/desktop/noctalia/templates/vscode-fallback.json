@@ -1,0 +1,17 @@
+{
+  "name": "NoctaliaTheme",
+  "type": "dark",
+  "colors": {
+    "editor.background": "#1a1a1a",
+    "editor.foreground": "#e0e0e0",
+    "activityBar.background": "#1a1a1a",
+    "activityBar.foreground": "#e0e0e0",
+    "sideBar.background": "#1f1f1f",
+    "sideBar.foreground": "#e0e0e0",
+    "statusBar.background": "#1a1a1a",
+    "statusBar.foreground": "#e0e0e0",
+    "terminal.background": "#1a1a1a",
+    "terminal.foreground": "#e0e0e0"
+  },
+  "tokenColors": []
+}
