@@ -95,8 +95,8 @@
       };
     };
 
-    tui = {
-      theme = "opencode-transparent";
+    cli = {
+      theme.name = "opencode-transparent";
       attention.notifications = true;
     };
   };
