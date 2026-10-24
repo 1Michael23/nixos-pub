@@ -79,7 +79,7 @@
   home.sessionVariables = {
     EDITOR = "nvim";
     LANG = "en_AU.UTF-8";
-    NH_FLAKE = "$HOME/dev/nix-pub-matugen";
+    NH_FLAKE = "$HOME/dev/nixos-pub";
   }
   // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
     TERMINAL = "alacritty";
