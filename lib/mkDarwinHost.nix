@@ -20,6 +20,7 @@ darwin.lib.darwinSystem {
 
   modules = [
     ../hosts/${hostname}/configuration.nix
+    ../modules/system/mcp-nixos.nix
     sops-nix.darwinModules.sops
     home-manager.darwinModules.home-manager
     {

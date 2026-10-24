@@ -20,6 +20,7 @@ nixpkgs.lib.nixosSystem {
 
   modules = [
     ../hosts/${hostname}/default.nix
+    ../modules/system/mcp-nixos.nix
     ../roles/system/base.nix
     sops-nix.nixosModules.sops
     home-manager.nixosModules.home-manager
