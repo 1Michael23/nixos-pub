@@ -14,7 +14,7 @@
     ./secrets.nix
     ./nvidia.nix
     ../../modules/system/services/media.nix
-    ../../modules/system/services/minecraft-server.nix
+    ../../modules/system/services/crafty.nix
 
     inputs.disko.nixosModules.disko
     inputs.nixarr.nixosModules.default

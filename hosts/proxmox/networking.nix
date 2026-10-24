@@ -16,6 +16,8 @@ _:
         8686 # Lidarr
         9696 # Prowlarr
         6767 # Bazarr
+        8443 # Crafty panel
+        25565 # Minecraft
       ];
     };
   };
