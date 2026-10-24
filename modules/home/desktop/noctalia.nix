@@ -63,8 +63,7 @@ in
       theme = {
         mode = "dark";
         shell_mode = "follow";
-        source = "community";
-        community_palette = "Oxocarbon";
+        source = "wallpaper";
         wallpaper_scheme = "m3-fruit-salad";
         sync_color_scheme = true;
 
@@ -80,7 +79,6 @@ in
           community_ids = [
             "steam"
             "ungoogled-chromium"
-            "vicinae"
           ];
 
           user.vscode = {

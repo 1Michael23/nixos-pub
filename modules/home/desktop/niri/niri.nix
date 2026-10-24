@@ -217,11 +217,6 @@
         background-effect { blur true; xray false; }
     }
 
-    layer-rule {
-        match namespace="^vicinae$"
-        background-effect { blur true; xray false; }
-    }
-
     window-rule {
         match app-id="dev.noctalia.Noctalia"
         open-floating true
@@ -238,7 +233,6 @@
     binds {
         Mod+Return { spawn "alacritty"; }
         Mod+Space { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
-        Mod+Alt+Space { spawn "vicinae" "toggle"; }
 
         Mod+Q { close-window; }
         Mod+F { maximize-column; }
@@ -295,9 +289,8 @@
 
         Mod+Escape allow-inhibiting=false { quit; }
 
-        Mod+U { spawn "usbguard-dmenu" "vicinae" "dmenu" "--placeholder"; }
+        Mod+U { spawn "usbguard-dmenu" "noctalia" "dmenu" "-p"; }
         Mod+V { spawn "noctalia" "msg" "panel-toggle" "clipboard"; }
-        Mod+Alt+V { spawn-sh "vicinae deeplink vicinae://launch/clipboard/history"; }
         Mod+S { spawn "noctalia" "msg" "panel-toggle" "control-center"; }
         Mod+Comma { spawn "noctalia" "msg" "settings-toggle"; }
         Mod+Shift+E { spawn "noctalia" "msg" "panel-toggle" "session"; }
