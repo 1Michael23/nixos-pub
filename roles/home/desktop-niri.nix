@@ -3,7 +3,12 @@
   ...
 }:
 {
-  wayland.windowManager.niri.enable = true;
+  wayland.windowManager.niri = {
+    enable = true;
+    # Use the system XDG portal configuration and the patched system niri.
+    portalPackage = null;
+    xwaylandSatellitePackage = null;
+  };
 
   home.packages = with pkgs; [
     pavucontrol

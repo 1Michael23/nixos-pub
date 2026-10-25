@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 
@@ -8,10 +9,12 @@ let
   home = config.home.homeDirectory;
 in
 {
+  home.packages = [ pkgs.adw-gtk3 ];
+
   programs.noctalia = {
     enable = true;
     systemd.enable = true;
-    checkConfig = true;
+    checkConfig = false;
 
     settings = {
       shell = {
@@ -24,6 +27,7 @@ in
         date_format = "{:%a %d %b}";
         niri_overview_type_to_launch_enabled = true;
         settings_show_advanced = false;
+        launch_apps_as_systemd_services = true;
 
         animation.enabled = false;
 
@@ -77,8 +81,6 @@ in
           ];
           enable_community_templates = true;
           community_ids = [
-            "steam"
-            "thunar"
             "ungoogled-chromium"
           ];
 
@@ -195,11 +197,13 @@ in
         enable_daemon = true;
         position = "top_right";
         layer = "top";
+        follow_focused_output = true;
       };
 
       osd = {
         enabled = true;
         position = "top_center";
+        follow_focused_output = true;
       };
 
       lockscreen = {
@@ -478,6 +482,25 @@ in
     };
   };
 
+  # checkConfig only rejects fatal validation errors; Noctalia exits 0 for
+  # warnings (unknown keys/enum values), so fail the build on those too.
+  xdg.configFile."noctalia/config.toml".source = lib.mkForce (
+    pkgs.runCommand "noctalia-config.toml" { } ''
+      set -euo pipefail
+      raw=${(pkgs.formats.toml { }).generate "noctalia-config.toml" config.programs.noctalia.settings}
+      ${lib.getExe pkgs.noctalia} config validate "$raw" 2>&1 | tee validate.log
+      if grep -q '^WARN' validate.log; then
+        echo "Noctalia config validation produced warnings" >&2
+        exit 1
+      fi
+      cp "$raw" "$out"
+    ''
+  );
+
+  # Issue #4652: Noctalia may not exit on SIGTERM during shutdown.
+  # This caps the wait; it does not fix the hang.
+  systemd.user.services.noctalia.Service.TimeoutStopSec = "5s";
+
   # Seed a valid VS Code theme before Noctalia first renders its own.
   home.activation.noctaliaVscodeTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     themeDir="${home}/.local/state/noctalia/vscode"
@@ -488,8 +511,4 @@ in
       run cp ${./noctalia/templates/vscode-fallback.json} "$themeFile"
     fi
   '';
-
-  # Issue #4652: Noctalia may not exit on SIGTERM during shutdown.
-  # This caps the wait; it does not fix the hang.
-  systemd.user.services.noctalia.Service.TimeoutStopSec = "5s";
 }

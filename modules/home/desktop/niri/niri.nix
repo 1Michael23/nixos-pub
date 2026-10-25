@@ -191,7 +191,7 @@
 
     window-rule {
         match app-id="^org.keepassxc.KeePassXC$"
-        block-out-from "screencast"
+        block-out-from "screen-capture"
     }
 
     window-rule {
@@ -228,15 +228,25 @@
         honor-xdg-activation-with-invalid-serial
     }
 
-    spawn-at-startup "systemctl" "--user" "start" "noctalia"
+    switch-events {
+        lid-close {
+            spawn "noctalia" "msg" "session" "lock";
+        }
+    }
 
     binds {
         Mod+Return { spawn "alacritty"; }
         Mod+Space { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
+        Mod+Period { spawn "noctalia" "msg" "panel-toggle" "launcher" "/emo"; }
+        Mod+W { spawn "noctalia" "msg" "panel-toggle" "wallpaper"; }
+        Mod+N { spawn "noctalia" "msg" "notification-dnd-toggle"; }
+        Mod+D { spawn "noctalia" "msg" "desktop-widgets-toggle"; }
+        Mod+Shift+C { spawn "noctalia" "msg" "caffeine-toggle"; }
+        Alt+Tab { spawn "noctalia" "msg" "window-switcher" "hold"; }
 
         Mod+Q { close-window; }
         Mod+F { maximize-column; }
-        Mod+L allow-when-locked=true { spawn "noctalia" "msg" "session" "lock"; }
+        Mod+L { spawn "noctalia" "msg" "session" "lock"; }
         Mod+Shift+F { fullscreen-window; }
         Mod+Shift+Space { toggle-window-floating; }
 
@@ -310,10 +320,10 @@
         Mod+XF86AudioRaiseVolume { spawn "playerctl" "-p" "spotify" "volume" "0.02+"; }
         Mod+XF86AudioLowerVolume { spawn "playerctl" "-p" "spotify" "volume" "0.02-"; }
 
-        XF86MonBrightnessUp { spawn "noctalia" "msg" "brightness-up"; }
-        XF86MonBrightnessDown { spawn "noctalia" "msg" "brightness-down"; }
-        XF86KbdBrightnessUp { spawn "noctalia" "msg" "keyboard-backlight-up"; }
-        XF86KbdBrightnessDown { spawn "noctalia" "msg" "keyboard-backlight-down"; }
+        XF86MonBrightnessUp allow-when-locked=true { spawn "noctalia" "msg" "brightness-up"; }
+        XF86MonBrightnessDown allow-when-locked=true { spawn "noctalia" "msg" "brightness-down"; }
+        XF86KbdBrightnessUp allow-when-locked=true { spawn "noctalia" "msg" "keyboard-backlight-up"; }
+        XF86KbdBrightnessDown allow-when-locked=true { spawn "noctalia" "msg" "keyboard-backlight-down"; }
     }
   '';
 }

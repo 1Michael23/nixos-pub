@@ -5,20 +5,24 @@
   ...
 }:
 
-let
-  # Niri 26.04's niri-session calls `systemctl --user import-environment`
-  # without a variable list, which systemd 262 warns about on the VT during
-  # login. Backport upstream's replacement from niri main.
-  niri = pkgs.niri.overrideAttrs (old: {
-    postPatch = (old.postPatch or "") + ''
-      substituteInPlace resources/niri-session \
-        --replace-fail 'systemctl --user import-environment' \
-          'dbus-update-activation-environment --systemd --all'
-    '';
-  });
-in
 {
   imports = [ ../../modules/system/thumbnailers.nix ];
+
+  # TODO: Remove this overlay once nixpkgs' niri includes upstream commit
+  # 4adbf003 ("niri-session: import login environment without the deprecated
+  # systemd call", niri-wm/niri#4706). This is a temporary backport for 26.04.
+  # https://github.com/niri-wm/niri/issues/4624
+  nixpkgs.overlays = [
+    (_final: prev: {
+      niri = prev.niri.overrideAttrs (old: {
+        postPatch = (old.postPatch or "") + ''
+          substituteInPlace resources/niri-session \
+            --replace-fail 'systemctl --user import-environment' \
+              'dbus-update-activation-environment --systemd --all'
+        '';
+      });
+    })
+  ];
 
   environment = {
     sessionVariables = {
@@ -31,7 +35,7 @@ in
     pathsToLink = [ "/share/wayland-sessions" ];
 
     systemPackages = with pkgs; [
-      # Local override: see the niri-session patch above.
+      # Patched via the overlay above.
       niri
       xwayland-satellite
       dbus
@@ -83,7 +87,7 @@ in
   services = {
     gvfs.enable = true;
 
-    accounts-daemon.enable = lib.mkForce false;
+    accounts-daemon.enable = false;
 
     displayManager.noctalia-greeter = {
       enable = true;
@@ -108,7 +112,7 @@ in
     avahi = {
       enable = true;
       nssmdns4 = true;
-      publish.enable = true;
+      settings.publish."disable-publishing" = false;
     };
 
     printing = {
@@ -134,8 +138,10 @@ in
     polkit.enable = true;
 
     pam.services = {
-      login.fprintAuth = true; # fingerprint for TTY and the Noctalia lock screen
-      polkit-1.fprintAuth = true; # run0 privilege escalation
+      # Noctalia's lock screen uses the FPrint D-Bus API directly. Keep
+      # login.fprintAuth off so pam_fprintd cannot block password unlock;
+      # polkit-1 still covers run0 privilege escalation.
+      polkit-1.fprintAuth = true;
       login.enableGnomeKeyring = true; # password login unlocks the keyring
       # greetd lacks PAM_TTY, so drop login's pam_securetty rule. Keep the
       # graphical greeter password-only: pam_fprintd gives PAM no password for

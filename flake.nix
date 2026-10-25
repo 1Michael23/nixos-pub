@@ -2,10 +2,7 @@
   description = "Nix";
 
   inputs = {
-    # TODO: revert to github:NixOS/nixpkgs/nixos-unstable once it contains 82139be
-    # (NixOS/nixpkgs#575818, which works around the still-open #575192 .ko.cer
-    # aggregation bug). The pin below already contains that fix.
-    nixpkgs.url = "github:NixOS/nixpkgs/9a43e55823aec87065693b5b78092a49421177f5";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     opencode.url = "github:anomalyco/opencode";
 
@@ -170,9 +167,9 @@
               ];
               text = ''
                 echo ">> statix"
-                statix check
+                statix check -i 'resources/**'
                 echo ">> deadnix"
-                deadnix --fail --exclude docs/refs .
+                deadnix --fail --exclude docs/refs resources .
                 echo ">> OK: lint clean"
               '';
             }

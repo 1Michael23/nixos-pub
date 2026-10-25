@@ -13,17 +13,7 @@
     # same files.
     mutableSettings = true;
 
-    package =
-      inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.opencode.overrideAttrs
-        (prev: {
-          postPatch = (prev.postPatch or "") + ''
-            # The fork's nix/node_modules.nix fileset excludes the top-level
-            # script/ dir, but packages/cli/script/build.ts imports
-            # ../../../script/native-arch. Copy it in from the full source.
-            # Upstream fix: anomalyco/opencode#55494. Drop this once merged.
-            cp -R ${inputs.opencode}/script ./script
-          '';
-        });
+    package = inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.opencode;
 
     extraPackages = [ pkgs.nodejs ];
 
