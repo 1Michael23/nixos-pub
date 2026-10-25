@@ -5,64 +5,98 @@
   ...
 }:
 
+let
+  # Niri 26.04's niri-session calls `systemctl --user import-environment`
+  # without a variable list, which systemd 262 warns about on the VT during
+  # login. Backport upstream's replacement from niri main.
+  niri = pkgs.niri.overrideAttrs (old: {
+    postPatch = (old.postPatch or "") + ''
+      substituteInPlace resources/niri-session \
+        --replace-fail 'systemctl --user import-environment' \
+          'dbus-update-activation-environment --systemd --all'
+    '';
+  });
+in
 {
 
-  environment.sessionVariables = {
-    XDG_SESSION_TYPE = "wayland";
-    XDG_CURRENT_DESKTOP = "niri";
+  environment = {
+    sessionVariables = {
+      XDG_SESSION_TYPE = "wayland";
+      XDG_CURRENT_DESKTOP = "niri";
+    };
+
+    # The greeter discovers sessions from the system profile, not from the
+    # packages' individual store paths.
+    pathsToLink = [ "/share/wayland-sessions" ];
+
+    systemPackages = with pkgs; [
+      # Local override: see the niri-session patch above.
+      niri
+      xwayland-satellite
+      dbus
+
+      nautilus
+      nautilus-open-any-terminal
+      file-roller
+
+      gst_all_1.gstreamer
+      gst_all_1.gst-plugins-base
+      gst_all_1.gst-plugins-good
+      gst_all_1.gst-plugins-bad
+      gst_all_1.gst-libav
+
+      piper
+
+      flatpak
+      gnome-software
+
+      mesa
+      vulkan-loader
+      vulkan-tools
+
+      libva-utils
+
+      gnome-disk-utility
+
+      mpv
+      imv
+      ffmpeg
+      unzip
+      p7zip
+      unrar
+      trash-cli
+      wf-recorder
+      easyeffects
+      lm_sensors
+    ];
   };
 
-  environment.systemPackages = with pkgs; [
-    niri
-    xwayland-satellite
-    dbus
-
-    nautilus
-    nautilus-open-any-terminal
-    file-roller
-
-    gst_all_1.gstreamer
-    gst_all_1.gst-plugins-base
-    gst_all_1.gst-plugins-good
-    gst_all_1.gst-plugins-bad
-    gst_all_1.gst-libav
-
-    tuigreet
-    piper
-
-    flatpak
-    gnome-software
-
-    mesa
-    vulkan-loader
-    vulkan-tools
-
-    libva-utils
-
-    gnome-disk-utility
-
-    mpv
-    imv
-    ffmpeg
-    unzip
-    p7zip
-    unrar
-    trash-cli
-    wf-recorder
-    easyeffects
-    lm_sensors
-
+  # greetd creates the greeter user without device groups. The graphical
+  # greeter needs DRM and input access to start its compositor.
+  users.users.greeter.extraGroups = [
+    "video"
+    "render"
+    "input"
   ];
 
   services = {
     gvfs.enable = true;
 
-    greetd = {
+    accounts-daemon.enable = lib.mkForce false;
+
+    displayManager.noctalia-greeter = {
       enable = true;
       settings = {
-        default_session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd ${pkgs.niri}/bin/niri-session";
-          user = "greeter";
+        session.default = "Niri";
+        keyboard.layout = "us";
+        auth.allow_empty_password = false;
+        # Match Niri's DP-9/DP-10 mode so login does not switch from the
+        # greeter's 60 Hz to Niri's 144 Hz and flash the display.
+        output.refresh_rate = "DP-9:144; DP-10:144; eDP-1:60";
+        appearance = {
+          hide_logo = true;
+          power_buttons_position = "hidden";
+          scheme_selector_position = "hidden";
         };
       };
     };
@@ -99,13 +133,18 @@
     polkit.enable = true;
 
     pam.services = {
-      login.fprintAuth = true; # greetd substacks login, so this enables fingerprint at login
+      login.fprintAuth = true; # fingerprint for TTY and the Noctalia lock screen
       polkit-1.fprintAuth = true; # run0 privilege escalation
-      login.enableGnomeKeyring = true; # greetd's session stack includes login
-      # greetd lacks PAM_TTY, so drop login's pam_securetty rule.
+      login.enableGnomeKeyring = true; # password login unlocks the keyring
+      # greetd lacks PAM_TTY, so drop login's pam_securetty rule. Keep the
+      # graphical greeter password-only: pam_fprintd gives PAM no password for
+      # pam_gnome_keyring, which leaves the login keyring locked.
       greetd.rules.auth = lib.mkForce (
         builtins.mapAttrs (_: rule: builtins.removeAttrs rule [ "name" ]) (
-          builtins.removeAttrs config.security.pam.services.login.rules.auth [ "securetty" ]
+          builtins.removeAttrs config.security.pam.services.login.rules.auth [
+            "securetty"
+            "fprintd"
+          ]
         )
       );
     };
