@@ -18,6 +18,7 @@ let
   });
 in
 {
+  imports = [ ../../modules/system/thumbnailers.nix ];
 
   environment = {
     sessionVariables = {
@@ -163,18 +164,43 @@ in
     ];
   };
 
-  programs.obs-studio = {
-    enable = true;
-    enableVirtualCamera = true;
+  programs = {
+    obs-studio = {
+      enable = true;
+      enableVirtualCamera = true;
 
-    plugins = with pkgs.obs-studio-plugins; [
-      wlrobs
-      obs-backgroundremoval
-      obs-pipewire-audio-capture
-      obs-vaapi # optional AMD hardware acceleration
-      obs-gstreamer
-      obs-vkcapture
-    ];
+      plugins = with pkgs.obs-studio-plugins; [
+        wlrobs
+        obs-backgroundremoval
+        obs-pipewire-audio-capture
+        obs-vaapi # optional AMD hardware acceleration
+        obs-gstreamer
+        obs-vkcapture
+      ];
+    };
+
+    thunar = {
+      enable = true;
+      plugins = with pkgs; [
+        thunar-archive-plugin
+        thunar-volman
+      ];
+    };
+
+    dconf = {
+      enable = true;
+      profiles.user.databases = [
+        {
+          settings."com/github/stunkymonkey/nautilus-open-any-terminal" = {
+            terminal = "'alacritty'";
+          };
+          settings."org/gnome/nautilus/preferences" = {
+            show-image-thumbnails = "always";
+            thumbnail-limit = lib.gvariant.mkUint64 100;
+          };
+        }
+      ];
+    };
   };
 
   xdg.portal = {
@@ -204,17 +230,6 @@ in
       sansSerif = [ "DejaVu Sans" ];
       serif = [ "DejaVu Serif" ];
     };
-  };
-
-  programs.dconf = {
-    enable = true;
-    profiles.user.databases = [
-      {
-        settings."com/github/stunkymonkey/nautilus-open-any-terminal" = {
-          terminal = "'alacritty'";
-        };
-      }
-    ];
   };
 
 }

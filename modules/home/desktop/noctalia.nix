@@ -78,6 +78,7 @@ in
           enable_community_templates = true;
           community_ids = [
             "steam"
+            "thunar"
             "ungoogled-chromium"
           ];
 
