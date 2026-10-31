@@ -142,6 +142,7 @@
       # login.fprintAuth off so pam_fprintd cannot block password unlock;
       # polkit-1 still covers run0 privilege escalation.
       polkit-1.fprintAuth = true;
+      login.fprintAuth = false;
       login.enableGnomeKeyring = true; # password login unlocks the keyring
       # greetd lacks PAM_TTY, so drop login's pam_securetty rule. Keep the
       # graphical greeter password-only: pam_fprintd gives PAM no password for
@@ -226,16 +227,10 @@
     };
   };
 
-  fonts = {
-    packages = with pkgs; [
-      dejavu_fonts
-    ];
-
-    fontconfig.defaultFonts = {
-      monospace = [ "DejaVu Sans Mono" ];
-      sansSerif = [ "DejaVu Sans" ];
-      serif = [ "DejaVu Serif" ];
-    };
+  fonts.fontconfig.defaultFonts = {
+    monospace = [ "DejaVu Sans Mono" ];
+    sansSerif = [ "DejaVu Sans" ];
+    serif = [ "DejaVu Serif" ];
   };
 
 }

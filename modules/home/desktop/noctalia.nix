@@ -9,7 +9,25 @@ let
   home = config.home.homeDirectory;
 in
 {
-  home.packages = [ pkgs.adw-gtk3 ];
+  home = {
+    packages = [
+      pkgs.adw-gtk3
+      pkgs.qt6Packages.qt6ct
+    ];
+
+    sessionVariables.QT_QPA_PLATFORMTHEME = "qt6ct";
+
+    # Seed a valid VS Code theme before Noctalia first renders its own.
+    activation.noctaliaVscodeTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      themeDir="${home}/.local/state/noctalia/vscode"
+      themeFile="$themeDir/NoctaliaTheme-color-theme.json"
+      run mkdir -p "$themeDir"
+      if [ ! -s "$themeFile" ]; then
+        run rm -f "$themeFile"
+        run cp ${./noctalia/templates/vscode-fallback.json} "$themeFile"
+      fi
+    '';
+  };
 
   programs.noctalia = {
     enable = true;
@@ -68,7 +86,7 @@ in
         mode = "dark";
         shell_mode = "follow";
         source = "wallpaper";
-        wallpaper_scheme = "m3-fruit-salad";
+        wallpaper_scheme = "m3-content";
         sync_color_scheme = true;
 
         templates = {
@@ -78,6 +96,7 @@ in
             "gtk3"
             "gtk4"
             "niri"
+            "qt"
           ];
           enable_community_templates = true;
           community_ids = [
@@ -221,8 +240,6 @@ in
         widget_order = [
           "lockscreen-login-box@eDP-1"
           "clock_edp"
-          "clock_dp9"
-          "clock_dp10"
         ];
 
         grid = {
@@ -271,26 +288,6 @@ in
             box_height = 120.0;
             settings.format = "{:%I:%M %p}";
           };
-
-          clock_dp9 = {
-            type = "clock";
-            output = "DP-9";
-            cx = 960.0;
-            cy = 120.0;
-            box_width = 360.0;
-            box_height = 120.0;
-            settings.format = "{:%I:%M %p}";
-          };
-
-          clock_dp10 = {
-            type = "clock";
-            output = "DP-10";
-            cx = 960.0;
-            cy = 120.0;
-            box_width = 360.0;
-            box_height = 120.0;
-            settings.format = "{:%I:%M %p}";
-          };
         };
       };
 
@@ -310,174 +307,6 @@ in
         };
       };
 
-      desktop_widgets = {
-        enabled = false;
-        schema_version = 2;
-        widget_order = [
-          "clock_edp"
-          "cpu_edp"
-          "ram_edp"
-          "temp_edp"
-          "clock_dp9"
-          "cpu_dp9"
-          "ram_dp9"
-          "temp_dp9"
-          "clock_dp10"
-          "cpu_dp10"
-          "ram_dp10"
-          "temp_dp10"
-        ];
-
-        widget = {
-          clock_edp = {
-            type = "clock";
-            output = "eDP-1";
-            cx = 867.5;
-            cy = 1040.0;
-            box_width = 360.0;
-            box_height = 120.0;
-            settings.format = "{:%I:%M %p}";
-          };
-
-          cpu_edp = {
-            type = "sysmon";
-            output = "eDP-1";
-            cx = 1580.0;
-            cy = 90.0;
-            settings = {
-              display = "gauge";
-              stat = "cpu_usage";
-              show_label = true;
-              background = true;
-            };
-          };
-
-          ram_edp = {
-            type = "sysmon";
-            output = "eDP-1";
-            cx = 1580.0;
-            cy = 140.0;
-            settings = {
-              display = "gauge";
-              stat = "ram_pct";
-              show_label = true;
-              background = true;
-            };
-          };
-
-          temp_edp = {
-            type = "sysmon";
-            output = "eDP-1";
-            cx = 1580.0;
-            cy = 190.0;
-            settings = {
-              display = "gauge";
-              stat = "cpu_temp";
-              show_label = true;
-              background = true;
-            };
-          };
-
-          clock_dp9 = {
-            type = "clock";
-            output = "DP-9";
-            cx = 960.0;
-            cy = 960.0;
-            box_width = 360.0;
-            box_height = 120.0;
-            settings.format = "{:%I:%M %p}";
-          };
-
-          cpu_dp9 = {
-            type = "sysmon";
-            output = "DP-9";
-            cx = 1770.0;
-            cy = 90.0;
-            settings = {
-              display = "gauge";
-              stat = "cpu_usage";
-              show_label = true;
-              background = true;
-            };
-          };
-
-          ram_dp9 = {
-            type = "sysmon";
-            output = "DP-9";
-            cx = 1770.0;
-            cy = 140.0;
-            settings = {
-              display = "gauge";
-              stat = "ram_pct";
-              show_label = true;
-              background = true;
-            };
-          };
-
-          temp_dp9 = {
-            type = "sysmon";
-            output = "DP-9";
-            cx = 1770.0;
-            cy = 190.0;
-            settings = {
-              display = "gauge";
-              stat = "cpu_temp";
-              show_label = true;
-              background = true;
-            };
-          };
-
-          clock_dp10 = {
-            type = "clock";
-            output = "DP-10";
-            cx = 960.0;
-            cy = 960.0;
-            box_width = 360.0;
-            box_height = 120.0;
-            settings.format = "{:%I:%M %p}";
-          };
-
-          cpu_dp10 = {
-            type = "sysmon";
-            output = "DP-10";
-            cx = 1770.0;
-            cy = 90.0;
-            settings = {
-              display = "gauge";
-              stat = "cpu_usage";
-              show_label = true;
-              background = true;
-            };
-          };
-
-          ram_dp10 = {
-            type = "sysmon";
-            output = "DP-10";
-            cx = 1770.0;
-            cy = 140.0;
-            settings = {
-              display = "gauge";
-              stat = "ram_pct";
-              show_label = true;
-              background = true;
-            };
-          };
-
-          temp_dp10 = {
-            type = "sysmon";
-            output = "DP-10";
-            cx = 1770.0;
-            cy = 190.0;
-            settings = {
-              display = "gauge";
-              stat = "cpu_temp";
-              show_label = true;
-              background = true;
-            };
-          };
-        };
-      };
-
       dock.enabled = false;
     };
   };
@@ -488,7 +317,7 @@ in
     pkgs.runCommand "noctalia-config.toml" { } ''
       set -euo pipefail
       raw=${(pkgs.formats.toml { }).generate "noctalia-config.toml" config.programs.noctalia.settings}
-      ${lib.getExe pkgs.noctalia} config validate "$raw" 2>&1 | tee validate.log
+      ${lib.getExe config.programs.noctalia.package} config validate "$raw" 2>&1 | tee validate.log
       if grep -q '^WARN' validate.log; then
         echo "Noctalia config validation produced warnings" >&2
         exit 1
@@ -500,15 +329,4 @@ in
   # Issue #4652: Noctalia may not exit on SIGTERM during shutdown.
   # This caps the wait; it does not fix the hang.
   systemd.user.services.noctalia.Service.TimeoutStopSec = "5s";
-
-  # Seed a valid VS Code theme before Noctalia first renders its own.
-  home.activation.noctaliaVscodeTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    themeDir="${home}/.local/state/noctalia/vscode"
-    themeFile="$themeDir/NoctaliaTheme-color-theme.json"
-    run mkdir -p "$themeDir"
-    if [ ! -s "$themeFile" ]; then
-      run rm -f "$themeFile"
-      run cp ${./noctalia/templates/vscode-fallback.json} "$themeFile"
-    fi
-  '';
 }

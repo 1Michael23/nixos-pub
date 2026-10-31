@@ -38,12 +38,10 @@
         position x=1920 y=0
     }
 
-    output "DP-9" {
-        mode "1920x1080@144.013"
-        position x=0 y=0
-    }
-
-    output "DP-10" {
+    // The dock's MST hub renumbers its stream connector (DP-9..DP-12) on
+    // every hotplug, so match the panel by make/model/serial, not connector
+    // name.
+    output "ASUSTek COMPUTER INC ASUS VP249 0x00036BA4" {
         mode "1920x1080@144.013"
         position x=0 y=0
     }
@@ -154,6 +152,20 @@
         clip-to-geometry true
     }
 
+    // Keep the theme-owned backgrounds opaque; let niri composite the whole
+    // window slightly transparent so its blurred backdrop shows through.
+    window-rule {
+        match app-id="^codium$"
+        opacity 0.9
+        draw-border-with-background false
+    }
+
+    window-rule {
+        match app-id=r#"^(org\.gnome\.Nautilus|nautilus|[Tt]hunar)$"#
+        opacity 0.9
+        draw-border-with-background false
+    }
+
     window-rule {
         match app-id="^pavucontrol$"
         open-floating true
@@ -180,7 +192,7 @@
     }
 
     window-rule {
-        match app-id="^Mullvad VPN$"
+        match app-id=r#"^proton\.vpn\.app\.gtk$"#
         open-floating true
     }
 
@@ -226,6 +238,11 @@
 
     debug {
         honor-xdg-activation-with-invalid-serial
+        // Promoting a fullscreen video buffer to the primary plane flashed
+        // white on both panels. Only scan out buffers whose format matches
+        // the composition swapchain, so client buffers keep going through
+        // composition.
+        restrict-primary-scanout-to-matching-format
     }
 
     switch-events {
@@ -240,7 +257,6 @@
         Mod+Period { spawn "noctalia" "msg" "panel-toggle" "launcher" "/emo"; }
         Mod+W { spawn "noctalia" "msg" "panel-toggle" "wallpaper"; }
         Mod+N { spawn "noctalia" "msg" "notification-dnd-toggle"; }
-        Mod+D { spawn "noctalia" "msg" "desktop-widgets-toggle"; }
         Mod+Shift+C { spawn "noctalia" "msg" "caffeine-toggle"; }
         Alt+Tab { spawn "noctalia" "msg" "window-switcher" "hold"; }
 

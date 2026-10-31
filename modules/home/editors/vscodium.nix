@@ -9,6 +9,8 @@
 
 let
   noctaliaThemePath = "${config.home.homeDirectory}/.local/state/noctalia/vscode/NoctaliaTheme-color-theme.json";
+  noctaliaEnabled = config.programs.noctalia.enable or false;
+  noctaliaThemeActive = isLinux && noctaliaEnabled;
 
   noctaliaVscodeTheme =
     pkgs.runCommand "noctalia-vscode-theme"
@@ -73,14 +75,16 @@ in
           sst-dev.opencode
         ])
         # Noctalia only runs on framework and seeds the theme JSON at activation;
-        # on Darwin that symlink would stay dangling, so fall back to Catppuccin.
-        ++ lib.optionals isLinux [ noctaliaVscodeTheme ]
-        ++ lib.optionals (!isLinux) [
+        # on Darwin (or a host without Noctalia) that symlink would stay dangling,
+        # so fall back to Catppuccin.
+        ++ lib.optionals noctaliaThemeActive [ noctaliaVscodeTheme ]
+        ++ lib.optionals (!noctaliaThemeActive) [
           pkgs.vscode-extensions.catppuccin.catppuccin-vsc
         ];
 
       userSettings = {
-        "workbench.colorTheme" = if isLinux then "NoctaliaTheme" else "Catppuccin Mocha";
+        "workbench.colorTheme" = if noctaliaThemeActive then "NoctaliaTheme" else "Catppuccin Mocha";
+        "python.defaultInterpreterPath" = "${config.home.profileDirectory}/bin/python3";
 
         "telemetry.telemetryLevel" = "off";
         "telemetry.enableCrashReporter" = false;
