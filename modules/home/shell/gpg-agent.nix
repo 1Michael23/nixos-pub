@@ -34,7 +34,6 @@
     services.gpg-agent = {
       enable = true;
       enableSshSupport = true;
-      enableZshIntegration = true;
 
       pinentry.package =
         if pkgs.stdenv.hostPlatform.isDarwin then pkgs.pinentry_mac else pkgs.pinentry-qt;
@@ -43,11 +42,7 @@
       inherit (config.custom.pgp) maxCacheTtl;
       defaultCacheTtlSsh = config.custom.pgp.cacheTtl;
       maxCacheTtlSsh = config.custom.pgp.maxCacheTtl;
-
-      sshKeys = [ ];
     };
-
-    home.packages = [ pkgs.gnupg ];
 
     programs.gpg = {
       enable = true;

@@ -10,7 +10,6 @@
     [
       exiftool
       imagemagick
-      libraw
       jpegoptim
       oxipng
     ]

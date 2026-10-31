@@ -78,7 +78,7 @@
       };
 
       plugins = [
-        "@tarquinen/opencode-dcp@latest"
+        "@tarquinen/opencode-dcp@3.2.0"
       ];
 
       mcp = {

@@ -17,15 +17,8 @@
   };
 
   home.packages = with pkgs; [
-    btop
-    ripgrep
-    fd
-    tree
     jq
-    tlrc
     gdu
-    sops
-    age
   ];
 
   imports = [
@@ -46,11 +39,9 @@
     };
   };
 
-  programs.bat.enable = true;
-
   home.sessionVariables = {
     EDITOR = "nvim";
     LANG = "en_AU.UTF-8";
-    NH_FLAKE = "$HOME/dev/nixos-pub";
+    NH_FLAKE = "${config.home.homeDirectory}/dev/nixos-pub";
   };
 }

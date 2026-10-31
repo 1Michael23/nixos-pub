@@ -15,7 +15,8 @@
       enable = true;
       interactiveShellInit = ''
         set fish_greeting
-        set -gx PATH $HOME/.local/bin /opt/homebrew/bin $PATH
+        set -gx PATH $HOME/.local/bin $PATH
+        ${lib.optionalString pkgs.stdenv.hostPlatform.isDarwin "set -gx PATH /opt/homebrew/bin $PATH"}
         set -gx SOPS_AGE_KEY_FILE ~/.config/sops/age/keys.txt
       '';
       shellAliases = {

@@ -70,8 +70,6 @@
     };
   };
 
-  programs.bat.enable = true;
-
   services.gnome-keyring = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
     enable = true;
   };
@@ -79,12 +77,10 @@
   home.sessionVariables = {
     EDITOR = "nvim";
     LANG = "en_AU.UTF-8";
-    NH_FLAKE = "$HOME/dev/nixos-pub";
+    NH_FLAKE = "${config.home.homeDirectory}/dev/nixos-pub";
   }
   // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
     TERMINAL = "alacritty";
 
   };
-
-  home.sessionPath = lib.mkIf isLinux [ "${config.home.homeDirectory}/.local/bin" ];
 }

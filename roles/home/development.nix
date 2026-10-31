@@ -4,6 +4,27 @@
   ...
 }:
 
+let
+  # Loose `python3Packages.*` entries in home.packages end up in the profile's
+  # site-packages but never on the interpreter's sys.path, so the Jupyter
+  # extension cannot import ipykernel/notebook. Build one withPackages env
+  # instead and let it provide `/etc/profiles/per-user/<user>/bin/python3`.
+  pythonPackages = ps: [
+    ps.ipykernel
+    ps.ipywidgets
+    ps.jupyter
+    ps.notebook
+
+    ps.matplotlib
+    ps.numpy
+    ps.openpyxl
+    ps.pandas
+    ps.scikit-learn
+    ps.scipy
+    ps.seaborn
+    ps.sympy
+  ];
+in
 {
 
   home.packages =
@@ -14,7 +35,6 @@
       gnumake
       tlrc
       cmake
-      zoxide
       statix
       nix-output-monitor
       nh
@@ -23,18 +43,17 @@
       deadnix
       nil
       nixd
-      grc
       gh
       ripgrep
       fd
       curl
       wget
       tree
+      xcp
       rustc
       cargo
       bat
       unzip
-      source-code-pro
       sops
       age
 
@@ -43,19 +62,23 @@
       imhex
       kicad
 
-      python313
-      python313Packages.notebook
-      python313Packages.ipykernel
-      python313Packages.pip
-      python313Packages.jupyter
-      python313Packages.tkinter
+      (python313.withPackages (
+        ps:
+        pythonPackages ps
+        ++ [
+          ps.pip
+          ps.tkinter
+        ]
+      ))
     ]
     ++ lib.optionals pkgs.stdenv.hostPlatform.isDarwin [
-      python314
-      python314Packages.notebook
-      python314Packages.ipykernel
-      python314Packages.pip
-      python314Packages.jupyter
+      (python314.withPackages (
+        ps:
+        pythonPackages ps
+        ++ [
+          ps.pip
+        ]
+      ))
     ];
 
   programs.nix-index = {
