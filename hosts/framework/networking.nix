@@ -17,7 +17,6 @@ _:
         22000
         21027
       ];
-      trustedInterfaces = [ "tailscale0" ];
     };
   };
 

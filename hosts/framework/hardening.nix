@@ -25,6 +25,13 @@
       debug.coredump = true; # TODO disable for security
     };
     filesystems.enable = false;
+    # The secureblue "unused-filesystems" combo blocks the CIFS client, which
+    # hosts/framework/storage.nix needs for the /mnt/nas automount. Re-enable
+    # only cifs and its MD4 helper (NTLM auth); everything else stays blocked.
+    kernel-modules.disable = {
+      cifs = false;
+      cifs_md4 = false;
+    };
   };
 
   # nix-mineral dropped its generic-machine-id default (now deprecated),

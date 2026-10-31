@@ -1,9 +1,18 @@
-_: {
+{
+  config,
+  ...
+}:
+{
   sops = {
     defaultSopsFile = ../../secrets/framework.yaml;
-    age.keyFile = "/home/michael/.config/sops/age/keys.txt";
+    age.keyFile = "${config.users.users.michael.home}/.config/sops/age/keys.txt";
 
-    secrets."ssh_private_key" = { };
-    secrets."ssh_public_key" = { };
+    secrets = {
+      "vpn-profile" = {
+        restartUnits = [ "vpn-profile.service" ];
+      };
+      # mount.cifs credentials file for //10.30.0.22/nas (see storage.nix).
+      "smb-credentials" = { };
+    };
   };
 }

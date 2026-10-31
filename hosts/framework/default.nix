@@ -9,7 +9,10 @@
   imports = [
     ./hardware-configuration.nix
     ./networking.nix
+    ./storage.nix
+    ./wireguard.nix
     ./hardening.nix
+    ./llama.nix
     ./secrets.nix
     ../../roles/system/desktop-niri.nix
     ../../modules/system/virtualization/libvirtd.nix
@@ -27,9 +30,6 @@
 
   home-manager.extraSpecialArgs = {
     inherit inputs;
-    nix-mineral = {
-      enable = true;
-    };
     tf2Nix = inputs.tf2-nix;
     firefox-addons = inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system};
     vscodeExtensions = inputs.nix-vscode-extensions.extensions.${pkgs.stdenv.hostPlatform.system};
@@ -41,10 +41,6 @@
     powertop
     sbctl
   ];
-
-  nixpkgs.config = {
-    allowUnfree = true;
-  };
 
   boot = {
     loader.systemd-boot.enable = lib.mkForce false;
@@ -71,6 +67,12 @@
     };
 
     resumeDevice = "/dev/mapper/cryptswap";
+
+    # The 760M has only a 512 MiB UMA carveout and the desktop sits near it, so
+    # the kernel put some scanout buffers in GTT. Those scanned out as solid
+    # white while the cursor plane kept working and screenshots were correct;
+    # only a reboot cleared it. Force scanout buffers into visible VRAM.
+    kernelParams = [ "amdgpu.sg_display=0" ];
   };
 
   # Force one swap unit; hardware-configuration.nix also declares this by UUID.
@@ -128,6 +130,7 @@
     blueman.enable = true;
 
     fprintd.enable = true;
+    fwupd.enable = true;
 
     power-profiles-daemon.enable = true;
 
@@ -138,8 +141,9 @@
         KERNEL=="card*",   GROUP="video",  MODE="0660"
         KERNEL=="kfd",     GROUP="render", MODE="0660"
 
-        # Keychron Q1 HE (HID access for WebHID)
-        SUBSYSTEM=="hidraw", MODE="0666"
+        # Keychron Q1 HE (HID access for WebHID); scope to the vendor so other
+        # raw HID devices are not exposed to every user.
+        SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", TAG+="uaccess"
       '';
       packages = with pkgs; [
         logitech-udev-rules
@@ -170,7 +174,6 @@
       };
     };
     framework = {
-      enableKmod = true;
       laptop13.audioEnhancement.enable = true;
     };
     sane.enable = true; # scanning support
@@ -193,9 +196,6 @@
     };
   };
 
-  time.timeZone = "Australia/Sydney";
-  i18n.defaultLocale = "en_AU.UTF-8";
-
   powerManagement = {
     enable = true;
     powertop.enable = true;
@@ -204,6 +204,7 @@
   users.mutableUsers = true;
   users.users.michael = {
     isNormalUser = true;
+    uid = 1000; # keep the CIFS/NFS mounts below stable across rebuilds
     extraGroups = [
       "wheel"
       "networkmanager"
