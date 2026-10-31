@@ -104,28 +104,4 @@
     "/dev/nvidiactl rw"
     "/dev/nvidia-uvm rw"
   ];
-
-  networking.firewall.interfaces."tailscale0" = {
-    allowedTCPPorts = [
-      8096 # Jellyfin
-      9091 # Transmission
-      8989 # Sonarr
-      7878 # Radarr
-      8686 # Lidarr
-      9696 # Prowlarr
-      6767 # Bazarr
-    ];
-  };
-
-  fileSystems."/mnt/media" = {
-    device = "10.30.0.22:/mnt/nas/media";
-    fsType = "nfs";
-    options = [
-      "noatime"
-      "hard"
-      "vers=4.2"
-      "timeo=600"
-      "retrans=2"
-    ];
-  };
 }

@@ -12,6 +12,7 @@
     ./hardware-configuration.nix
     ./networking.nix
     ./secrets.nix
+    ./storage.nix
     ./nvidia.nix
     ../../modules/system/services/media.nix
     ../../modules/system/services/crafty.nix
@@ -28,8 +29,6 @@
   };
 
   system.stateVersion = "25.05";
-
-  nixpkgs.config.allowUnfree = true;
 
   boot = {
     kernelPackages = lib.mkForce pkgs.linuxPackages_6_12;
@@ -70,24 +69,9 @@
       automatic = true;
       dates = "weekly";
       options = "--delete-older-than 14d";
+      persistent = true;
     };
   };
-
-  system.autoUpgrade = {
-    enable = false;
-    flake = "github:1Michael23/nixos-pub";
-    dates = "04:00";
-    allowReboot = true;
-    persistent = true;
-  };
-
-  security.sudo = {
-    enable = lib.mkForce true;
-    wheelNeedsPassword = true;
-  };
-
-  time.timeZone = "Australia/Sydney";
-  i18n.defaultLocale = "en_AU.UTF-8";
 
   users.mutableUsers = true;
   users.users.michael = {

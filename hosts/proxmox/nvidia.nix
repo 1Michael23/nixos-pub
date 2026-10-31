@@ -15,7 +15,6 @@
   hardware = {
     graphics = {
       enable = true;
-      enable32Bit = false;
       extraPackages = with pkgs; [
         nvidia-vaapi-driver
       ];
@@ -25,8 +24,6 @@
       open = false;
       nvidiaSettings = false;
       modesetting.enable = true;
-      powerManagement.enable = false;
-      powerManagement.finegrained = false;
       package = config.boot.kernelPackages.nvidiaPackages.legacy_580; # quadro p5000 not supported anymore
     };
   };
