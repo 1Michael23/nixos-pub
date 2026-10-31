@@ -7,9 +7,13 @@ My personal NixOS + nix-darwin configuration.
 - Hibernation to disk with encrypted swap (framework)
 - Self-signed Secure Boot via lanzaboote (framework)
 - Secrets via sops-nix
-- System hardening via nix-mineral and run0 sudo shim (framework), hardened ssh
-- Niri + Noctalia Shell desktop on framework: bar, launcher, clipboard, notifications, OSD, lock/session, screenshots, and wallpaper-derived theming for GTK, Alacritty, and Niri
-- flake-native developer tooling: `nix fmt`, `nix run .#check`, on-demand devShell via `nix develop`
+- System hardening via nix-mineral and run0 sudo shim (framework and proxmox), hardened ssh
+- Niri + Noctalia Shell desktop on framework: bar, launcher, clipboard, notifications, OSD, lock/session, screenshots, and wallpaper-derived theming for GTK, Alacritty, Qt and Niri
+- flake-native developer tooling: `nix fmt`, `nix run .#check` (lint + format), on-demand devShell via `nix develop`
+
+## Local-only files
+
+`AGENTS.md`, the historical plan files (`matugen-plan.md`, `NOCTALIA-MIGRATION-PLAN.md`) and the `resources/` directory of read-only upstream checkouts are local-only and excluded via `.git/info/exclude`. They are never tracked or committed; a fresh clone does not need them.
 
 ## Directory Structure
 

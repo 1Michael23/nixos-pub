@@ -1,13 +1,19 @@
 {
-  description = "Nix";
+  description = "NixOS and nix-darwin configuration for Michael's hosts";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     opencode.url = "github:anomalyco/opencode";
 
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    nix-mineral.url = "github:cynicsketch/nix-mineral/";
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-mineral = {
+      url = "github:cynicsketch/nix-mineral";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     disko = {
       url = "github:nix-community/disko";
@@ -49,14 +55,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    solaar = {
-      url = "github:Svenum/Solaar-Flake/main";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     tf2-nix.url = "gitlab:msyds/tf2-nix";
 
-    usbguard-fuzzel.url = "path:/home/michael/dev/usbguard-fuzzel";
+    usbguard-fuzzel = {
+      url = "github:1Michael23/usbguard-fuzzel";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     darwin = {
       url = "github:lnl7/nix-darwin";
@@ -65,6 +69,7 @@
 
     mac-app-util = {
       url = "github:hraban/mac-app-util";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixarr = {
@@ -149,6 +154,7 @@
             deadnix
             nix-eval-jobs
             nixfmt
+            nixfmt-tree
             sops
             statix
           ];
@@ -158,18 +164,24 @@
       apps = forAllSystems (pkgs: {
         check = {
           type = "app";
+          meta.description = "Run statix, deadnix and nixfmt checks";
           program = "${
             pkgs.writeShellApplication {
               name = "check";
               runtimeInputs = with pkgs; [
                 deadnix
+                findutils
+                nixfmt
                 statix
               ];
               text = ''
                 echo ">> statix"
                 statix check -i 'resources/**'
                 echo ">> deadnix"
-                deadnix --fail --exclude docs/refs resources .
+                deadnix --fail --exclude resources .
+                echo ">> nixfmt"
+                find . -name '*.nix' -not -path './resources/*' -not -path './.git/*' -print0 \
+                  | xargs -0 nixfmt --check
                 echo ">> OK: lint clean"
               '';
             }
@@ -178,6 +190,7 @@
 
         check-eval = {
           type = "app";
+          meta.description = "Evaluate all host configurations";
           program = "${
             pkgs.writeShellApplication {
               name = "check-eval";
