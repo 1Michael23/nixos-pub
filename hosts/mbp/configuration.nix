@@ -25,7 +25,6 @@
   };
 
   networking.hostName = "mbp";
-  nixpkgs.config.allowUnfree = true;
 
   users.users.michael = {
     name = "michael";
@@ -53,7 +52,7 @@
       autohide-delay = 0.0;
       autohide-time-modifier = 0.1;
       mru-spaces = false; # don't rearrange spaces by recent use
-      show-recents = true; # hide recent apps section
+      show-recents = true; # show the recent apps section
       tilesize = 48; # icon size
       orientation = "left";
       persistent-apps = [
@@ -131,14 +130,6 @@
   };
 
   launchd.user.agents = {
-    aerospace = {
-      serviceConfig = {
-        Label = "com.nikitabobko.AeroSpace";
-        ProgramArguments = [ "/Applications/AeroSpace.app/Contents/MacOS/AeroSpace" ];
-        RunAtLoad = true;
-        KeepAlive = true;
-      };
-    };
     raycast = {
       serviceConfig = {
         Label = "com.raycast.macos";
@@ -153,7 +144,6 @@
 
   environment = {
     shells = [ pkgs.fish ];
-    systemPackages = with pkgs; [ ];
     variables.HOMEBREW_NO_ANALYTICS = "1";
   };
 
@@ -165,9 +155,9 @@
     enable = true;
     prefix = "/opt/homebrew";
     onActivation = {
-      autoUpdate = true;
-      cleanup = "zap";
-      upgrade = true;
+      autoUpdate = false;
+      cleanup = "uninstall"; # never zap apps that are managed outside this file
+      upgrade = false;
     };
     brews = [
       "nmap"

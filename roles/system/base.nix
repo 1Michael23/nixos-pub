@@ -24,7 +24,6 @@
     ../../modules/system/networking/tailscale.nix
     ../../modules/system/networking/ssh-server.nix
     ../../modules/system/users/authorized-keys.nix
-    #../../modules/system/services/vscode-server.nix
   ];
 
   programs = {
@@ -35,7 +34,9 @@
   };
 
   security.sudo.enable = false;
-  services.fwupd.enable = true;
   security.allowUserNamespaces = true;
+
+  time.timeZone = "Australia/Sydney";
+  i18n.defaultLocale = "en_AU.UTF-8";
 
 }

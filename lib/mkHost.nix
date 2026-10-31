@@ -15,10 +15,11 @@ nixpkgs.lib.nixosSystem {
   inherit system;
 
   specialArgs = {
-    inherit inputs hostname;
+    inherit inputs;
   };
 
   modules = [
+    { nixpkgs.config.allowUnfree = true; }
     ../hosts/${hostname}/default.nix
     ../modules/system/mcp-nixos.nix
     ../roles/system/base.nix

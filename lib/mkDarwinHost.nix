@@ -15,10 +15,11 @@ darwin.lib.darwinSystem {
   inherit system;
 
   specialArgs = {
-    inherit inputs hostname;
+    inherit inputs;
   };
 
   modules = [
+    { nixpkgs.config.allowUnfree = true; }
     ../hosts/${hostname}/configuration.nix
     ../modules/system/mcp-nixos.nix
     sops-nix.darwinModules.sops
