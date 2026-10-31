@@ -178,7 +178,6 @@
       "vlc"
       "stats"
       "tailscale-app"
-      "syncthing-app"
       "iina"
       "discord"
       "adobe-creative-cloud"

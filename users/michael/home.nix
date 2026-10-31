@@ -29,6 +29,7 @@
       jq
       bitwarden-cli
       gcr_3 # gcr-prompter: provides org.gnome.keyring.SystemPrompter for gnome-keyring
+      wl-clipboard # provider for Neovim's clipboard=unnamedplus
     ];
 
   imports = [
@@ -50,7 +51,6 @@
     ../../roles/home/pentesting.nix
     ../../roles/home/desktop-niri.nix
     ../../modules/home/personal/tf2-game.nix
-    ../../modules/home/services/syncthing.nix
   ];
 
   custom.pgp = {
