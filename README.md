@@ -4,7 +4,7 @@ My personal NixOS + nix-darwin configuration.
 
 ## Features
 
-- Hibernation to disk with encrypted swap (framework)
+- No disk swap; zram only, suspend to RAM (framework)
 - Self-signed Secure Boot via lanzaboote (framework)
 - Secrets via sops-nix
 - System hardening via nix-mineral (framework) and the run0 sudo shim (Linux hosts), plus hardened ssh

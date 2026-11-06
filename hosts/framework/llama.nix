@@ -17,9 +17,9 @@
 
     script = ''
       mkdir -p "$HOME/models"
-      # Idle sleep destroys the model/context, freeing memory before
-      # suspend-then-hibernate. A model actively loaded when the lid closes
-      # can still exceed the 16 GiB swap and fail to hibernate.
+      # Idle sleep destroys the model/context, freeing memory. There is no
+      # disk swap, so leaving a model idle-loaded is what keeps a closed lid
+      # from pushing the 30 GiB of RAM into OOM.
       # 128K context with q8_0 K/V stays within the 24 GiB GTT cap. One
       # slot avoids multiplying KV and checkpoint memory; Pi is a single
       # user client.

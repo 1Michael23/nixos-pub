@@ -56,17 +56,15 @@
     };
 
     initrd.luks.devices = {
-      cryptswap = {
-        device = "/dev/disk/by-uuid/ad86da8e-163e-49b1-a995-c644083b2aba";
-        allowDiscards = true;
-      };
       cryptroot = {
         device = "/dev/disk/by-uuid/9d569fca-69ea-4d85-a2f1-ce9a09959d9c";
         allowDiscards = true;
       };
     };
 
-    resumeDevice = "/dev/mapper/cryptswap";
+    # nvme0n1p2 (uuid ad86da8e-163e-49b1-a995-c644083b2aba) is still a LUKS
+    # container from the old hibernate-on-encrypted-swap setup. It is left
+    # untouched and unused so hibernation can be restored without repartitioning.
 
     # The 760M has only a 512 MiB UMA carveout and the desktop sits near it, so
     # the kernel put some scanout buffers in GTT. Those scanned out as solid
@@ -75,11 +73,13 @@
     kernelParams = [ "amdgpu.sg_display=0" ];
   };
 
-  # Force one swap unit; hardware-configuration.nix also declares this by UUID.
-  swapDevices = lib.mkForce [ { device = "/dev/mapper/cryptswap"; } ];
+  # No disk swap: hibernation is gone, and suspend to RAM needs none.
+  # hardware-configuration.nix still declares the old LUKS swap partition by
+  # UUID, so force it off here rather than editing the generated file.
+  swapDevices = lib.mkForce [ ];
 
-  # Compressed RAM swap on top of the LUKS swapfile, so short memory spikes
-  # are absorbed without touching the disk.
+  # Compressed RAM swap, so short memory spikes are absorbed without touching
+  # the disk. This is the only swap on the machine.
   zramSwap = {
     enable = true;
     memoryPercent = 25;
@@ -123,11 +123,6 @@
     # offending app slice (e.g. llama.cpp) instead of the whole session.
     oomd.enableUserSlices = true;
 
-    sleep.settings.Sleep = {
-      HibernateDelaySec = "45min";
-      SuspendEstimationSec = "20min";
-    };
-
     services.battery-charge-limit = {
       description = "Cap battery charge at 80%";
       wantedBy = [ "multi-user.target" ];
@@ -140,13 +135,13 @@
 
   services = {
     logind.settings.Login = {
-      HandleLidSwitch = "suspend-then-hibernate";
+      HandleLidSwitch = "suspend";
       HandleLidSwitchExternalPower = "suspend";
       HandleLidSwitchDocked = "ignore";
-      HandlePowerKey = "suspend-then-hibernate";
+      HandlePowerKey = "suspend";
       HandleSuspendKey = "suspend";
-      HandleHibernateKey = "hibernate";
-      HandlePowerKeyLongPress = "hibernate";
+      HandleHibernateKey = "ignore";
+      HandlePowerKeyLongPress = "poweroff";
     };
 
     blueman.enable = true;
@@ -156,9 +151,12 @@
 
     power-profiles-daemon.enable = true;
 
+    # The critical-battery default is HybridSleep, which needs swap space for
+    # a hibernation image. There is no swap anymore, so power off instead.
+    upower.criticalPowerAction = "PowerOff";
+
     udev = {
       extraRules = ''
-        SUBSYSTEM=="power_supply", KERNEL=="BAT*", ATTR{status}=="Discharging", ATTR{capacity}=="5", RUN+="/run/current-system/systemd/bin/systemctl hibernate"
         KERNEL=="renderD*", GROUP="render", MODE="0660"
         KERNEL=="card*",   GROUP="video",  MODE="0660"
         KERNEL=="kfd",     GROUP="render", MODE="0660"
