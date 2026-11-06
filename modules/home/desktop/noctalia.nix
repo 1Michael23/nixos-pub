@@ -313,7 +313,17 @@ in
           "screen-off" = {
             enabled = true;
             timeout = 660;
+            locked_timeout = 30; # after a manual lock, screen off in 30 s
             action = "screen_off";
+          };
+
+          # Battery only. Goes through Noctalia's session suspend, so a future
+          # shell.session.power.suspend override applies here too.
+          sleep = {
+            enabled = true;
+            timeout = 1200;
+            action = "command";
+            command = "${lib.getExe' pkgs.gnugrep "grep"} -q 1 /sys/class/power_supply/ACAD/online || ${lib.getExe config.programs.noctalia.package} msg session lock-and-suspend";
           };
         };
       };
