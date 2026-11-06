@@ -166,6 +166,9 @@ in
     # offending app slice (e.g. llama.cpp) instead of the whole session.
     oomd.enableUserSlices = true;
 
+    settings.Manager.DefaultTimeoutStopSec = "15s";
+    user.settings.Manager.DefaultTimeoutStopSec = "15s";
+
     services.battery-charge-limit = {
       description = "Cap battery charge at 80%";
       wantedBy = [ "multi-user.target" ];
