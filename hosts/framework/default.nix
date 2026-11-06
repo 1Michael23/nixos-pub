@@ -202,6 +202,11 @@
     i2c.enable = true;
     sane.enable = true; # scanning support
     amdgpu.opencl.enable = true;
+
+    # nixos-hardware disables PSR on Framework AMD as a hang workaround.
+    # Testing whether the current BIOS/kernel is stable with it on; revert this
+    # commit on display freezes.
+    amdgpu.dcDebugMask.disablePsr = false;
   };
 
   programs = {
