@@ -1,10 +1,23 @@
 {
+  config,
   pkgs,
   lib,
   inputs,
   ...
 }:
 
+let
+  # nixpkgs signs every module with a per-module certificate (kmodigest) and
+  # aggregates them into modules.cer, but the plain kernel output never has
+  # them inserted, so lockdown rejects every module load -- including the
+  # initrd's dm_crypt, which makes the machine unbootable. rebuildImage runs
+  # scripts/insert-sys-cert and relinks the boot image; it does not recompile
+  # the kernel.
+  signedKernel = config.boot.kernelPackages.rebuildImage {
+    target = config.system.boot.loader.kernelFile;
+    inherit (config.system) modulesTree;
+  };
+in
 {
   imports = [
     ./hardware-configuration.nix
@@ -79,6 +92,12 @@
       "lockdown=confidentiality"
     ];
   };
+
+  # Link the image with the module-signing certificates inserted, otherwise
+  # lockdown has no trusted key and refuses every module.
+  system.systemBuilderCommands = lib.mkAfter ''
+    ln -sf -- ${signedKernel}/${config.system.boot.loader.kernelFile} $out/kernel
+  '';
 
   # No disk swap: hibernation is gone, and suspend to RAM needs none.
   # hardware-configuration.nix still declares the old LUKS swap partition by
