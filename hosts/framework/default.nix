@@ -118,7 +118,7 @@
   services = {
     logind.settings.Login = {
       HandleLidSwitch = "suspend-then-hibernate";
-      HandleLidSwitchExternalPower = "ignore";
+      HandleLidSwitchExternalPower = "suspend";
       HandleLidSwitchDocked = "ignore";
       HandlePowerKey = "suspend-then-hibernate";
       HandleSuspendKey = "suspend";

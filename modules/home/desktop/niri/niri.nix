@@ -21,6 +21,7 @@
         }
         touchpad {
             tap
+            dwt
             natural-scroll
             accel-speed 0.2
             accel-profile "flat"
@@ -247,12 +248,6 @@
         // the composition swapchain, so client buffers keep going through
         // composition.
         restrict-primary-scanout-to-matching-format
-    }
-
-    switch-events {
-        lid-close {
-            spawn "noctalia" "msg" "session" "lock";
-        }
     }
 
     binds {
