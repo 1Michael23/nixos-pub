@@ -22,7 +22,7 @@
     settings = {
       system.multilib = true; # NOTE disable when/if steam no longer needs it
       debug.quiet-boot = false;
-      debug.coredump = true; # TODO disable for security
+      debug.coredump = false;
     };
     filesystems.enable = false;
     # The secureblue "unused-filesystems" combo blocks the CIFS client, which
