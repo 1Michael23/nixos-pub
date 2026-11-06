@@ -27,28 +27,33 @@
       allow id 1d6b:0003 serial "0000:c3:00.3" name "xHCI Host Controller" hash "yk4omAkIgm8hhcOiCo1YDe3mTaXCcxEIrpW0uIoamd0=" parent-hash "MoJ8FZSZJd/VDdGtr28IOLmQPH6G5m24G50ldOqGdfo=" with-interface 09:00:00 with-connect-type ""
       allow id 1d6b:0002 serial "0000:c3:00.4" name "xHCI Host Controller" hash "ytflbcUR58vOaTlsVdDp+prbapFyL+b4z2vdOAgegjM=" parent-hash "0Zqwj+n2tT57N8mqsEeUWN4fJNpMYtDdL3cN6GSctzI=" with-interface 09:00:00 with-connect-type ""
       allow id 1d6b:0003 serial "0000:c3:00.4" name "xHCI Host Controller" hash "8LvDdXu4NWbVU1Eh+I9LUc9dxnpFqnSPUFWXpeUyPtc=" parent-hash "0Zqwj+n2tT57N8mqsEeUWN4fJNpMYtDdL3cN6GSctzI=" with-interface 09:00:00 with-connect-type ""
-      allow id 32ac:0002 serial "11AD1D00A49C4014271C0B00" name "HDMI Expansion Card" hash "VmLn9/JTP6CHxhdcUamIII+0O61Nd0gJJpevlnhAvts=" parent-hash "p9XdYtshh7dWZvylwnT2mODxf1un62IZMB3s1EZjqbs=" with-interface { 11:00:00 03:00:00 } with-connect-type "hotplug"
+      allow id 32ac:0002 serial "11AD1D00A49C4014271C0B00" name "HDMI Expansion Card" hash "VmLn9/JTP6CHxhdcUamIII+0O61Nd0gJJpevlnhAvts=" with-interface { 11:00:00 03:00:00 }
       allow id 27c6:609c serial "UID036501B2_XXXX_MOC_B0" name "Goodix Fingerprint USB Device" hash "PyqNNgiiRUF/WMGGDT1O33J5MAuIlp83fzKLC+0/BgA=" parent-hash "p9XdYtshh7dWZvylwnT2mODxf1un62IZMB3s1EZjqbs=" with-interface ff:00:00 with-connect-type "hardwired"
       allow id 0e8d:e616 serial "000000000" name "Wireless_Device" hash "erna9raFW4Dl/v6M4pInxogL0kJv1XNVxBTVuoNFhBA=" parent-hash "p9XdYtshh7dWZvylwnT2mODxf1un62IZMB3s1EZjqbs=" with-interface { e0:01:01 e0:01:01 e0:01:01 e0:01:01 e0:01:01 e0:01:01 e0:01:01 e0:01:01 e0:01:01 e0:01:01 } with-connect-type "hardwired"
       allow id 0bda:5634 serial "200901010001" name "Laptop Camera" hash "kdGy3lEIo5D1obiHNVzRRuYdr6RtRQ9vx0YyT88kozE=" parent-hash "Hc8P2OygD2+wF1fFNwvlpeIVyRbf+OODwtf4qnle/Y8=" with-interface { 0e:01:00 0e:02:00 0e:02:00 0e:02:00 0e:02:00 0e:02:00 0e:02:00 0e:02:00 0e:02:00 } with-connect-type "hardwired"
-      allow id 17ef:a392 serial "" name "USB2.0 Hub" hash "PypkiVGdFiVdmb9QWRg4TCkoJ+Jp1TcXtU1x8GhS/zA=" parent-hash "ytflbcUR58vOaTlsVdDp+prbapFyL+b4z2vdOAgegjM=" via-port "7-1" with-interface { 09:00:01 09:00:02 } with-connect-type "hotplug"
-      allow id 17ef:a391 serial "" name "USB3.1 Hub" hash "bSPFJDY6VJB1/TLktY1SKMnyq8yM+xoYRZzUNYGBJ1E=" parent-hash "8LvDdXu4NWbVU1Eh+I9LUc9dxnpFqnSPUFWXpeUyPtc=" via-port "8-1" with-interface 09:00:00 with-connect-type "hotplug"
-      allow id 17ef:a394 serial "" name "USB2.0 Hub" hash "lP1MiStgC6H3DzgyitbjfOfTvjInIQBn7OsXDDjTAd4=" parent-hash "PypkiVGdFiVdmb9QWRg4TCkoJ+Jp1TcXtU1x8GhS/zA=" via-port "7-1.3" with-interface { 09:00:01 09:00:02 } with-connect-type "unknown"
-      allow id 17ef:a387 serial "301000001" name "USB-C Dock Ethernet" hash "PdxMA1X8xVL5G8GygzKiVaxEGe/E68egOcp4ci8l6/4=" parent-hash "bSPFJDY6VJB1/TLktY1SKMnyq8yM+xoYRZzUNYGBJ1E=" with-interface { ff:ff:00 02:06:00 0a:00:00 0a:00:00 } with-connect-type "unknown"
-      allow id 17ef:a393 serial "" name "USB3.1 Hub" hash "69Y339Uk+TVaNGT//cRD1MmHwOhl6SYF5sTmIAiG+MU=" parent-hash "bSPFJDY6VJB1/TLktY1SKMnyq8yM+xoYRZzUNYGBJ1E=" via-port "8-1.3" with-interface 09:00:00 with-connect-type "unknown"
-      allow id 17ef:a395 serial "" name "USB2.0 Hub" hash "zZYYfrUbupQM8DZXGy8czWNditt0hnauSHtIeYx1TZk=" parent-hash "lP1MiStgC6H3DzgyitbjfOfTvjInIQBn7OsXDDjTAd4=" via-port "7-1.3.3" with-interface 09:00:00 with-connect-type "unknown"
-      allow id 05e3:0610 serial "" name "USB2.1 Hub" hash "CbRB9LX/JdGjNWCYSOcIwMVXE0UpOR03LCotWrTbuCM=" parent-hash "lP1MiStgC6H3DzgyitbjfOfTvjInIQBn7OsXDDjTAd4=" via-port "7-1.3.4" with-interface 09:00:00 with-connect-type "unknown"
-      allow id 05e3:0626 serial "" name "USB3.1 Hub" hash "15SBGsOo8K+JjtOKSCn7t0i6ifer4wmhzep1yEB5pLQ=" parent-hash "69Y339Uk+TVaNGT//cRD1MmHwOhl6SYF5sTmIAiG+MU=" via-port "8-1.3.4" with-interface 09:00:00 with-connect-type "unknown"
-      allow id 04b4:521a serial "" name "USB-I2C Bridge" hash "FW1i/NYxIgZbwwR1aoQhld2mwHcWIa8evtb9NDK2UyU=" parent-hash "zZYYfrUbupQM8DZXGy8czWNditt0hnauSHtIeYx1TZk=" via-port "7-1.3.3.1" with-interface { ff:03:00 ff:05:00 } with-connect-type "unknown"
-      allow id 17ef:30d1 serial "000000000000" name "ThinkPad USB-C Dock Gen2 USB Audio" hash "HlVxQidTq+BJltIp/8wG3BpGG4rrfyLsp6uUWiDQWp0=" parent-hash "zZYYfrUbupQM8DZXGy8czWNditt0hnauSHtIeYx1TZk=" with-interface { 01:01:20 01:02:20 01:02:20 01:02:20 01:02:20 01:02:20 03:00:00 } with-connect-type "unknown"
-      allow id 0d8c:0089 serial "201805" name "ATGM1-USB" hash "tng4pAFyMqx5m744cszNY35tcXz3akcAEtNW6quryUo=" parent-hash "zZYYfrUbupQM8DZXGy8czWNditt0hnauSHtIeYx1TZk=" with-interface { 01:01:00 01:02:00 01:02:00 03:00:00 } with-connect-type "unknown"
-      allow id 3434:d030 serial "" name "Keychron Link " hash "gfm9dUg3k4ERginO0CR4zhvckjZ/kZ+to/WtGxgHdZ8=" parent-hash "CbRB9LX/JdGjNWCYSOcIwMVXE0UpOR03LCotWrTbuCM=" via-port "7-1.3.4.1" with-interface { 03:01:02 03:01:01 03:01:01 03:00:00 } with-connect-type "unknown"
-      allow id 046d:c547 serial "" name "USB Receiver" hash "gFx7kcPo3OnfDcPhrJk3PxeBiF1o6/JGeTevInhob4A=" parent-hash "CbRB9LX/JdGjNWCYSOcIwMVXE0UpOR03LCotWrTbuCM=" via-port "7-1.3.4.2" with-interface { 03:01:02 03:01:01 03:00:00 } with-connect-type "unknown"
-      allow id 2b5a:0020 serial "22112036022592" name "Volt 1" hash "UwPt9+AtN/gu7VAytdu1nw7K6MoSMOaMDgQjRx3unyU=" parent-hash "CbRB9LX/JdGjNWCYSOcIwMVXE0UpOR03LCotWrTbuCM=" with-interface { 01:01:20 01:02:20 01:02:20 01:02:20 01:02:20 01:02:20 01:02:20 01:01:00 01:03:00 fe:01:01 03:00:00 01:01:20 01:02:20 01:02:20 01:02:20 01:02:20 01:02:20 01:02:20 01:01:00 01:03:00 fe:01:01 03:00:00 } with-connect-type "unknown"
-      allow id 1050:0407 serial "" name "YubiKey OTP+FIDO+CCID" hash "Q+A8QQReKclmBSaDIYja0w4Bx6ld2IU6wF7HFKdtJ3Q=" parent-hash "CbRB9LX/JdGjNWCYSOcIwMVXE0UpOR03LCotWrTbuCM=" via-port "7-1.3.4.4" with-interface { 03:01:01 03:00:00 0b:00:00 } with-connect-type "unknown"
+      allow id 17ef:a392 serial "" name "USB2.0 Hub" hash "PypkiVGdFiVdmb9QWRg4TCkoJ+Jp1TcXtU1x8GhS/zA=" with-interface { 09:00:01 09:00:02 }
+      allow id 17ef:a391 serial "" name "USB3.1 Hub" hash "bSPFJDY6VJB1/TLktY1SKMnyq8yM+xoYRZzUNYGBJ1E=" with-interface 09:00:00
+      allow id 17ef:a394 serial "" name "USB2.0 Hub" hash "lP1MiStgC6H3DzgyitbjfOfTvjInIQBn7OsXDDjTAd4=" with-interface { 09:00:01 09:00:02 }
+      allow id 17ef:a387 serial "301000001" name "USB-C Dock Ethernet" hash "PdxMA1X8xVL5G8GygzKiVaxEGe/E68egOcp4ci8l6/4=" with-interface { ff:ff:00 02:06:00 0a:00:00 0a:00:00 }
+      allow id 17ef:a393 serial "" name "USB3.1 Hub" hash "69Y339Uk+TVaNGT//cRD1MmHwOhl6SYF5sTmIAiG+MU=" with-interface 09:00:00
+      allow id 17ef:a395 serial "" name "USB2.0 Hub" hash "zZYYfrUbupQM8DZXGy8czWNditt0hnauSHtIeYx1TZk=" with-interface 09:00:00
+      allow id 05e3:0610 serial "" name "USB2.1 Hub" hash "CbRB9LX/JdGjNWCYSOcIwMVXE0UpOR03LCotWrTbuCM=" with-interface 09:00:00
+      allow id 05e3:0626 serial "" name "USB3.1 Hub" hash "15SBGsOo8K+JjtOKSCn7t0i6ifer4wmhzep1yEB5pLQ=" with-interface 09:00:00
+      allow id 04b4:521a serial "" name "USB-I2C Bridge" hash "FW1i/NYxIgZbwwR1aoQhld2mwHcWIa8evtb9NDK2UyU=" with-interface { ff:03:00 ff:05:00 }
+      allow id 17ef:30d1 serial "000000000000" name "ThinkPad USB-C Dock Gen2 USB Audio" hash "HlVxQidTq+BJltIp/8wG3BpGG4rrfyLsp6uUWiDQWp0=" with-interface { 01:01:20 01:02:20 01:02:20 01:02:20 01:02:20 01:02:20 03:00:00 }
+      allow id 0d8c:0089 serial "201805" name "ATGM1-USB" hash "tng4pAFyMqx5m744cszNY35tcXz3akcAEtNW6quryUo=" with-interface { 01:01:00 01:02:00 01:02:00 03:00:00 }
+      allow id 3434:d030 serial "" name "Keychron Link " hash "gfm9dUg3k4ERginO0CR4zhvckjZ/kZ+to/WtGxgHdZ8=" with-interface { 03:01:02 03:01:01 03:01:01 03:00:00 }
+      allow id 046d:c547 serial "" name "USB Receiver" hash "gFx7kcPo3OnfDcPhrJk3PxeBiF1o6/JGeTevInhob4A=" with-interface { 03:01:02 03:01:01 03:00:00 }
+      allow id 2b5a:0020 serial "22112036022592" name "Volt 1" hash "UwPt9+AtN/gu7VAytdu1nw7K6MoSMOaMDgQjRx3unyU=" with-interface { 01:01:20 01:02:20 01:02:20 01:02:20 01:02:20 01:02:20 01:02:20 01:01:00 01:03:00 fe:01:01 03:00:00 01:01:20 01:02:20 01:02:20 01:02:20 01:02:20 01:02:20 01:02:20 01:01:00 01:03:00 fe:01:01 03:00:00 }
+      allow id 1050:0407 serial "" name "YubiKey OTP+FIDO+CCID" hash "Q+A8QQReKclmBSaDIYja0w4Bx6ld2IU6wF7HFKdtJ3Q=" with-interface { 03:01:01 03:00:00 0b:00:00 }
 
     '';
   };
+
+  # usbguard-notifier ships only a user unit; pull it in and start it with the
+  # graphical session so blocked devices raise a desktop notification.
+  systemd.packages = [ pkgs.usbguard-notifier ];
+  systemd.user.services.usbguard-notifier.wantedBy = [ "graphical-session.target" ];
 
   # Audit events to journald via auditd
   environment.etc."usbguard/usbguard-daemon.conf.d/10-audit.conf".text = ''
