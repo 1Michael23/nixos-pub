@@ -7,7 +7,6 @@
 
 {
   environment.systemPackages = with pkgs; [
-    inputs.run0-sudo-shim.packages.${pkgs.stdenv.hostPlatform.system}.default
     btop
     tlrc # tldr
     pfetch-rs
@@ -15,6 +14,8 @@
     usbutils
     pciutils
     gdu
+    screen
+    tmux
   ];
 
   boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
@@ -33,7 +34,7 @@
     nix-index.enable = true;
   };
 
-  security.sudo.enable = false;
+  security.run0-sudo-shim.enable = true;
   security.allowUserNamespaces = true;
 
   time.timeZone = "Australia/Sydney";
