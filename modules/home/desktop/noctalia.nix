@@ -35,6 +35,17 @@ in
     checkConfig = false;
 
     settings = {
+      hooks =
+        let
+          ppctl = lib.getExe' pkgs.power-profiles-daemon "powerprofilesctl";
+        in
+        {
+          battery_discharging = "${ppctl} set power-saver";
+          battery_charging = "${ppctl} set balanced";
+          # Fires when plugged in but not charging, e.g. holding at the 80% cap.
+          battery_plugged = "${ppctl} set balanced";
+        };
+
       shell = {
         font_family = "sans-serif";
         setup_wizard_enabled = false;

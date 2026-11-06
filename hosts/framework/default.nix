@@ -197,7 +197,20 @@
 
   powerManagement = {
     enable = true;
-    powertop.enable = true;
+    resumeCommands = ''
+      if [ -w /sys/class/power_supply/BAT1/charge_control_end_threshold ]; then
+        echo 80 > /sys/class/power_supply/BAT1/charge_control_end_threshold
+      fi
+    '';
+  };
+
+  systemd.services.battery-charge-limit = {
+    description = "Cap battery charge at 80%";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "systemd-modules-load.service" ];
+    unitConfig.ConditionPathExists = "/sys/class/power_supply/BAT1/charge_control_end_threshold";
+    serviceConfig.Type = "oneshot";
+    script = "echo 80 > /sys/class/power_supply/BAT1/charge_control_end_threshold";
   };
 
   users.mutableUsers = true;
