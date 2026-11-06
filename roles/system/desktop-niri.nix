@@ -50,8 +50,6 @@
       gst_all_1.gst-plugins-bad
       gst_all_1.gst-libav
 
-      piper
-
       flatpak
       gnome-software
 
@@ -207,6 +205,11 @@
           };
         }
       ];
+    };
+
+    localsend = {
+      enable = true;
+      openFirewall = true;
     };
   };
 

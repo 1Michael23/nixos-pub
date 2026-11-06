@@ -21,6 +21,7 @@
     ../../modules/home/desktop/noctalia.nix
     ../../modules/home/desktop/vesktop.nix
     ../../modules/home/desktop/alacritty.nix
+    ../../modules/home/desktop/localsend.nix
     ../../modules/home/services/protonvpn.nix
   ];
 }
