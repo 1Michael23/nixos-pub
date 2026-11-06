@@ -3,6 +3,7 @@
   pkgs,
   lib,
   inputs,
+  options,
   ...
 }:
 
@@ -90,13 +91,29 @@ in
       # signs the kernel) and blocks unsigned modules, /dev/mem, kexec and
       # kernel profiling. Revert if a needed module fails to load at boot.
       "lockdown=confidentiality"
+      # gpt-auto sees nvme0n1p2 (still typed "Linux swap") and generates a
+      # systemd-cryptsetup@swap unit whose passphrase prompt blocks
+      # cryptsetup.target, stalling sysinit and any polkit/run0 switch. Root is
+      # unlocked from the initrd and /efi comes from fstab, so nothing needs it.
+      "systemd.gpt_auto=0"
     ];
   };
 
-  # Link the image with the module-signing certificates inserted, otherwise
+  # The kernel image with the module-signing certificates inserted, otherwise
   # lockdown has no trusted key and refuses every module.
   system.systemBuilderCommands = lib.mkAfter ''
     ln -sf -- ${signedKernel}/${config.system.boot.loader.kernelFile} $out/kernel
+  '';
+
+  # Point the bootspec at the same image. lanzaboote builds the UKI from
+  # boot.json, and bootspec hardcodes boot.kernelPackages.kernel there, so
+  # relinking $out/kernel alone is silently ignored. Reuse the stock writer and
+  # rewrite only the kernel field once it has run.
+  boot.bootspec.writer = lib.mkForce ''
+    ${options.boot.bootspec.writer.default}
+    ${lib.getExe pkgs.jq} --arg kernel "${signedKernel}/${config.system.boot.loader.kernelFile}" \
+      '."org.nixos.bootspec.v1".kernel = $kernel' $out/boot.json > $out/boot.json.tmp
+    mv $out/boot.json.tmp $out/boot.json
   '';
 
   # No disk swap: hibernation is gone, and suspend to RAM needs none.
