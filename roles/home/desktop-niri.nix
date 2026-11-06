@@ -19,6 +19,7 @@
   imports = [
     ../../modules/home/desktop/niri/niri.nix
     ../../modules/home/desktop/noctalia.nix
+    ../../modules/home/desktop/qt.nix
     ../../modules/home/desktop/vesktop.nix
     ../../modules/home/desktop/alacritty.nix
     ../../modules/home/desktop/localsend.nix

@@ -37,6 +37,7 @@
   system.stateVersion = "25.05";
 
   environment.systemPackages = with pkgs; [
+    ddcutil
     powertop
     sbctl
   ];
@@ -197,6 +198,8 @@
     framework = {
       laptop13.audioEnhancement.enable = true;
     };
+    # i2c-dev for DDC/CI brightness control of the external monitor.
+    i2c.enable = true;
     sane.enable = true; # scanning support
     amdgpu.opencl.enable = true;
   };
@@ -241,6 +244,7 @@
       "dialout"
       "scanner"
       "lp" # printing stuff
+      "i2c" # ddcutil
     ];
 
     shell = pkgs.fish;

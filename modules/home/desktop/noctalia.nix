@@ -12,10 +12,7 @@ in
   home = {
     packages = [
       pkgs.adw-gtk3
-      pkgs.qt6Packages.qt6ct
     ];
-
-    sessionVariables.QT_QPA_PLATFORMTHEME = "qt6ct";
 
     # Seed a valid VS Code theme before Noctalia first renders its own.
     activation.noctaliaVscodeTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -140,6 +137,13 @@ in
         enabled = true;
         unit = "metric";
       };
+
+      nightlight = {
+        enabled = true;
+        temperature_night = 4000;
+      };
+
+      brightness.enable_ddcutil = true;
 
       control_center = {
         hidden_tabs = [ "calendar" ];

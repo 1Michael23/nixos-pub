@@ -86,7 +86,7 @@ in
         "application/x-7z-compressed" = [ "org.gnome.FileRoller.desktop" ];
         "application/x-rar" = [ "org.gnome.FileRoller.desktop" ];
 
-        "application/pdf" = [ "re.sonny.Junction.desktop" ];
+        "application/pdf" = [ "org.gnome.Papers.desktop" ];
         "application/msword" = [ "onlyoffice-desktopeditors.desktop" ];
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = [
           "onlyoffice-desktopeditors.desktop"

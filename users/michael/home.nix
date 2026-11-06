@@ -26,6 +26,7 @@
       onlyoffice-desktopeditors
       moonlight-qt
       openssh
+      papers
       jq
       bitwarden-cli
       gcr_3 # gcr-prompter: provides org.gnome.keyring.SystemPrompter for gnome-keyring
