@@ -4,7 +4,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    opencode.url = "github:anomalyco/opencode";
+    # Pinned: upstream's nix/hashes.json is stale since bun.lock changed on
+    # 2026-11-01, so fresh builds fail with an opencode-node_modules FOD hash
+    # mismatch. Unpin once upstream updates nix/hashes.json.
+    opencode.url = "github:anomalyco/opencode/bf544cd419c5f17535c0d5af929f7ecd41188320";
 
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
