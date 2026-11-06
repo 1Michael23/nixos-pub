@@ -6,40 +6,29 @@ _:
     settings = {
       logo = {
         source = "nixos";
-        padding = {
-          right = 4;
-        };
+        position = "top";
+        padding.right = 2;
       };
       display = {
         separator = ": ";
-        key = {
-          width = 14;
-        };
+        key.width = 8;
       };
       modules = [
-        "title"
-        "separator"
         "os"
-        "host"
         "kernel"
         "uptime"
-        "packages"
-        "shell"
-        "wm"
-        "theme"
-        "icons"
-        "font"
-        "cursor"
-        "terminal"
-        "terminalfont"
+        {
+          type = "wm";
+          key = "WM";
+        }
         "cpu"
         "gpu"
         "memory"
         {
           type = "disk";
+          key = "Disk";
           folders = "/";
         }
-        "colors"
       ];
     };
   };
