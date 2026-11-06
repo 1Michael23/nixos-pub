@@ -77,6 +77,13 @@
   # Force one swap unit; hardware-configuration.nix also declares this by UUID.
   swapDevices = lib.mkForce [ { device = "/dev/mapper/cryptswap"; } ];
 
+  # Compressed RAM swap on top of the LUKS swapfile, so short memory spikes
+  # are absorbed without touching the disk.
+  zramSwap = {
+    enable = true;
+    memoryPercent = 25;
+  };
+
   documentation = {
     enable = true;
     man.enable = true;
@@ -110,9 +117,24 @@
     optimise.automatic = true;
   };
 
-  systemd.sleep.settings.Sleep = {
-    HibernateDelaySec = "45min";
-    SuspendEstimationSec = "20min";
+  systemd = {
+    # Noctalia launches apps as systemd services, so let oomd kill the
+    # offending app slice (e.g. llama.cpp) instead of the whole session.
+    oomd.enableUserSlices = true;
+
+    sleep.settings.Sleep = {
+      HibernateDelaySec = "45min";
+      SuspendEstimationSec = "20min";
+    };
+
+    services.battery-charge-limit = {
+      description = "Cap battery charge at 80%";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "systemd-modules-load.service" ];
+      unitConfig.ConditionPathExists = "/sys/class/power_supply/BAT1/charge_control_end_threshold";
+      serviceConfig.Type = "oneshot";
+      script = "echo 80 > /sys/class/power_supply/BAT1/charge_control_end_threshold";
+    };
   };
 
   services = {
@@ -202,15 +224,6 @@
         echo 80 > /sys/class/power_supply/BAT1/charge_control_end_threshold
       fi
     '';
-  };
-
-  systemd.services.battery-charge-limit = {
-    description = "Cap battery charge at 80%";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "systemd-modules-load.service" ];
-    unitConfig.ConditionPathExists = "/sys/class/power_supply/BAT1/charge_control_end_threshold";
-    serviceConfig.Type = "oneshot";
-    script = "echo 80 > /sys/class/power_supply/BAT1/charge_control_end_threshold";
   };
 
   users.mutableUsers = true;
