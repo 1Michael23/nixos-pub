@@ -68,8 +68,11 @@
   ];
 
   security = {
-    protectKernelImage = false; # needed for hibernation
-    lockKernelModules = false; # Intentional: required for SD cards/removable media.
+    # Blocks kexec and other in-kernel image replacement. Hibernation used to
+    # require this off; hibernation is gone, so enforce it.
+    protectKernelImage = true;
+    # Intentional: required for SD cards/removable media.
+    lockKernelModules = false;
 
     forcePageTableIsolation = true;
 

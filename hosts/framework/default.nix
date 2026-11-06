@@ -70,7 +70,14 @@
     # the kernel put some scanout buffers in GTT. Those scanned out as solid
     # white while the cursor plane kept working and screenshots were correct;
     # only a reboot cleared it. Force scanout buffers into visible VRAM.
-    kernelParams = [ "amdgpu.sg_display=0" ];
+    kernelParams = [
+      "amdgpu.sg_display=0"
+      # nixpkgs enables the lockdown LSM but not its Secure Boot trigger, so
+      # request the strongest mode explicitly. Requires Secure Boot (lanzaboote
+      # signs the kernel) and blocks unsigned modules, /dev/mem, kexec and
+      # kernel profiling. Revert if a needed module fails to load at boot.
+      "lockdown=confidentiality"
+    ];
   };
 
   # No disk swap: hibernation is gone, and suspend to RAM needs none.
