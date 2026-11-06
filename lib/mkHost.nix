@@ -23,6 +23,7 @@ nixpkgs.lib.nixosSystem {
     ../hosts/${hostname}/default.nix
     ../modules/system/mcp-nixos.nix
     ../roles/system/base.nix
+    inputs.run0-sudo-shim.nixosModules.default
     sops-nix.nixosModules.sops
     home-manager.nixosModules.home-manager
     {

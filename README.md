@@ -7,7 +7,7 @@ My personal NixOS + nix-darwin configuration.
 - Hibernation to disk with encrypted swap (framework)
 - Self-signed Secure Boot via lanzaboote (framework)
 - Secrets via sops-nix
-- System hardening via nix-mineral and run0 sudo shim (framework and proxmox), hardened ssh
+- System hardening via nix-mineral (framework) and the run0 sudo shim (Linux hosts), plus hardened ssh
 - Niri + Noctalia Shell desktop on framework: bar, launcher, clipboard, notifications, OSD, lock/session, screenshots, and wallpaper-derived theming for GTK, Alacritty, Qt and Niri
 - flake-native developer tooling: `nix fmt`, `nix run .#check` (lint + format), on-demand devShell via `nix develop`
 

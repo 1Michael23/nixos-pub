@@ -21,7 +21,6 @@
     ../../modules/system/theme/fonts.nix
 
     inputs.lanzaboote.nixosModules.lanzaboote
-    inputs.run0-sudo-shim.nixosModules.default
     inputs.nix-mineral.nixosModules.nix-mineral
     inputs.nixos-hardware.nixosModules.framework-13-7040-amd
   ];
