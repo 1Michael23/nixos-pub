@@ -12,11 +12,6 @@ _:
     firewall = {
       enable = true;
       checkReversePath = "loose";
-      allowedTCPPorts = [ 22000 ];
-      allowedUDPPorts = [
-        22000
-        21027
-      ];
     };
   };
 
